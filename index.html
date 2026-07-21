@@ -77,9 +77,98 @@
             line-height: 1.6;
         }
 
+        /* --- BARRA DE NAVEGACIÓN Y MENÚ --- */
+        .main-nav {
+            background-color: #12141a;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            color: #ff4e50;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu > li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 18px 8px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu li.active > a {
+            color: #fff;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #1a1d24;
+            min-width: 220px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            top: 100%;
+            left: 0;
+            list-style: none;
+            padding: 8px 0;
+            margin: 0;
+        }
+
+        .dropdown-content li a {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #232730;
+            color: #fff;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* --- ESTILOS HEADER Y ESTRUCTURA --- */
         header {
             text-align: center;
-            padding: 50px 20px 20px;
+            padding: 40px 20px 20px;
             max-width: 900px;
             margin: 0 auto;
         }
@@ -305,7 +394,19 @@
             margin-top: 60px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+            .nav-menu a {
+                padding: 10px 6px;
+            }
             .result-grid {
                 grid-template-columns: 1fr;
             }
@@ -317,13 +418,45 @@
 </head>
 <body>
 
+    <!-- MENÚ SUPERIOR DE HERRAMIENTAS SEO -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">ROY RD <span>SEO SUITE</span></a>
+            <ul class="nav-menu">
+                <li class="dropdown">
+                    <a href="#serps">Herramientas SERPs ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#serp-checker">Analizador de SERPs</a></li>
+                        <li><a href="#local-rank">Local Rank Tracker</a></li>
+                    </ul>
+                </li>
+                <li><a href="#kw-volume">KW Volume</a></li>
+                <li><a href="#suggest-tools">Suggest Tools</a></li>
+                <li class="dropdown">
+                    <a href="#competencia">Competencia ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#extractor">Extractor de Tags & Miniaturas</a></li>
+                        <li><a href="#seo-monitor">SEO Monitor</a></li>
+                    </ul>
+                </li>
+                <li><a href="#local-rank-tracker">Local Rank Tracker</a></li>
+                <li class="dropdown">
+                    <a href="#utilidades">Utilidades ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#seo-monitor-tool">SEO MONITOR</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <header>
         <h1>Suite de Miniaturas & Inspección SEO</h1>
         <p class="subtitle">Descarga portadas en Máxima Resolución (1080p/4K) y analiza datos de rendimiento para YouTube y Twitch.</p>
     </header>
 
     <main class="container">
-        <div class="tool-box">
+        <div class="tool-box" id="extractor">
             <div class="tabs">
                 <button class="tab-btn active-yt" id="btnYt" onclick="setPlatform('youtube')">YouTube + SEO</button>
                 <button class="tab-btn" id="btnTw" onclick="setPlatform('twitch')">Twitch Stream</button>
@@ -371,7 +504,7 @@
         <!-- SECCIÓN DE CONTENIDO EDUCATIVO & SEO COMPLETO -->
         <article class="seo-section">
             <h2>Herramientas de Análisis de Miniaturas y Optimización SEO</h2>
-            <p>La miniatura (o thumbnail) es el factor número uno que determina el **CTR (Click-Through Rate)** de un video en YouTube. Un CTR elevado le indica al algoritmo que tu contenido es atractivo, lo que resulta en más recomendaciones en la página principal.</p>
+            <p>La miniatura (o thumbnail) es el factor número uno que determina el <strong>CTR (Click-Through Rate)</strong> de un video en YouTube. Un CTR elevado le indica al algoritmo que tu contenido es atractivo, lo que resulta en más recomendaciones en la página principal.</p>
 
             <h2>¿Cómo usar las miniaturas de la competencia para mejorar tu CTR?</h2>
             <p>Analizar las portadas de los creadores referentes en tu nicho te permite identificar patrones visuales ganadores:</p>
@@ -384,7 +517,7 @@
             <h2>Preguntas Frecuentes (FAQ)</h2>
             <div class="faq-item">
                 <div class="faq-question">¿Cuál es el tamaño recomendado para una miniatura de YouTube?</div>
-                <p>El tamaño ideal es de **1280 x 720 píxeles** (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB en formatos JPG, GIF o PNG.</p>
+                <p>El tamaño ideal es de <strong>1280 x 720 píxeles</strong> (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB en formatos JPG, GIF o PNG.</p>
             </div>
             <div class="faq-item">
                 <div class="faq-question">¿Cómo obtener la portada de un directo de Twitch en tiempo real?</div>
@@ -394,7 +527,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Suite SEO de Miniaturas — Herramientas para Creadores de Contenido.</p>
+        <p>&copy; 2026 Suite SEO de Miniaturas — Herramientas para Creadores de Contenido por ROY RD.</p>
     </footer>
 
     <script>
