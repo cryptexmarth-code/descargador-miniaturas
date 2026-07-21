@@ -18,7 +18,7 @@
       "@type": "WebPage",
       "name": "Noticias y Tendencias SEO VidPulse",
       "url": "https://vidpulseseo.com/noticias.html",
-      "description": "Actualidad segmentada sobre YouTube, SEO y tecnología para creadores."
+      "description": "Actualidad general, sobre YouTube, SEO y tecnología para creadores."
     }
     </script>
 
@@ -254,6 +254,12 @@
 
     <main class="container">
         
+        <!-- SECCIÓN 0: ÚLTIMAS NOTICIAS GENERALES (UNIVERSAL) -->
+        <h2 class="section-title">📰 Últimas Noticias y Actualidad General</h2>
+        <div class="news-grid" id="grid-general">
+            <div class="loading-text">Cargando actualidad general...</div>
+        </div>
+
         <!-- SECCIÓN 1: YOUTUBE & REDES SOCIALES -->
         <h2 class="section-title">📺 Algoritmo de YouTube y Redes Sociales</h2>
         <div class="news-grid" id="grid-youtube">
@@ -272,10 +278,10 @@
             <div class="loading-text">Cargando avances tecnológicos...</div>
         </div>
 
-        <!-- CONTENIDO SEO ESTRATÉGICO LARGO (EXCELENTE PARA GOOGLE) -->
+        <!-- CONTENIDO SEO ESTRATÉGICO LARGO -->
         <article class="seo-article">
             <h3>¿Por qué estructurar la información por categorías mejora tu posicionamiento web?</h3>
-            <p>Google prioriza los sitios web que ofrecen una arquitectura de contenidos clara y segmentada. Al separar las noticias entre el algoritmo de YouTube, el SEO orgánico y las herramientas digitales, los robots de búsqueda indexan tus palabras clave de forma mucho más eficiente, atrayendo tráfico cualificado interesado en hacer crecer sus plataformas de streaming y webs automatizadas.</p>
+            <p>Google prioriza los sitios web que ofrecen una arquitectura de contenidos clara y segmentada. Al integrar noticias de actualidad general junto con el algoritmo de YouTube y el SEO orgánico, los robots de búsqueda indexan tus palabras clave de forma mucho más eficiente, atrayendo tráfico masivo y constante.</p>
         </article>
 
     </main>
@@ -293,6 +299,7 @@
                 const data = await response.json();
 
                 if (data.success && data.categories) {
+                    renderGrid('grid-general', data.categories.general);
                     renderGrid('grid-youtube', data.categories.youtube);
                     renderGrid('grid-seo', data.categories.seo);
                     renderGrid('grid-tech', data.categories.tech);
@@ -341,7 +348,7 @@
         }
 
         function showErrorAll() {
-            ['grid-youtube', 'grid-seo', 'grid-tech'].forEach(id => {
+            ['grid-general', 'grid-youtube', 'grid-seo', 'grid-tech'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.innerHTML = `<p class="loading-text">Error al sincronizar con el servidor de noticias.</p>`;
             });
