@@ -512,6 +512,100 @@
             gap: 10px;
         }
 
+        /* TENDENCIAS DE COMPETENCIA - ESTILO LLAMATIVO */
+        .competencia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .competencia-card {
+            background: linear-gradient(145deg, #121622, #181d2c);
+            border: 1px solid var(--border-highlight);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .competencia-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-orange), var(--accent-gold));
+        }
+
+        .competencia-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(255, 78, 80, 0.15);
+            border-color: var(--accent-orange);
+        }
+
+        .comp-canal-tag {
+            background: rgba(255, 78, 80, 0.12);
+            color: var(--accent-orange);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+            align-self: flex-start;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .comp-titulo {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .comp-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 12px;
+            margin-top: auto;
+        }
+
+        .comp-date {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .comp-btn {
+            background: var(--accent-yt);
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .comp-btn:hover {
+            opacity: 0.9;
+        }
+
         /* SEO Content & FAQ Section */
         .seo-article {
             margin-top: 40px;
@@ -683,6 +777,7 @@
                         <li><a onclick="showTab('tab-seo-monitor')">SEO Monitor & Auditoría</a></li>
                     </ul>
                 </li>
+                <li><a onclick="showTab('tab-competencia')" style="color: var(--accent-gold);">🔥 Tendencias Competencia</a></li>
             </ul>
         </div>
     </nav>
@@ -751,13 +846,30 @@
                 </div>
             </div>
 
+            <!-- SECCIÓN LLAMATIVA DE TENDENCIAS EN LA PÁGINA PRINCIPAL -->
+            <div class="tool-box" style="margin-top: 50px; background: linear-gradient(135deg, #121622 0%, #1a1e2f 100%); border-color: var(--border-highlight);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;">🔥 Monitoreo Automático</span>
+                        <h2 style="font-size: 1.8rem; margin: 10px 0 5px 0; color: #fff;">Últimos Vídeos de Canales Masivos</h2>
+                        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">Rastreo diario en tiempo real de los creadores de referencia para inspirar tus próximos contenidos.</p>
+                    </div>
+                    <button class="btn-secondary" onclick="showTab('tab-competencia')">Ver Todos en Pestaña Dedicada ➔</button>
+                </div>
+                
+                <div id="homeCompetenciaContainer" class="competencia-grid">
+                    <!-- Cargado dinámicamente -->
+                    <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias de competencia...</p>
+                </div>
+            </div>
+
             <!-- ARTÍCULO SEO EXTREMADAMENTE DETALLADO -->
             <article class="seo-article">
                 <h2>Guía Definitiva de Optimización de Miniaturas para YouTube y Twitch</h2>
                 <p>Las miniaturas (thumbnails) son el elemento visual número uno para determinar la tasa de clics de tus contenidos audiovisuales. En un ecosistema donde se suben más de 500 horas de vídeo por minuto a plataformas como YouTube, la miniatura actúa como la portada de un libro: es la primera línea de conversión antes de que el espectador decida consumir tu contenido.</p>
 
                 <h2>¿Cómo afecta el CTR (Click-Through Rate) al Algoritmo?</h2>
-                <p>El algoritmo de recomendación de YouTube prioriza dos métricas fundamentales por encima de todo lo demás: <strong>el CTR (Tasa de Clics por Impresión)</strong> y <strong>el Tiempo de Reproducción Retenido (Audience Retention)</strong>. Cuando publicas un vídeo, el sistema muestra la miniatura a un grupo de prueba (impresiones). Si el porcentaje de personas que hace clic es elevado (por ejemplo, entre un 8% y un 15%), el sistema expande las impresiones a una audiencia más amplia en la página de inicio y en la barra de sugeridos.</p>
+                <p>El algoritmo de recomendación de YouTube prioriza two métricas fundamentales por encima de todo lo demás: <strong>el CTR (Tasa de Clics por Impresión)</strong> y <strong>el Tiempo de Reproducción Retenido (Audience Retention)</strong>. Cuando publicas un vídeo, el sistema muestra la miniatura a un grupo de prueba (impresiones). Si el porcentaje de personas que hace clic es elevado (por ejemplo, entre un 8% y un 15%), el sistema expande las impresiones a una audiencia más amplia en la página de inicio y en la barra de sugeridos.</p>
 
                 <h3>Factores Clave para Miniaturas de Alto Impacto</h3>
                 <ul>
@@ -781,6 +893,31 @@
                     <p>Las miniaturas están protegidas por derechos de autor. Te recomendamos utilizar las miniaturas descargadas exclusivamente como referencia conceptual, análisis de la competencia o tableros de inspiración (moodboards) para diseñar tus propias portadas originales.</p>
                 </div>
             </article>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA NUEVA: TENDENCIAS DE COMPETENCIA (DEDICADA)
+         ========================================== -->
+    <section id="tab-competencia" class="page-section">
+        <header>
+            <h1>Monitoreo de Tendencias de la Competencia</h1>
+            <p class="subtitle">Explora los últimos lanzamientos de los canales masivos de referencia actualizados automáticamente todos los días.</p>
+        </header>
+
+        <main class="container">
+            <div class="tool-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #fff;">Feed Completo de Canales de Referencia</h3>
+                    <button class="btn-secondary" onclick="cargarDatosCompetencia()">🔄 Actualizar Datos</button>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Estos datos se sincronizan de manera autónoma desde los feeds RSS oficiales de creadores principales como MrBeast, Linus Tech Tips, AuronPlay, Fazt Code y The Verge.</p>
+
+                <div id="fullCompetenciaContainer" class="competencia-grid">
+                    <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 30px;">Cargando feed de competencia...</p>
+                </div>
+            </div>
         </main>
     </section>
 
@@ -1104,6 +1241,73 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // CARGAR AUTOMÁTICAMENTE LOS DATOS DE COMPETENCIA AL INICIO
+        document.addEventListener("DOMContentLoaded", () => {
+            cargarDatosCompetencia();
+        });
+
+        async function cargarDatosCompetencia() {
+            const homeContainer = document.getElementById('homeCompetenciaContainer');
+            const fullContainer = document.getElementById('fullCompetenciaContainer');
+
+            try {
+                const response = await fetch('/data/competencia-rss.json');
+                if (!response.ok) throw new Error("No se pudo cargar el archivo JSON de competencia.");
+                
+                const videos = await response.json();
+
+                if (!videos || videos.length === 0) {
+                    const msg = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No hay datos de competencia disponibles aún.</p>';
+                    if(homeContainer) homeContainer.innerHTML = msg;
+                    if(fullContainer) fullContainer.innerHTML = msg;
+                    return;
+                }
+
+                // Renderizar en página principal (primeros 6 vídeos)
+                if(homeContainer) {
+                    homeContainer.innerHTML = '';
+                    videos.slice(0, 6).forEach(item => {
+                        homeContainer.appendChild(crearTarjetaCompetencia(item));
+                    });
+                }
+
+                // Renderizar en pestaña completa
+                if(fullContainer) {
+                    fullContainer.innerHTML = '';
+                    videos.forEach(item => {
+                        fullContainer.appendChild(crearTarjetaCompetencia(item));
+                    });
+                }
+
+            } catch (error) {
+                console.error("Error cargando competencia:", error);
+                const errorMsg = '<p style="color: #ff6b6b; grid-column: 1/-1; text-align: center;">Error al cargar las tendencias de competencia. Ejecuta la Action en GitHub si es la primera vez.</p>';
+                if(homeContainer) homeContainer.innerHTML = errorMsg;
+                if(fullContainer) fullContainer.innerHTML = errorMsg;
+            }
+        }
+
+        function crearTarjetaCompetencia(item) {
+            const card = document.createElement('div');
+            card.className = 'competencia-card';
+            
+            const fechaFormateada = new Date(item.publicado).toLocaleDateString('es-ES', {
+                day: '2-digit', month: 'short', year: 'numeric'
+            });
+
+            card.innerHTML = `
+                <div>
+                    <span class="comp-canal-tag">📺 ${item.canal}</span>
+                    <div class="comp-titulo" title="${item.titulo}">${item.titulo}</div>
+                </div>
+                <div class="comp-footer">
+                    <span class="comp-date">📅 ${fechaFormateada}</span>
+                    <a href="${item.url}" target="_blank" class="comp-btn">Ver Vídeo ➔</a>
+                </div>
+            `;
+            return card;
+        }
+
         // 2. DESCARGADOR DE MINIATURAS (YOUTUBE Y TWITCH FIXED)
         let currentPlatform = 'youtube';
 
@@ -1302,80 +1506,62 @@
                 return;
             }
 
-            // A) AUDITORÍA DE TÍTULO DINÁMICA
-            let score = 40; // Base inicial neutra
+            // A) AUDITORÍA DE TÍTULO
+            let score = 50;
             const len = rawInput.length;
             const auditList = document.getElementById('titleAuditList');
             auditList.innerHTML = '';
 
             const lower = rawInput.toLowerCase();
             
-            // 1. Longitud (Óptima entre 40 y 65 caracteres)
+            // 1. Longitud
             document.getElementById('charCountText').textContent = `${len} / 100 caracteres`;
             if (len >= 40 && len <= 65) {
-                score += 25;
+                score += 20;
                 document.getElementById('charFeedback').textContent = "✔ Longitud perfecta para dispositivos móviles y escritorio.";
                 document.getElementById('charFeedback').style.color = "var(--accent-green)";
-                auditList.innerHTML += `<li>✔ Longitud de caracteres optimizada.</li>`;
-            } else if (len >= 20 && len < 40) {
-                score += 15;
-                document.getElementById('charFeedback').textContent = "⚠ Título algo corto. Considera agregar más contexto.";
-                document.getElementById('charFeedback').style.color = "var(--accent-gold)";
-                auditList.innerHTML += `<li>⚠ El título es ligeramente corto.</li>`;
-            } else if (len > 65) {
-                score += 10;
-                document.getElementById('charFeedback').textContent = "⚠ Título extenso. Podría cortarse en pantallas pequeñas.";
-                document.getElementById('charFeedback').style.color = "#ff6b6b";
-                auditList.innerHTML += `<li>⚠ Riesgo de truncamiento móvil.</li>`;
-            } else {
+            } else if (len < 40) {
                 score += 5;
-                document.getElementById('charFeedback').textContent = "✖ Demasiado corto para posicionar correctamente.";
+                document.getElementById('charFeedback').textContent = "⚠ Título un poco corto. Agrega contexto o una palabra de alto impacto.";
+                document.getElementById('charFeedback').style.color = "var(--accent-gold)";
+            } else {
+                score += 10;
+                document.getElementById('charFeedback').textContent = "⚠ Título largo. Puede cortarse con '...' en teléfonos móviles.";
                 document.getElementById('charFeedback').style.color = "#ff6b6b";
-                auditList.innerHTML += `<li>✖ Extensión insuficiente.</li>`;
             }
 
-            // 2. Power Words (Palabras de alto impacto)
-            const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso', 'pro', 'epico'];
+            // 2. Power Words
+            const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso'];
             const hasPowerWord = powerWords.some(pw => lower.includes(pw));
             if (hasPowerWord) {
-                score += 20;
+                score += 15;
                 document.getElementById('powerWordsStatus').textContent = "✔ Detectadas palabras de alto impacto";
                 document.getElementById('powerWordsStatus').style.color = "var(--accent-green)";
                 auditList.innerHTML += `<li>✔ Contiene términos de alto impacto psicológico.</li>`;
             } else {
                 document.getElementById('powerWordsStatus').textContent = "✖ Sin palabras de impacto directo";
                 document.getElementById('powerWordsStatus').style.color = "#ff6b6b";
-                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secreto", "Definitivo" o "Paso a paso".</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secretos", "Paso a paso" o "Definitivo".</li>`;
             }
 
-            // 3. Curiosidad / Números / Preguntas
+            // 3. Curiosidad / Números
             const hasNumbers = /\d/.test(rawInput);
-            if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?') || lower.includes('¡')) {
+            if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?')) {
                 score += 15;
                 document.getElementById('curiosityStatus').textContent = "✔ Provoca curiosidad / Datos cuantitativos";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-green)";
-                auditList.innerHTML += `<li>✔ Despierta interés activo mediante formato de pregunta, número o énfasis.</li>`;
+                auditList.innerHTML += `<li>✔ Despierta interés activo en la audiencia.</li>`;
             } else {
-                document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva simple";
+                document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva pasiva";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-gold)";
-                auditList.innerHTML += `<li>💡 Tip: Incluye números, signos de exclamación o formato de incógnita.</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Incluye números o formulación en forma de pregunta/desafío.</li>`;
             }
 
             document.getElementById('mobileStatus').textContent = len <= 65 ? "✔ Excelente (100% visible)" : "⚠ Riesgo de truncamiento";
 
-            // Limitar puntuación realista entre 30% y 98%
-            score = Math.min(Math.max(score, 30), 98);
-            
-            // Asignación de color dinámica según la nota obtenida
-            const scoreElement = document.getElementById('ctrScoreText');
-            scoreElement.textContent = `${score}%`;
-            if (score >= 80) {
-                scoreElement.style.color = "var(--accent-green)";
-            } else if (score >= 60) {
-                scoreElement.style.color = "var(--accent-gold)";
-            } else {
-                scoreElement.style.color = "#ff6b6b";
-            }
+            // Limitar score entre 0 y 98
+            score = Math.min(Math.max(score, 25), 98);
+            document.getElementById('ctrScoreText').textContent = `${score}%`;
 
             // B) GENERADOR DE VARIANTES VIRALES
             const container = document.getElementById('generatedTitlesContainer');
@@ -1385,12 +1571,12 @@
 
             const templates = [
                 { cat: "🔥 Alta Conversión / Urgencia", title: `¡NUNCA Hagas Esto! 🛑 ${rawInput} (Error Grave)` },
-                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject || rawInput} Que Nadie Te Cuenta` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject || rawInput}?` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject || rawInput} Por 30 Días Y Pasó Esto...` },
+                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject} Que Nadie Te Cuenta` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject}?` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject} Por 30 Días Y Pasó Esto...` },
                 { cat: "🚀 Guía Paso a Paso / Tutorial", title: `${rawInput}: Guía Definitiva [2026]` },
-                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject || rawInput} En Solo 5 Pasos Sencillos` },
-                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject || rawInput}` },
+                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject} En Solo 5 Pasos Sencillos` },
+                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject}` },
                 { cat: "⭐ Formato Lista / Resultados", title: `Top 5 Errores Al ${rawInput} (Y Cómo Evitarlos)` }
             ];
 
