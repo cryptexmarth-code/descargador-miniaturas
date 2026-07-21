@@ -208,29 +208,79 @@
     </div>
 
     <script>
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
+    let currentPlatform = 'youtube';
+
+    function setPlatform(platform) {
+        currentPlatform = platform;
+        
+        // Cambiar estilo de la pestaña activa
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        if (event && event.target) {
+            event.target.classList.add('active');
         }
 
-        function processUrl() {
-            const url = document.getElementById('mediaUrl').value.trim();
-            const errorDiv = document.getElementById('error');
-            const resultsDiv = document.getElementById('results');
-            const ytId = extractYouTubeId(url);
+        // Cambiar el texto de ayuda en el campo de texto
+        const input = document.getElementById('mediaUrl');
+        if (platform === 'youtube') input.placeholder = "Pega el enlace del video de YouTube...";
+        if (platform === 'twitch') input.placeholder = "Pega el enlace del canal o clip de Twitch...";
+        if (platform === 'kick') input.placeholder = "Pega el enlace del canal de Kick...";
+        if (platform === 'tiktok') input.placeholder = "Pega el enlace del video de TikTok...";
+    }
 
+    function extractYouTubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    async function processUrl() {
+        const url = document.getElementById('mediaUrl').value.trim();
+        const errorDiv = document.getElementById('error');
+        const resultsDiv = document.getElementById('results');
+        const thumbImg = document.getElementById('thumbImg');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        errorDiv.style.display = 'none';
+
+        if (!url) {
+            errorDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+            return;
+        }
+
+        // 1. Si es YouTube, lo hace instantáneo en el navegador
+        if (currentPlatform === 'youtube') {
+            const ytId = extractYouTubeId(url);
             if (ytId) {
-                errorDiv.style.display = 'none';
                 const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-                document.getElementById('thumbImg').src = maxUrl;
-                document.getElementById('downloadBtn').href = maxUrl;
+                thumbImg.src = maxUrl;
+                downloadBtn.href = maxUrl;
                 resultsDiv.style.display = 'block';
             } else {
                 errorDiv.style.display = 'block';
                 resultsDiv.style.display = 'none';
             }
+            return;
         }
-    </script>
+
+        // 2. Si es Twitch, Kick o TikTok, llama a la API de Vercel
+        try {
+            const res = await fetch(`/api/extract?platform=${currentPlatform}&url=${encodeURIComponent(url)}`);
+            const data = await res.json();
+
+            if (data.imgUrl) {
+                thumbImg.src = data.imgUrl;
+                downloadBtn.href = data.imgUrl;
+                resultsDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'block';
+                resultsDiv.style.display = 'none';
+            }
+        } catch (e) {
+            errorDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
