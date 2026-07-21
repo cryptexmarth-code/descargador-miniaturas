@@ -2,9 +2,8 @@ name: Sincronizar RSS de Competencia
 
 on:
   schedule:
-    # Se ejecuta automáticamente todos los días a las 6:00 AM UTC
     - cron: '0 6 * * *'
-  workflow_dispatch: # Permite lanzarlo manualmente cuando quieras desde la pestaña Actions de GitHub
+  workflow_dispatch:
 
 jobs:
   run-rss-sync:
