@@ -512,7 +512,7 @@
             gap: 10px;
         }
 
-        /* TENDENCIAS DE COMPETENCIA - ESTILO LLAMATIVO */
+        /* TENDENCIAS DE COMPETENCIA - ESTILO LLAMATIVO CON MINIATURAS */
         .competencia-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -524,7 +524,7 @@
             background: linear-gradient(145deg, #121622, #181d2c);
             border: 1px solid var(--border-highlight);
             border-radius: 14px;
-            padding: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -549,6 +549,28 @@
             border-color: var(--accent-orange);
         }
 
+        .comp-thumb-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .comp-thumb-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .competencia-card:hover .comp-thumb-container img {
+            transform: scale(1.03);
+        }
+
         .comp-canal-tag {
             background: rgba(255, 78, 80, 0.12);
             color: var(--accent-orange);
@@ -558,7 +580,7 @@
             padding: 4px 10px;
             border-radius: 6px;
             align-self: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: 0.5px;
         }
 
@@ -566,7 +588,7 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -846,12 +868,12 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN LLAMATIVA DE TENDENCIAS EN LA PÁGINA PRINCIPAL -->
+            <!-- SECCIÓN LLAMATIVA DE TENDENCIAS CON MINIATURAS EN LA PÁGINA PRINCIPAL -->
             <div class="tool-box" style="margin-top: 50px; background: linear-gradient(135deg, #121622 0%, #1a1e2f 100%); border-color: var(--border-highlight);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
                     <div>
                         <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;">🔥 Monitoreo Automático</span>
-                        <h2 style="font-size: 1.8rem; margin: 10px 0 5px 0; color: #fff;">Últimos Vídeos de Canales Masivos</h2>
+                        <h2 style="font-size: 1.8rem; margin: 10px 0 5px 0; color: #fff;">Últimos Vídeos y Miniaturas de Canales Masivos</h2>
                         <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">Rastreo diario en tiempo real de los creadores de referencia para inspirar tus próximos contenidos.</p>
                     </div>
                     <button class="btn-secondary" onclick="showTab('tab-competencia')">Ver Todos en Pestaña Dedicada ➔</button>
@@ -903,7 +925,7 @@
     <section id="tab-competencia" class="page-section">
         <header>
             <h1>Monitoreo de Tendencias de la Competencia</h1>
-            <p class="subtitle">Explora los últimos lanzamientos de los canales masivos de referencia actualizados automáticamente todos los días.</p>
+            <p class="subtitle">Explora los últimos lanzamientos y sus miniaturas en los canales masivos de referencia actualizados automáticamente todos los días.</p>
         </header>
 
         <main class="container">
@@ -1287,6 +1309,12 @@
             }
         }
 
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
         function crearTarjetaCompetencia(item) {
             const card = document.createElement('div');
             card.className = 'competencia-card';
@@ -1295,9 +1323,16 @@
                 day: '2-digit', month: 'short', year: 'numeric'
             });
 
+            // Extraer ID de YouTube para mostrar la miniatura automáticamente
+            const ytId = extractYouTubeId(item.url);
+            const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'https://img.youtube.com/vi/default/maxresdefault.jpg';
+
             card.innerHTML = `
                 <div>
                     <span class="comp-canal-tag">📺 ${item.canal}</span>
+                    <div class="comp-thumb-container">
+                        <img src="${thumbUrl}" alt="Miniatura de ${item.titulo}" loading="lazy">
+                    </div>
                     <div class="comp-titulo" title="${item.titulo}">${item.titulo}</div>
                 </div>
                 <div class="comp-footer">
@@ -1326,12 +1361,6 @@
                 btnTw.className = 'tab-btn active-tw';
                 input.placeholder = "Pega el nombre de usuario o enlace del canal de Twitch (ej: https://www.twitch.tv/nombre_canal)...";
             }
-        }
-
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
         }
 
         function extractTwitchChannel(url) {
