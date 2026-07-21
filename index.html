@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags Avanzados -->
-    <title>Descargador de Miniaturas YouTube y Twitch HD + Extractor de Tags SEO</title>
-    <meta name="description" content="Herramienta profesional para descargar miniaturas de YouTube en 4K/HD, extraer etiquetas (tags) ocultas y analizar miniaturas de Twitch. Gratis y sin registro.">
+    <title>Suite SEO Creadores — Descargador de Miniaturas HD y Herramientas SEO</title>
+    <meta name="description" content="Herramienta profesional para descargar miniaturas de YouTube en 4K/HD, analizar miniaturas de Twitch y suite completa de herramientas SEO. Gratis y sin registro.">
     <meta name="keywords" content="descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas video youtube, bajar caratula twitch hd, youtube thumbnail inspector">
     <meta name="robots" content="index, follow">
     <meta name="author" content="ROY RD">
 
     <!-- Open Graph / Redes Sociales -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Suite SEO: Descargador de Miniaturas y Extractor de Tags">
-    <meta property="og:description" content="Descarga miniaturas en Máxima Resolución y analiza las etiquetas SEO de cualquier vídeo de YouTube al instante.">
+    <meta property="og:title" content="ROY RD SEO SUITE: Descargador de Miniaturas y Herramientas SEO">
+    <meta property="og:description" content="Descarga miniaturas en Máxima Resolución y gestiona tu suite de herramientas SEO al instante.">
 
-    <!-- Datos Estructurados JSON-LD (WebApplication + FAQPage para destacar en Google) -->
+    <!-- Datos Estructurados JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "WebApplication",
-          "name": "Extractor SEO de Miniaturas y Tags",
+          "name": "ROY RD SEO SUITE",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
           "offers": {
@@ -101,6 +101,7 @@
             color: #fff;
             text-decoration: none;
             letter-spacing: 0.5px;
+            cursor: pointer;
         }
 
         .logo span {
@@ -127,6 +128,7 @@
             padding: 18px 8px;
             display: block;
             transition: color 0.2s;
+            cursor: pointer;
         }
 
         .nav-menu a:hover,
@@ -165,6 +167,21 @@
             display: block;
         }
 
+        /* --- CONTROL DE SECCIONES (TABS DE NAVEGACIÓN) --- */
+        .page-section {
+            display: none; /* Ocultas por defecto */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page-section.active-section {
+            display: block; /* Muestra solo la activa */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* --- ESTILOS HEADER Y ESTRUCTURA --- */
         header {
             text-align: center;
@@ -174,7 +191,7 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             margin-bottom: 12px;
             background: linear-gradient(90deg, #ff4e50, #f9d423);
             -webkit-background-clip: text;
@@ -183,7 +200,7 @@
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .container {
@@ -418,119 +435,258 @@
 </head>
 <body>
 
-    <!-- MENÚ SUPERIOR DE HERRAMIENTAS SEO -->
+    <!-- MENÚ SUPERIOR DE NAVEGACIÓN -->
     <nav class="main-nav">
         <div class="nav-container">
-            <a href="#" class="logo">ROY RD <span>SEO SUITE</span></a>
+            <a onclick="showTab('tab-thumb-downloader')" class="logo">ROY RD <span>SEO SUITE</span></a>
             <ul class="nav-menu">
                 <li class="dropdown">
-                    <a href="#serps">Herramientas SERPs ▾</a>
+                    <a>Herramientas SERPs ▾</a>
                     <ul class="dropdown-content">
-                        <li><a href="#serp-checker">Analizador de SERPs</a></li>
-                        <li><a href="#local-rank">Local Rank Tracker</a></li>
+                        <li><a onclick="showTab('tab-serp-checker')">Analizador de SERPs</a></li>
+                        <li><a onclick="showTab('tab-local-rank')">Local Rank Tracker</a></li>
                     </ul>
                 </li>
-                <li><a href="#kw-volume">KW Volume</a></li>
-                <li><a href="#suggest-tools">Suggest Tools</a></li>
+                <li><a onclick="showTab('tab-kw-volume')">KW Volume</a></li>
+                <li><a onclick="showTab('tab-suggest-tools')">Suggest Tools</a></li>
                 <li class="dropdown">
-                    <a href="#competencia">Competencia ▾</a>
+                    <a>Competencia ▾</a>
                     <ul class="dropdown-content">
-                        <li><a href="#extractor">Extractor de Tags & Miniaturas</a></li>
-                        <li><a href="#seo-monitor">SEO Monitor</a></li>
+                        <li><a onclick="showTab('tab-thumb-downloader')">Descargador de Miniaturas</a></li>
+                        <li><a onclick="showTab('tab-tag-extractor')">Extractor de Tags</a></li>
+                        <li><a onclick="showTab('tab-seo-monitor')">SEO Monitor</a></li>
                     </ul>
                 </li>
-                <li><a href="#local-rank-tracker">Local Rank Tracker</a></li>
+                <li><a onclick="showTab('tab-local-rank')">Local Rank</a></li>
                 <li class="dropdown">
-                    <a href="#utilidades">Utilidades ▾</a>
+                    <a>Utilidades ▾</a>
                     <ul class="dropdown-content">
-                        <li><a href="#seo-monitor-tool">SEO MONITOR</a></li>
+                        <li><a onclick="showTab('tab-seo-monitor')">SEO MONITOR</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <header>
-        <h1>Suite de Miniaturas & Inspección SEO</h1>
-        <p class="subtitle">Descarga portadas en Máxima Resolución (1080p/4K) y analiza datos de rendimiento para YouTube y Twitch.</p>
-    </header>
+    <!-- ==========================================
+         PÁGINA PRINCIPAL: DESCARGADOR DE MINIATURAS
+         ========================================== -->
+    <section id="tab-thumb-downloader" class="page-section active-section">
+        <header>
+            <h1>Descargador de Miniaturas YouTube y Twitch</h1>
+            <p class="subtitle">Obtén la portada de cualquier vídeo o directo en Máxima Resolución (1080p / 4K) al instante.</p>
+        </header>
 
-    <main class="container">
-        <div class="tool-box" id="extractor">
-            <div class="tabs">
-                <button class="tab-btn active-yt" id="btnYt" onclick="setPlatform('youtube')">YouTube + SEO</button>
-                <button class="tab-btn" id="btnTw" onclick="setPlatform('twitch')">Twitch Stream</button>
-            </div>
+        <main class="container">
+            <div class="tool-box">
+                <div class="tabs">
+                    <button class="tab-btn active-yt" id="btnYt" onclick="setPlatform('youtube')">YouTube</button>
+                    <button class="tab-btn" id="btnTw" onclick="setPlatform('twitch')">Twitch Stream</button>
+                </div>
 
-            <div class="input-group">
-                <input type="text" id="mediaUrl" placeholder="Pega el enlace del video de YouTube..." />
-                <button class="btn-main" onclick="processUrl()">Analizar y Extraer</button>
-            </div>
+                <div class="input-group">
+                    <input type="text" id="mediaUrl" placeholder="Pega el enlace del video de YouTube..." />
+                    <button class="btn-main" onclick="processUrl()">Extraer Miniatura</button>
+                </div>
 
-            <div id="error"></div>
+                <div id="error"></div>
 
-            <div id="results">
-                <div class="result-grid">
-                    <!-- Columna Izquierda: Vista previa y Descargas -->
-                    <div class="img-preview-box">
-                        <img id="thumbImg" src="" alt="Miniatura extraída HD">
-                        <div class="download-options">
-                            <a id="dlMax" class="dl-btn primary" href="" target="_blank" download="miniatura-maxres.jpg">Descargar Máxima Calidad (HD / 1080p)</a>
-                            <a id="dlHq" class="dl-btn" href="" target="_blank" download="miniatura-hq.jpg">Descargar Calidad Estándar (480p)</a>
-                            <a id="dlMq" class="dl-btn" href="" target="_blank" download="miniatura-mq.jpg">Descargar Tamaño Pequeño (360p)</a>
+                <div id="results">
+                    <div class="result-grid">
+                        <!-- Columna Izquierda: Vista previa y Descargas -->
+                        <div class="img-preview-box">
+                            <img id="thumbImg" src="" alt="Miniatura extraída HD">
+                            <div class="download-options">
+                                <a id="dlMax" class="dl-btn primary" href="" target="_blank" download="miniatura-maxres.jpg">Descargar Máxima Calidad (HD / 1080p)</a>
+                                <a id="dlHq" class="dl-btn" href="" target="_blank" download="miniatura-hq.jpg">Descargar Calidad Estándar (480p)</a>
+                                <a id="dlMq" class="dl-btn" href="" target="_blank" download="miniatura-mq.jpg">Descargar Tamaño Pequeño (360p)</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Columna Derecha: Inspector SEO de Metadatos -->
-                    <div class="seo-inspector">
-                        <h3>Datos SEO del Video</h3>
-                        <div class="info-item">
-                            <span class="info-label">ID del Video:</span>
-                            <span id="metaId" style="font-family: monospace; color: #f9d423;">-</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Enlace Directo de la Imagen:</span>
-                            <input type="text" id="metaImgUrl" readonly style="padding: 6px; font-size: 0.8rem; margin-top: 4px;" onclick="this.select();">
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Estado de Resolución:</span>
-                            <span id="metaStatus" style="color: #27ae60;">✔ Máxima Definición Disponible</span>
+                        <!-- Columna Derecha: Inspector SEO de Metadatos -->
+                        <div class="seo-inspector">
+                            <h3>Datos de la Miniatura</h3>
+                            <div class="info-item">
+                                <span class="info-label">ID del Recurso:</span>
+                                <span id="metaId" style="font-family: monospace; color: #f9d423;">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Enlace Directo de la Imagen:</span>
+                                <input type="text" id="metaImgUrl" readonly style="padding: 6px; font-size: 0.8rem; margin-top: 4px;" onclick="this.select();">
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Estado de Resolución:</span>
+                                <span id="metaStatus" style="color: #27ae60;">✔ Máxima Definición Disponible</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- SECCIÓN DE CONTENIDO EDUCATIVO & SEO COMPLETO -->
-        <article class="seo-section">
-            <h2>Herramientas de Análisis de Miniaturas y Optimización SEO</h2>
-            <p>La miniatura (o thumbnail) es el factor número uno que determina el <strong>CTR (Click-Through Rate)</strong> de un video en YouTube. Un CTR elevado le indica al algoritmo que tu contenido es atractivo, lo que resulta en más recomendaciones en la página principal.</p>
+            <!-- CONTENIDO SEO EDUCATIVO -->
+            <article class="seo-section">
+                <h2>¿Cómo afecta la miniatura al CTR de tus vídeos?</h2>
+                <p>La miniatura (o thumbnail) es el factor principal que determina el <strong>CTR (Click-Through Rate)</strong>. Un CTR elevado le indica al algoritmo que tu contenido es atractivo, lo que se traduce en más impresiones en la página principal.</p>
 
-            <h2>¿Cómo usar las miniaturas de la competencia para mejorar tu CTR?</h2>
-            <p>Analizar las portadas de los creadores referentes en tu nicho te permite identificar patrones visuales ganadores:</p>
-            <ul>
-                <li><strong>Contraste de Colores:</strong> Observa si utilizan tonos brillantes (amarillo, rojo, verde neón) para destacar sobre el modo oscuro de YouTube.</li>
-                <li><strong>Expresiones Faciales:</strong> Los rostros en primer plano con emociones marcadas aumentan la tasa de clics hasta un 38%.</li>
-                <li><strong>Texto Legible:</strong> Menos de 4 palabras en tipografía gruesa para asegurar legibilidad en dispositivos móviles.</li>
-            </ul>
+                <h2>Consejos para crear miniaturas de alto impacto:</h2>
+                <ul>
+                    <li><strong>Contraste de Colores:</strong> Utiliza tonos brillantes (amarillo, rojo, verde neón) para destacar sobre el tema oscuro de la plataforma.</li>
+                    <li><strong>Expresiones Faciales:</strong> Los rostros en primer plano con emociones marcadas aumentan la tasa de clics considerablemente.</li>
+                    <li><strong>Texto Legible:</strong> Usa menos de 4 palabras en tipografía gruesa para asegurar legibilidad en móviles.</li>
+                </ul>
 
-            <h2>Preguntas Frecuentes (FAQ)</h2>
-            <div class="faq-item">
-                <div class="faq-question">¿Cuál es el tamaño recomendado para una miniatura de YouTube?</div>
-                <p>El tamaño ideal es de <strong>1280 x 720 píxeles</strong> (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB en formatos JPG, GIF o PNG.</p>
+                <h2>Preguntas Frecuentes (FAQ)</h2>
+                <div class="faq-item">
+                    <div class="faq-question">¿Cuál es el tamaño recomendado para una miniatura?</div>
+                    <p>El tamaño ideal es de <strong>1280 x 720 píxeles</strong> (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB en JPG o PNG.</p>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">¿Cómo obtener la portada de un directo de Twitch?</div>
+                    <p>Selecciona la pestaña de Twitch, pega el enlace del canal del streamer y nuestro sistema obtendrá la captura de pantalla actualizada del directo a 1080p.</p>
+                </div>
+            </article>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 2: EXTRACTOR DE TAGS
+         ========================================== -->
+    <section id="tab-tag-extractor" class="page-section">
+        <header>
+            <h1>Extractor de Tags y Etiquetas SEO</h1>
+            <p class="subtitle">Descubre las palabras clave ocultas que usa tu competencia para posicionar sus vídeos.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" id="tagUrl" placeholder="Pega el enlace del video de YouTube..." />
+                    <button class="btn-main" onclick="alert('Función de Extracción de Tags lista para conectar API')">Extraer Tags</button>
+                </div>
+                <p style="color: var(--text-muted); text-align: center;">Introduce cualquier enlace para inspeccionar sus etiquetas metadato ocultas.</p>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">¿Cómo obtener la portada de un directo de Twitch en tiempo real?</div>
-                <p>Selecciona la pestaña de Twitch, pega el enlace del canal del streamer y nuestro sistema obtendrá la captura de pantalla actualizada del directo a 1080p.</p>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 3: ANALIZADOR DE SERPS
+         ========================================== -->
+    <section id="tab-serp-checker" class="page-section">
+        <header>
+            <h1>Analizador de SERPs</h1>
+            <p class="subtitle">Evalúa los resultados de búsqueda de Google y YouTube en tiempo real.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" placeholder="Ingresa una palabra clave..." />
+                    <button class="btn-main">Analizar SERP</button>
+                </div>
             </div>
-        </article>
-    </main>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 4: LOCAL RANK TRACKER
+         ========================================== -->
+    <section id="tab-local-rank" class="page-section">
+        <header>
+            <h1>Local Rank Tracker</h1>
+            <p class="subtitle">Monitorea el posicionamiento geolocalizado de tus proyectos.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" placeholder="Dominio o Nombre del Negocio..." />
+                    <button class="btn-main">Rastrear Posición</button>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 5: KW VOLUME
+         ========================================== -->
+    <section id="tab-kw-volume" class="page-section">
+        <header>
+            <h1>Buscador de Búsquedas y Volumen de Keywords</h1>
+            <p class="subtitle">Consulta el volumen mensual de búsquedas y la dificultad de tus palabras clave.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" placeholder="Escribe tus keywords separadas por coma..." />
+                    <button class="btn-main">Calcular Volumen</button>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 6: SUGGEST TOOLS
+         ========================================== -->
+    <section id="tab-suggest-tools" class="page-section">
+        <header>
+            <h1>Suggest Tools (Autocompletado)</h1>
+            <p class="subtitle">Genera cientos de ideas de palabras clave derivas de la búsqueda sugerida de YouTube y Google.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" placeholder="Semilla de Keyword (ej: miniaturas gaming)..." />
+                    <button class="btn-main">Obtener Sugerencias</button>
+                </div>
+            </div>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA 7: SEO MONITOR
+         ========================================== -->
+    <section id="tab-seo-monitor" class="page-section">
+        <header>
+            <h1>SEO Monitor & Auditoría</h1>
+            <p class="subtitle">Inspecciona el estado de optimización técnica de tus páginas o canales.</p>
+        </header>
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" placeholder="https://tu-sitio-web.com..." />
+                    <button class="btn-main">Auditar Ahora</button>
+                </div>
+            </div>
+        </main>
+    </section>
+
 
     <footer>
         <p>&copy; 2026 Suite SEO de Miniaturas — Herramientas para Creadores de Contenido por ROY RD.</p>
     </footer>
 
+    <!-- LÓGICA JAVASCRIPT -->
     <script>
+        // 1. SISTEMA DE CAMBIO DE PESTAÑAS (SPA)
+        function showTab(tabId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            // Mostrar la sección seleccionada
+            const targetSection = document.getElementById(tabId);
+            if (targetSection) {
+                targetSection.classList.add('active-section');
+            }
+
+            // Desplazar suavemente hacia arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. LÓGICA DE PLATAFORMAS EN EL DESCARGADOR DE MINIATURAS
         let currentPlatform = 'youtube';
 
         function setPlatform(platform) {
@@ -590,7 +746,7 @@
                     document.getElementById('dlHq').href = hqUrl;
                     document.getElementById('dlMq').href = mqUrl;
 
-                    // Llenar Inspector SEO
+                    // Llenar Inspector
                     document.getElementById('metaId').textContent = ytId;
                     document.getElementById('metaImgUrl').value = maxUrl;
 
