@@ -212,19 +212,17 @@
 
     function setPlatform(platform) {
         currentPlatform = platform;
-        
-        // Cambiar estilo de la pestaña activa
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        if (event && event.target) {
-            event.target.classList.add('active');
-        }
+        
+        // Marcar visualmente el botón presionado
+        const activeBtn = document.querySelector(`.tab-btn[onclick*="${platform}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
 
-        // Cambiar el texto de ayuda en el campo de texto
         const input = document.getElementById('mediaUrl');
-        if (platform === 'youtube') input.placeholder = "Pega el enlace del video de YouTube...";
-        if (platform === 'twitch') input.placeholder = "Pega el enlace del canal o clip de Twitch...";
-        if (platform === 'kick') input.placeholder = "Pega el enlace del canal de Kick...";
-        if (platform === 'tiktok') input.placeholder = "Pega el enlace del video de TikTok...";
+        if (platform === 'youtube') input.placeholder = "Pega el enlace de YouTube...";
+        if (platform === 'twitch') input.placeholder = "Pega el enlace de Twitch...";
+        if (platform === 'kick') input.placeholder = "Pega el enlace de Kick...";
+        if (platform === 'tiktok') input.placeholder = "Pega el enlace de TikTok...";
     }
 
     function extractYouTubeId(url) {
@@ -234,7 +232,8 @@
     }
 
     async function processUrl() {
-        const url = document.getElementById('mediaUrl').value.trim();
+        const urlInput = document.getElementById('mediaUrl');
+        const url = urlInput.value.trim();
         const errorDiv = document.getElementById('error');
         const resultsDiv = document.getElementById('results');
         const thumbImg = document.getElementById('thumbImg');
@@ -243,13 +242,21 @@
         errorDiv.style.display = 'none';
 
         if (!url) {
+            errorDiv.textContent = "Por favor, pega un enlace válido.";
             errorDiv.style.display = 'block';
             resultsDiv.style.display = 'none';
             return;
         }
 
-        // 1. Si es YouTube, lo hace instantáneo en el navegador
-        if (currentPlatform === 'youtube') {
+        // AUTO-DETECCIÓN DE PLATAFORMA (Evita errores de selección manual)
+        let targetPlatform = currentPlatform;
+        if (url.includes('kick.com')) targetPlatform = 'kick';
+        else if (url.includes('tiktok.com')) targetPlatform = 'tiktok';
+        else if (url.includes('twitch.tv')) targetPlatform = 'twitch';
+        else if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
+
+        // 1. YouTube (Rápido en cliente)
+        if (targetPlatform === 'youtube') {
             const ytId = extractYouTubeId(url);
             if (ytId) {
                 const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
@@ -257,26 +264,29 @@
                 downloadBtn.href = maxUrl;
                 resultsDiv.style.display = 'block';
             } else {
+                errorDiv.textContent = "Enlace de YouTube no válido.";
                 errorDiv.style.display = 'block';
                 resultsDiv.style.display = 'none';
             }
             return;
         }
 
-        // 2. Si es Twitch, Kick o TikTok, llama a la API de Vercel
+        // 2. Twitch, Kick, TikTok (Backend en Vercel)
         try {
-            const res = await fetch(`/api/extract?platform=${currentPlatform}&url=${encodeURIComponent(url)}`);
+            const res = await fetch(`/api/extract?platform=${targetPlatform}&url=${encodeURIComponent(url)}`);
             const data = await res.json();
 
-            if (data.imgUrl) {
+            if (res.ok && data.imgUrl) {
                 thumbImg.src = data.imgUrl;
                 downloadBtn.href = data.imgUrl;
                 resultsDiv.style.display = 'block';
             } else {
+                errorDiv.textContent = "No se pudo obtener la miniatura. Verifica que el canal o video exista.";
                 errorDiv.style.display = 'block';
                 resultsDiv.style.display = 'none';
             }
         } catch (e) {
+            errorDiv.textContent = "Error al conectar con el servidor.";
             errorDiv.style.display = 'block';
             resultsDiv.style.display = 'none';
         }
