@@ -1,12 +1,14 @@
 export default async function handler(req, res) {
-  // Configurar caché en Vercel por 4 horas (14400 segundos)
   res.setHeader('Cache-Control', 'public, s-maxage=14400, stale-while-revalidate=3600');
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   try {
-    // Función auxiliar para buscar por término en Google News
-    async function fetchCategory(query) {
-      const url = `https://news.google.com/rss/search?q=${encodeURIComponent(query)}&hl=es-419&gl=US&ceid=US:es-419`;
+    // Función auxiliar para buscar por término o URL directa
+    async function fetchFeed(urlOrQuery, isSearch = true) {
+      const url = isSearch 
+        ? `https://news.google.com/rss/search?q=${encodeURIComponent(urlOrQuery)}&hl=es-419&gl=US&ceid=US:es-419`
+        : urlOrQuery;
+        
       const apiEndpoint = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`;
       const response = await fetch(apiEndpoint);
       const data = await response.json();
@@ -22,14 +24,16 @@ export default async function handler(req, res) {
       return [];
     }
 
-    // Consultamos términos clave enfocados en tu nicho SEO y de creadores
-    const youtubeItems = await fetchCategory('YouTube algoritmo monetizacion');
-    const seoItems = await fetchCategory('SEO posicionamiento web trafico');
-    const techItems = await fetchCategory('inteligencia artificial herramientas digitales');
+    // Consultamos las categorías temáticas y el feed general de noticias destacadas
+    const generalItems = await fetchFeed('https://news.google.com/rss?hl=es-419&gl=US&ceid=US:es-419', false);
+    const youtubeItems = await fetchFeed('YouTube algoritmo monetizacion', true);
+    const seoItems = await fetchFeed('SEO posicionamiento web trafico', true);
+    const techItems = await fetchFeed('inteligencia artificial herramientas digitales', true);
 
     return res.status(200).json({
       success: true,
       categories: {
+        general: generalItems.slice(0, 4),
         youtube: youtubeItems.slice(0, 4),
         seo: seoItems.slice(0, 4),
         tech: techItems.slice(0, 4)
