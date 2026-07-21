@@ -1,96 +1,85 @@
-export default async function handler(req, res) {
-    // 1. Configurar Cabeceras CORS (Permitir que tu web consulte esta API)
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+<script>
+    let currentPlatform = 'youtube';
 
-    // Manejar petición pre-flight (OPTIONS)
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+    function setPlatform(platform) {
+        currentPlatform = platform;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        // Marcar visualmente el botón presionado
+        const activeBtn = document.querySelector(`.tab-btn[onclick*="${platform}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        const input = document.getElementById('mediaUrl');
+        if (platform === 'youtube') input.placeholder = "Pega el enlace de YouTube...";
+        if (platform === 'twitch') input.placeholder = "Pega el enlace de Twitch...";
+        if (platform === 'kick') input.placeholder = "Pega el enlace de Kick...";
+        if (platform === 'tiktok') input.placeholder = "Pega el enlace de TikTok...";
     }
 
-    const { url, platform } = req.query;
-
-    // Validar parámetros básicos
-    if (!url || !platform) {
-        return res.status(400).json({ error: 'URL y Plataforma requeridas' });
+    function extractYouTubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // Cabeceras simuladas de navegador para evitar bloqueos
-    const browserHeaders = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-    };
+    async function processUrl() {
+        const urlInput = document.getElementById('mediaUrl');
+        const url = urlInput.value.trim();
+        const errorDiv = document.getElementById('error');
+        const resultsDiv = document.getElementById('results');
+        const thumbImg = document.getElementById('thumbImg');
+        const downloadBtn = document.getElementById('downloadBtn');
 
-    try {
-        console.log(`Procesando ${platform}: ${url}`);
+        errorDiv.style.display = 'none';
 
-        // --- LÓGICA TIKTOK ---
-        if (platform === 'tiktok') {
-            // Limpiar URL de TikTok de parámetros de rastreo
-            const cleanTiktokUrl = url.split('?')[0];
-            const oembedUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(cleanTiktokUrl)}`;
-            
-            const response = await fetch(oembedUrl, { headers: browserHeaders });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.thumbnail_url) {
-                    console.log("Imagen TikTok obtenida");
-                    return res.status(200).json({ imgUrl: data.thumbnail_url });
-                }
-            }
-            console.error("TikTok oEmbed falló:", response.status);
+        if (!url) {
+            errorDiv.textContent = "Por favor, pega un enlace válido.";
+            errorDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+            return;
         }
 
-        // --- LÓGICA KICK ---
-        if (platform === 'kick') {
-            // Limpiar URL de Kick
-            const cleanKickUrl = url.split('?')[0];
-            
-            // Usamos oEmbed público de Kick, no su API privada bloqueada
-            const kickOembedUrl = `https://kick.com/oembed?url=${encodeURIComponent(cleanKickUrl)}`;
-            
-            const response = await fetch(kickOembedUrl, { headers: browserHeaders });
+        // AUTO-DETECCIÓN DE PLATAFORMA (Evita errores de selección manual)
+        let targetPlatform = currentPlatform;
+        if (url.includes('kick.com')) targetPlatform = 'kick';
+        else if (url.includes('tiktok.com')) targetPlatform = 'tiktok';
+        else if (url.includes('twitch.tv')) targetPlatform = 'twitch';
+        else if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.thumbnail_url) {
-                    // Kick a veces devuelve URLs de imágenes relativas, las hacemos absolutas
-                    let img = data.thumbnail_url;
-                    if (img.startsWith('/')) {
-                        img = `https://kick.com${img}`;
-                    }
-                    console.log("Imagen Kick obtenida");
-                    return res.status(200).json({ imgUrl: img });
-                }
+        // 1. YouTube (Rápido en cliente)
+        if (targetPlatform === 'youtube') {
+            const ytId = extractYouTubeId(url);
+            if (ytId) {
+                const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                thumbImg.src = maxUrl;
+                downloadBtn.href = maxUrl;
+                resultsDiv.style.display = 'block';
+            } else {
+                errorDiv.textContent = "Enlace de YouTube no válido.";
+                errorDiv.style.display = 'block';
+                resultsDiv.style.display = 'none';
             }
-            console.error("Kick oEmbed falló:", response.status);
+            return;
         }
 
-        // --- LÓGICA TWITCH (Ya funcionaba) ---
-        if (platform === 'twitch') {
-            const cleanTwitchUrl = url.split('?')[0];
-            // Clips
-            if (cleanTwitchUrl.includes('/clip/')) {
-                const clipId = cleanTwitchUrl.split('/clip/')[1];
-                return res.status(200).json({ imgUrl: `https://clips-media-assets2.twitch.tv/${clipId}-preview-480x272.jpg` });
+        // 2. Twitch, Kick, TikTok (Backend en Vercel)
+        try {
+            const res = await fetch(`/api/extract?platform=${targetPlatform}&url=${encodeURIComponent(url)}`);
+            const data = await res.json();
+
+            if (res.ok && data.imgUrl) {
+                thumbImg.src = data.imgUrl;
+                downloadBtn.href = data.imgUrl;
+                resultsDiv.style.display = 'block';
+            } else {
+                errorDiv.textContent = "No se pudo obtener la miniatura. Verifica que el canal o video exista.";
+                errorDiv.style.display = 'block';
+                resultsDiv.style.display = 'none';
             }
-            // Canales en vivo
-            const channel = cleanTwitchUrl.split('twitch.tv/')[1]?.replace('/', '');
-            if (channel) {
-                return res.status(200).json({ imgUrl: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel.toLowerCase()}-1920x1080.jpg` });
-            }
+        } catch (e) {
+            errorDiv.textContent = "Error al conectar con el servidor.";
+            errorDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
         }
-
-        // Si llega aquí, algo falló
-        return res.status(404).json({ error: 'No se pudo extraer la imagen de este enlace' });
-
-    } catch (err) {
-        console.error("Error Servidor:", err.message);
-        return res.status(500).json({ error: 'Error interno consultando la plataforma' });
     }
-}
+</script>
