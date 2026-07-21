@@ -1,74 +1,96 @@
 export default async function handler(req, res) {
+    // 1. Configurar Cabeceras CORS (Permitir que tu web consulte esta API)
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Manejar petición pre-flight (OPTIONS)
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
 
     const { url, platform } = req.query;
 
-    if (!url) {
-        return res.status(400).json({ error: 'URL requerida' });
+    // Validar parámetros básicos
+    if (!url || !platform) {
+        return res.status(400).json({ error: 'URL y Plataforma requeridas' });
     }
 
+    // Cabeceras simuladas de navegador para evitar bloqueos
+    const browserHeaders = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+    };
+
     try {
-        // 1. TIKTOK
+        console.log(`Procesando ${platform}: ${url}`);
+
+        // --- LÓGICA TIKTOK ---
         if (platform === 'tiktok') {
-            const cleanUrl = url.split('?')[0];
-            const oembedUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(cleanUrl)}`;
+            // Limpiar URL de TikTok de parámetros de rastreo
+            const cleanTiktokUrl = url.split('?')[0];
+            const oembedUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(cleanTiktokUrl)}`;
             
-            const response = await fetch(oembedUrl, {
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                }
-            });
+            const response = await fetch(oembedUrl, { headers: browserHeaders });
 
             if (response.ok) {
                 const data = await response.json();
                 if (data.thumbnail_url) {
+                    console.log("Imagen TikTok obtenida");
                     return res.status(200).json({ imgUrl: data.thumbnail_url });
                 }
             }
+            console.error("TikTok oEmbed falló:", response.status);
         }
 
-        // 2. KICK
+        // --- LÓGICA KICK ---
         if (platform === 'kick') {
-            const cleanUrl = url.split('?')[0];
-            const channel = cleanUrl.split('kick.com/')[1]?.replace('/', '').trim();
+            // Limpiar URL de Kick
+            const cleanKickUrl = url.split('?')[0];
+            
+            // Usamos oEmbed público de Kick, no su API privada bloqueada
+            const kickOembedUrl = `https://kick.com/oembed?url=${encodeURIComponent(cleanKickUrl)}`;
+            
+            const response = await fetch(kickOembedUrl, { headers: browserHeaders });
 
-            if (channel) {
-                // Intentamos obtener el stream/avatar desde la API pública de Kick
-                const response = await fetch(`https://kick.com/api/v2/channels/${channel}`, {
-                    headers: {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        'Accept': 'application/json'
+            if (response.ok) {
+                const data = await response.json();
+                if (data.thumbnail_url) {
+                    // Kick a veces devuelve URLs de imágenes relativas, las hacemos absolutas
+                    let img = data.thumbnail_url;
+                    if (img.startsWith('/')) {
+                        img = `https://kick.com${img}`;
                     }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.livestream?.thumbnail?.url) {
-                        return res.status(200).json({ imgUrl: data.livestream.thumbnail.url });
-                    }
-                    if (data.user?.profile_pic) {
-                        return res.status(200).json({ imgUrl: data.user.profile_pic });
-                    }
+                    console.log("Imagen Kick obtenida");
+                    return res.status(200).json({ imgUrl: img });
                 }
             }
+            console.error("Kick oEmbed falló:", response.status);
         }
 
-        // 3. TWITCH
+        // --- LÓGICA TWITCH (Ya funcionaba) ---
         if (platform === 'twitch') {
-            const cleanUrl = url.split('?')[0];
-            if (cleanUrl.includes('/clip/')) {
-                const clipId = cleanUrl.split('/clip/')[1];
+            const cleanTwitchUrl = url.split('?')[0];
+            // Clips
+            if (cleanTwitchUrl.includes('/clip/')) {
+                const clipId = cleanTwitchUrl.split('/clip/')[1];
                 return res.status(200).json({ imgUrl: `https://clips-media-assets2.twitch.tv/${clipId}-preview-480x272.jpg` });
             }
-            const channel = cleanUrl.split('twitch.tv/')[1]?.replace('/', '');
+            // Canales en vivo
+            const channel = cleanTwitchUrl.split('twitch.tv/')[1]?.replace('/', '');
             if (channel) {
                 return res.status(200).json({ imgUrl: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel.toLowerCase()}-1920x1080.jpg` });
             }
         }
 
-        return res.status(400).json({ error: 'No se pudo procesar el enlace' });
+        // Si llega aquí, algo falló
+        return res.status(404).json({ error: 'No se pudo extraer la imagen de este enlace' });
+
     } catch (err) {
-        return res.status(500).json({ error: 'Error en el servidor' });
+        console.error("Error Servidor:", err.message);
+        return res.status(500).json({ error: 'Error interno consultando la plataforma' });
     }
 }
