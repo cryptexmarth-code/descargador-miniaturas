@@ -1,0 +1,31 @@
+name: Sincronizar RSS de Competencia
+
+on:
+  schedule:
+    # Se ejecuta automáticamente todos los días a las 6:00 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Permite lanzarlo manualmente cuando quieras desde la pestaña Actions de GitHub
+
+jobs:
+  run-rss-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar Dependencias del Script
+        run: npm install axios xml2js
+
+      - name: Ejecutar Script de Extracción RSS
+        run: node scripts/rss-extractor.js
+
+      - name: Guardar cambios automáticamente en el Repositorio
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto: Actualizar datos de competencia por RSS [skip ci]"
+          file_pattern: data/competencia-rss.json
