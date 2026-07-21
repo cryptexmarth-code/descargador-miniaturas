@@ -6,8 +6,8 @@
     
     <!-- SEO Meta Tags Avanzados -->
     <title>VidPulse SEO — Descargador de Miniaturas HD 4K, Extractor de Tags y Análisis SERP</title>
-    <meta name="description" content="Suite SEO profesional y gratuita para creadores de contenido. Descarga miniaturas de YouTube y Twitch en 4K/HD, extrae tags ocultas, analiza canales y optimiza tu posicionamiento.">
-    <meta name="keywords" content="descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas ocultas youtube, descargar caratula twitch hd, suite seo creadores, analizador serp youtube, keyword research creadores, miniaturas alta resolucion, seo para streamers">
+    <meta name="description" content="Suite SEO profesional y gratuita para creadores de contenido. Descarga miniaturas de YouTube y Twitch en 4K/HD, extrae tags ocultas, analiza canales, audita títulos para CTR y optimiza tu posicionamiento.">
+    <meta name="keywords" content="descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas ocultas youtube, descargar caratula twitch hd, suite seo creadores, analizador serp youtube, generador de titulos virales, auditor ctr titulos, keyword research creadores, miniaturas alta resolucion, seo para streamers">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="https://vidpulseseo.com">
 
@@ -16,14 +16,14 @@
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="VidPulse SEO">
     <meta property="og:title" content="VidPulse SEO — Herramientas Gratuitas para Creadores y Streamers">
-    <meta property="og:description" content="Extrae miniaturas en 4K, inspecciona tags de la competencia, analiza directos de Twitch y optimiza tu canal con nuestra suite SEO ilimitada.">
+    <meta property="og:description" content="Extrae miniaturas en 4K, inspecciona tags de la competencia, genera títulos virales optimizados para CTR y audita tu canal con nuestra suite SEO ilimitada.">
     <meta property="og:url" content="https://vidpulseseo.com">
     <meta property="og:image" content="https://img.youtube.com/vi/default/maxresdefault.jpg">
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="VidPulse SEO — Herramientas para YouTubers y Streamers">
-    <meta name="twitter:description" content="Herramientas profesionales para creadores de contenido: Miniaturas 4K, Extractor de Tags y Análisis SERP gratis.">
+    <meta name="twitter:description" content="Herramientas profesionales para creadores de contenido: Miniaturas 4K, Extractor de Tags, Generador de Títulos CTR y Análisis SERP gratis.">
 
     <!-- Datos Estructurados JSON-LD Expandidos -->
     <script type="application/ld+json">
@@ -38,8 +38,8 @@
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires JavaScript. Requires HTML5.",
-          "softwareVersion": "2.5.0",
-          "description": "Herramienta web integral para optimización SEO en YouTube y Twitch, descarga de miniaturas en máxima resolución y extracción de etiquetas.",
+          "softwareVersion": "2.6.0",
+          "description": "Herramienta web integral para optimización SEO en YouTube y Twitch, descarga de miniaturas en máxima resolución, extracción de etiquetas y optimizador de títulos CTR.",
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -71,6 +71,14 @@
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Introduce la URL del canal o el nombre de usuario de Twitch. Nuestra suite consulta los servidores CDN de Twitch en tiempo real para obtener la captura actualizada del directo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo ayuda el generador y auditor de títulos a aumentar el CTR en YouTube?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Analiza la longitud, las palabras de alto impacto emocional, los gatillos de curiosidad y la estructura del título para otorgar una calificación objetiva y sugerir combinaciones virales."
               }
             }
           ]
@@ -662,6 +670,7 @@
                 <li class="dropdown">
                     <a>Auditoría SERP & Keywords ▾</a>
                     <ul class="dropdown-content">
+                        <li><a onclick="showTab('tab-title-generator')">Generador & Auditor de Títulos CTR</a></li>
                         <li><a onclick="showTab('tab-serp-checker')">Analizador SERP Real-Time</a></li>
                         <li><a onclick="showTab('tab-kw-volume')">Calculadora Volumen KW</a></li>
                         <li><a onclick="showTab('tab-suggest-tools')">YouTube & Google Suggest</a></li>
@@ -819,6 +828,90 @@
                     <li><strong>Tags Categóricas/Generales:</strong> Incluye términos más amplios de la temática global (ejemplo: "SEO", "Marketing Digital", "Tutoriales").</li>
                     <li><strong>Tag de Marca:</strong> Coloca siempre el nombre de tu canal en todas tus publicaciones para reforzar las sugerencias de tus propios vídeos.</li>
                 </ol>
+            </article>
+        </main>
+    </section>
+
+
+    <!-- ==========================================
+         PESTAÑA NUEVA: GENERADOR Y AUDITOR DE TÍTULOS CTR
+         ========================================== -->
+    <section id="tab-title-generator" class="page-section">
+        <header>
+            <h1>Generador & Auditor de Títulos CTR Virales para YouTube</h1>
+            <p class="subtitle">Audita la efectividad de tus títulos y genera decenas de variantes magnéticas para maximizar tu tasa de clics e impresiones.</p>
+        </header>
+
+        <main class="container">
+            <div class="tool-box">
+                <div class="input-group">
+                    <input type="text" id="titleInput" placeholder="Escribe la idea o título de tu vídeo (ej: Como hacer streaming en Twitch)..." />
+                    <button class="btn-main" onclick="analyzeAndGenerateTitles()">Auditar y Generar Títulos</button>
+                </div>
+
+                <div id="titleError" class="alert-box"></div>
+
+                <div id="titleResults" class="results-container">
+                    <div class="result-grid">
+                        <!-- Columna Izquierda: Puntuación CTR y Métricas -->
+                        <div class="seo-inspector">
+                            <h3>Auditoría del Título Ingresado</h3>
+                            <div class="info-item">
+                                <span class="info-label">Puntuación Estimada de CTR:</span>
+                                <span id="ctrScoreText" style="font-size: 2rem; font-weight: 900; color: var(--accent-gold);">0%</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Longitud de Caracteres:</span>
+                                <span id="charCountText" style="color: #fff; font-weight: bold;">0 / 100 caracteres</span>
+                                <p id="charFeedback" style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;"></p>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Diagnóstico Algorítmico:</span>
+                                <ul id="titleAuditList" style="padding-left: 18px; margin-top: 5px; font-size: 0.88rem; color: #d1d5e4;">
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Columna Derecha: Recomendación de estructura -->
+                        <div class="seo-inspector">
+                            <h3>Factores Psicológicos Analizados</h3>
+                            <div class="info-item">
+                                <span class="info-label">Palabras de Alto Impacto (Power Words):</span>
+                                <span id="powerWordsStatus" style="color: var(--accent-green); font-weight: bold;">Auditando...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Gatillo de Curiosidad / Urgencia:</span>
+                                <span id="curiosityStatus" style="color: var(--accent-gold); font-weight: bold;">Auditando...</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Legibilidad Móvil (Truncamiento):</span>
+                                <span id="mobileStatus" style="color: #fff; font-weight: bold;">Auditando...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generador de Variaciones Virales -->
+                    <div style="margin-top: 35px;">
+                        <h3>Ideas de Títulos Optimizados por Categorías</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Haz clic en cualquier título para copiarlo al portapapeles:</p>
+                        
+                        <div id="generatedTitlesContainer" style="display: grid; gap: 12px; margin-top: 15px;">
+                            <!-- Títulos generados dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <article class="seo-article">
+                <h2>¿Por Qué el Título es el Factor Más Determinante en el CTR de YouTube?</h2>
+                <p>En el algoritmo de recomendación moderna de YouTube, el título trabaja en sinergia directa con la miniatura. Mientras que la miniatura detiene el desplazamiento (*scroll*) del usuario, el título confirma el valor percibido y provoca el clic final. Un mal título en una excelente miniatura destruirá la tasa de clics (*CTR*).</p>
+
+                <h2>Principios de Copywriting Aplicados a Vídeos y Directos</h2>
+                <ul>
+                    <li><strong>Longitud Óptima (40-60 Caracteres):</strong> Los títulos largos se cortan en dispositivos móviles. Coloca la palabra clave y la emoción principal en las primeras 4 palabras.</li>
+                    <li><strong>Uso Strategico de Números y Corchetes:</strong> Incluir datos cuantitativos (ej: *"5 Pasos"*, *"[2026]"*) aumenta hasta un 33% la tasa de conversión visual.</li>
+                    <li><strong>Brecha de Curiosidad (Curiosity Gap):</strong> Deja una pregunta o misterio sin resolver en el título que obligue al espectador a reproducir el contenido para descubrir la respuesta.</li>
+                </ul>
             </article>
         </main>
     </section>
@@ -1194,7 +1287,123 @@
         }
 
 
-        // 4. HERRAMIENTAS ADICIONALES INTERACTIVAS
+        // 4. LÓGICA DEL GENERADOR Y AUDITOR DE TÍTULOS CTR
+        function analyzeAndGenerateTitles() {
+            const rawInput = document.getElementById('titleInput').value.trim();
+            const titleError = document.getElementById('titleError');
+            const titleResults = document.getElementById('titleResults');
+
+            titleError.style.display = 'none';
+
+            if (!rawInput) {
+                titleError.textContent = "Ingresa una idea o título para poder analizarlo y generar variantes.";
+                titleError.style.display = 'block';
+                titleResults.style.display = 'none';
+                return;
+            }
+
+            // A) AUDITORÍA DE TÍTULO
+            let score = 50;
+            const len = rawInput.length;
+            const auditList = document.getElementById('titleAuditList');
+            auditList.innerHTML = '';
+
+            const lower = rawInput.toLowerCase();
+            
+            // 1. Longitud
+            document.getElementById('charCountText').textContent = `${len} / 100 caracteres`;
+            if (len >= 40 && len <= 65) {
+                score += 20;
+                document.getElementById('charFeedback').textContent = "✔ Longitud perfecta para dispositivos móviles y escritorio.";
+                document.getElementById('charFeedback').style.color = "var(--accent-green)";
+            } else if (len < 40) {
+                score += 5;
+                document.getElementById('charFeedback').textContent = "⚠ Título un poco corto. Agrega contexto o una palabra de alto impacto.";
+                document.getElementById('charFeedback').style.color = "var(--accent-gold)";
+            } else {
+                score += 10;
+                document.getElementById('charFeedback').textContent = "⚠ Título largo. Puede cortarse con '...' en teléfonos móviles.";
+                document.getElementById('charFeedback').style.color = "#ff6b6b";
+            }
+
+            // 2. Power Words
+            const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso'];
+            const hasPowerWord = powerWords.some(pw => lower.includes(pw));
+            if (hasPowerWord) {
+                score += 15;
+                document.getElementById('powerWordsStatus').textContent = "✔ Detectadas palabras de alto impacto";
+                document.getElementById('powerWordsStatus').style.color = "var(--accent-green)";
+                auditList.innerHTML += `<li>✔ Contiene términos de alto impacto psicológico.</li>`;
+            } else {
+                document.getElementById('powerWordsStatus').textContent = "✖ Sin palabras de impacto directo";
+                document.getElementById('powerWordsStatus').style.color = "#ff6b6b";
+                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secretos", "Paso a paso" o "Definitivo".</li>`;
+            }
+
+            // 3. Curiosidad / Números
+            const hasNumbers = /\d/.test(rawInput);
+            if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?')) {
+                score += 15;
+                document.getElementById('curiosityStatus').textContent = "✔ Provoca curiosidad / Datos cuantitativos";
+                document.getElementById('curiosityStatus').style.color = "var(--accent-green)";
+                auditList.innerHTML += `<li>✔ Despierta interés activo en la audiencia.</li>`;
+            } else {
+                document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva pasiva";
+                document.getElementById('curiosityStatus').style.color = "var(--accent-gold)";
+                auditList.innerHTML += `<li>💡 Tip: Incluye números o formulación en forma de pregunta/desafío.</li>`;
+            }
+
+            document.getElementById('mobileStatus').textContent = len <= 65 ? "✔ Excelente (100% visible)" : "⚠ Riesgo de truncamiento";
+
+            // Limitar score entre 0 y 98
+            score = Math.min(Math.max(score, 25), 98);
+            document.getElementById('ctrScoreText').textContent = `${score}%`;
+
+            // B) GENERADOR DE VARIANTES VIRALES
+            const container = document.getElementById('generatedTitlesContainer');
+            container.innerHTML = '';
+
+            const cleanSubject = rawInput.replace(/como|hacer|para|el|la|los|las|de|un|una/gi, '').trim();
+
+            const templates = [
+                { cat: "🔥 Alta Conversión / Urgencia", title: `¡NUNCA Hagas Esto! 🛑 ${rawInput} (Error Grave)` },
+                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject} Que Nadie Te Cuenta` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject}?` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject} Por 30 Días Y Pasó Esto...` },
+                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `${rawInput}: Guía Definitiva [2026]` },
+                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject} En Solo 5 Pasos Sencillos` },
+                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject}` },
+                { cat: "⭐ Formato Lista / Resultados", title: `Top 5 Errores Al ${rawInput} (Y Cómo Evitarlos)` }
+            ];
+
+            templates.forEach(item => {
+                const titleCard = document.createElement('div');
+                titleCard.style.cssText = "background: var(--card-inner); border: 1px solid var(--border); padding: 14px 18px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;";
+                titleCard.innerHTML = `
+                    <div>
+                        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--accent-gold); font-weight: bold; display: block; margin-bottom: 2px;">${item.cat}</span>
+                        <strong style="color: #fff; font-size: 0.98rem;">${item.title}</strong>
+                    </div>
+                    <button class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">📋 Copiar</button>
+                `;
+
+                titleCard.onclick = () => {
+                    navigator.clipboard.writeText(item.title).then(() => {
+                        alert(`¡Título copiado al portapapeles!\n\n"${item.title}"`);
+                    });
+                };
+
+                titleCard.onmouseover = () => titleCard.style.borderColor = 'var(--accent-orange)';
+                titleCard.onmouseout = () => titleCard.style.borderColor = 'var(--border)';
+
+                container.appendChild(titleCard);
+            });
+
+            titleResults.style.display = 'block';
+        }
+
+
+        // 5. HERRAMIENTAS ADICIONALES INTERACTIVAS
         function analyzeSerp() {
             const kw = document.getElementById('serpKw').value.trim();
             if (!kw) return;
