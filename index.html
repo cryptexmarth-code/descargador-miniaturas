@@ -3,294 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descargar Miniaturas y Portadas HD | YouTube, Twitch, Kick, TikTok</title>
-    <meta name="description" content="Herramienta online para descargar miniaturas y portadas de YouTube, Twitch, Kick y TikTok en máxima resolución HD / 4K gratis y sin anuncios molestos.">
+    
+    <!-- Meta Etiquetas Principales de SEO -->
+    <title>Descargar Miniaturas de YouTube y Twitch HD Gratis | Online</title>
+    <meta name="description" content="Descarga miniaturas de YouTube en HD (1080p, 4K) y portadas de directo o clips de Twitch gratis. Herramienta online rápida, fácil y sin registro.">
+    <meta name="keywords" content="descargar miniatura youtube, bajar carátula youtube hd, extractor de miniaturas twitch, guardar portada directo twitch, youtube thumbnail downloader">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="ROY RD">
+
+    <!-- Open Graph para Redes Sociales (Facebook, WhatsApp, Twitter) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Descargador de Miniaturas YouTube y Twitch HD Gratis">
+    <meta property="og:description" content="Obtén las portadas de cualquier video de YouTube o directo de Twitch en máxima resolución al instante.">
+    <meta property="og:image" content="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+
+    <!-- Marcado Esquemático Schema.org (JSON-LD) para que Google reconozca la Herramienta -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Descargador de Miniaturas HD",
+      "url": "https://tu-dominio.com",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Herramienta gratuita para extraer y descargar miniaturas de YouTube y Twitch en alta definición."
+    }
+    </script>
+
     <style>
         :root {
-            --primary: #ff0000;
-            --bg-dark: #0f0f11;
-            --card-bg: #18181b;
-            --accent: #22c55e;
-            --text: #ffffff;
-            --text-muted: #a1a1aa;
+            --bg-color: #0f0f12;
+            --card-bg: #18181c;
+            --accent-yt: #ff0000;
+            --accent-tw: #9146ff;
+            --text-color: #ffffff;
+            --text-secondary: #a0a0ab;
+            --border-color: #2a2a32;
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        .container { max-width: 850px; width: 100%; }
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-        header { text-align: center; margin-bottom: 25px; }
-        h1 { font-size: 2rem; margin-bottom: 8px; color: #fff; }
-        p.subtitle { color: var(--text-muted); font-size: 0.95rem; }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff4e50, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        /* Selector de Plataformas */
-        .platform-tabs {
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .tabs {
             display: flex;
-            justify-content: center;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
         .tab-btn {
-            background-color: var(--card-bg);
-            color: var(--text-muted);
-            border: 1px solid #27272a;
-            padding: 8px 16px;
-            border-radius: 20px;
+            flex: 1;
+            padding: 12px;
+            background-color: #222228;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.2s;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        .tab-btn.active, .tab-btn:hover {
-            background-color: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
+        .tab-btn.active-yt {
+            background-color: var(--accent-yt);
+            border-color: var(--accent-yt);
         }
 
-        /* Caja de Entrada */
+        .tab-btn.active-tw {
+            background-color: var(--accent-tw);
+            border-color: var(--accent-tw);
+        }
+
         .input-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
             flex: 1;
-            padding: 14px 18px;
+            padding: 14px;
             border-radius: 8px;
-            border: 1px solid #27272a;
-            background-color: #121214;
+            border: 1px solid var(--border-color);
+            background-color: #0c0c0e;
             color: #fff;
             font-size: 1rem;
-            outline: none;
-            min-width: 260px;
         }
 
-        input[type="text"]:focus { border-color: var(--primary); }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff4e50;
+        }
 
-        button.btn-main {
-            padding: 14px 28px;
-            background-color: var(--primary);
-            color: #fff;
+        button.action-btn {
+            padding: 14px 25px;
+            background: linear-gradient(90deg, #ff4e50, #f9d423);
             border: none;
             border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        /* Resultados */
-        .results-box {
-            display: none;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #27272a;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .results-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-
-        .btn-download {
-            display: inline-block;
-            background-color: var(--accent);
             color: #000;
             font-weight: bold;
-            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button.action-btn:hover {
+            opacity: 0.9;
+        }
+
+        #error {
+            display: none;
+            color: #ff5555;
+            background: rgba(255,85,85,0.1);
+            padding: 10px;
             border-radius: 6px;
-            text-decoration: none;
-            margin-top: 5px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        /* Sección de Recursos (Monetización) */
-        .resources-section {
+        #results {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #thumbImg {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* Sección SEO de Texto Largo (Crucial para Google) */
+        .seo-content {
+            margin-top: 50px;
             background-color: var(--card-bg);
-            padding: 20px;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            border: 1px dashed #3f3f46;
-            margin-bottom: 40px;
+            padding: 30px;
         }
 
-        .resources-section h3 { font-size: 1.1rem; margin-bottom: 12px; color: #f43f5e; }
-        .resource-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .resource-list a {
-            color: #38bdf8;
-            text-decoration: none;
+        .seo-content h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-top: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .seo-content p, .seo-content li {
+            color: var(--text-secondary);
             font-size: 0.95rem;
         }
-        .resource-list a:hover { text-decoration: underline; }
 
-        /* Contenido SEO / FAQ */
-        .seo-content {
-            border-top: 1px solid #27272a;
-            padding-top: 30px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
         }
 
-        .seo-content h2 { color: #fff; font-size: 1.3rem; margin: 20px 0 10px 0; }
-        .seo-content p { margin-bottom: 15px; }
-
-        .error-msg { color: #ef4444; display: none; margin-bottom: 15px; text-align: center; }
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Descargar Miniaturas HD</h1>
-            <p class="subtitle">Extrae portadas en alta resolución de tus plataformas favoritas de forma instantánea</p>
-        </header>
+    <header>
+        <h1>Descargar Miniaturas de YouTube y Twitch HD</h1>
+        <p class="subtitle">Obtén la portada de cualquier video o transmisión en vivo en máxima resolución gratis.</p>
+    </header>
 
-        <!-- Selector de Plataformas -->
-        <div class="platform-tabs">
-            <button class="tab-btn active" onclick="setPlatform('youtube')">YouTube</button>
-            <button class="tab-btn" onclick="setPlatform('twitch')">Twitch</button>
-            <button class="tab-btn" onclick="setPlatform('kick')">Kick</button>
-            <button class="tab-btn" onclick="setPlatform('tiktok')">TikTok</button>
-        </div>
+    <main class="container">
+        <div class="tool-card">
+            <div class="tabs">
+                <button class="tab-btn active-yt" id="btnYt" onclick="setPlatform('youtube')">YouTube</button>
+                <button class="tab-btn" id="btnTw" onclick="setPlatform('twitch')">Twitch</button>
+            </div>
 
-        <!-- Caja de Entrada -->
-        <div class="input-group">
-            <input type="text" id="mediaUrl" placeholder="Pega el enlace del video o stream aquí...">
-            <button class="btn-main" onclick="processUrl()">Obtener Portada</button>
-        </div>
+            <div class="input-group">
+                <input type="text" id="mediaUrl" placeholder="Pega el enlace del video de YouTube..." />
+                <button class="action-btn" onclick="processUrl()">Obtener Portada</button>
+            </div>
 
-        <div id="error" class="error-msg">Ingresa un enlace válido para continuar.</div>
+            <div id="error"></div>
 
-        <!-- Previsualización y Descarga -->
-        <div id="results" class="results-box">
-            <h3 id="resTitle">Portada Obtenida (Máxima Calidad)</h3>
-            <img id="thumbImg" src="" alt="Vista previa de miniatura">
-            <div>
-                <a id="downloadBtn" class="btn-download" target="_blank" download>Descargar Imagen HD</a>
+            <div id="results">
+                <img id="thumbImg" src="" alt="Miniatura descargada HD">
+                <br>
+                <a id="downloadBtn" class="download-btn" href="" target="_blank" download="miniatura.jpg">Descargar Imagen HD</a>
             </div>
         </div>
 
-        <!-- Recursos para Editores (Monetización con acortador) -->
-        <div class="resources-section">
-            <h3>🎁 Recursos Gratis para Creadores y Editores</h3>
-            <ul class="resource-list">
-                <li>👉 <a href="TU_ENLACE_OUO" target="_blank">Descargar Pack de Fuentes Editables para Miniaturas Virales</a></li>
-                <li>👉 <a href="TU_ENLACE_OUO" target="_blank">Pack de Plantillas PSD para Photoshop (Gaming & Vlogs)</a></li>
+        <!-- SECCIÓN DE CONTENIDO SEO PARA POSICIONAMIENTO EN GOOGLE -->
+        <article class="seo-content">
+            <h2>¿Cómo descargar miniaturas de YouTube en HD (1080p / 4K)?</h2>
+            <p>Nuestra herramienta te permite extraer la carátula o miniatura de cualquier video de YouTube en su resolución original máxima (Max Resolution Default). Solo debes seguir tres sencillos pasos:</p>
+            <ol>
+                <li>Copia la dirección URL del video de YouTube (desde la barra de navegador o la opción "Compartir").</li>
+                <li>Pega el enlace en el cuadro de búsqueda superior teniendo seleccionada la pestaña de <strong>YouTube</strong>.</li>
+                <li>Haz clic en <strong>Obtener Portada</strong> y presiona el botón verde para guardar la imagen en tu dispositivo.</li>
+            </ol>
+
+            <h2>¿Cómo guardar la portada de un directo o Clip de Twitch?</h2>
+            <p>Si eres editor de video o creador de contenido, extraer la vista previa de una transmisión en vivo de Twitch o un clip es fundamental para tus diseños:</p>
+            <ul>
+                <li><strong>Canales en Vivo:</strong> Pega el enlace del canal (ejemplo: <code>https://www.twitch.tv/usuario</code>) para obtener la miniatura en tiempo real del directo en resolución 1080p.</li>
+                <li><strong>Clips de Twitch:</strong> Pega la URL del clip para obtener la captura exacta en alta definición.</li>
             </ul>
-        </div>
 
-        <!-- Sección SEO (Para posicionar en el #1 de Google) -->
-        <section class="seo-content">
-            <h2>¿Cómo descargar una miniatura o portada de video?</h2>
-            <p>Nuestra herramienta en línea te permite extraer portadas e imágenes de vista previa en calidad HD (1080p, 720p) sin necesidad de instalar programas ni registrarte.</p>
+            <h2>¿Por qué usar nuestro extractor de portadas online?</h2>
+            <p>A diferencia de otras aplicaciones, nuestra plataforma es 100% gratuita, no requiere instalación de software ni registro, y funciona de forma ultrarrápida desde cualquier celular, tablet o computadora.</p>
+        </article>
+    </main>
 
-            <h2>¿Qué plataformas son compatibles?</h2>
-            <p>Puedes descargar imágenes de <strong>YouTube, Twitch, Kick y TikTok</strong>. Simplemente copia el enlace desde la aplicación o navegador, pégalo en el cuadro superior y presiona el botón de obtención.</p>
-        </section>
-    </div>
+    <footer>
+        <p>&copy; 2026 Descargador de Miniaturas HD — Desarrollado para Creadores de Contenido.</p>
+    </footer>
 
     <script>
-    let currentPlatform = 'youtube';
+        let currentPlatform = 'youtube';
 
-    function setPlatform(platform) {
-        currentPlatform = platform;
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        // Marcar visualmente el botón presionado
-        const activeBtn = document.querySelector(`.tab-btn[onclick*="${platform}"]`);
-        if (activeBtn) activeBtn.classList.add('active');
+        function setPlatform(platform) {
+            currentPlatform = platform;
+            const btnYt = document.getElementById('btnYt');
+            const btnTw = document.getElementById('btnTw');
+            const input = document.getElementById('mediaUrl');
 
-        const input = document.getElementById('mediaUrl');
-        if (platform === 'youtube') input.placeholder = "Pega el enlace de YouTube...";
-        if (platform === 'twitch') input.placeholder = "Pega el enlace de Twitch...";
-        if (platform === 'kick') input.placeholder = "Pega el enlace de Kick...";
-        if (platform === 'tiktok') input.placeholder = "Pega el enlace de TikTok...";
-    }
-
-    function extractYouTubeId(url) {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    }
-
-    async function processUrl() {
-        const urlInput = document.getElementById('mediaUrl');
-        const url = urlInput.value.trim();
-        const errorDiv = document.getElementById('error');
-        const resultsDiv = document.getElementById('results');
-        const thumbImg = document.getElementById('thumbImg');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        errorDiv.style.display = 'none';
-
-        if (!url) {
-            errorDiv.textContent = "Por favor, pega un enlace válido.";
-            errorDiv.style.display = 'block';
-            resultsDiv.style.display = 'none';
-            return;
+            if (platform === 'youtube') {
+                btnYt.className = 'tab-btn active-yt';
+                btnTw.className = 'tab-btn';
+                input.placeholder = "Pega el enlace del video de YouTube...";
+            } else {
+                btnYt.className = 'tab-btn';
+                btnTw.className = 'tab-btn active-tw';
+                input.placeholder = "Pega el enlace del canal o clip de Twitch...";
+            }
         }
 
-        // AUTO-DETECCIÓN DE PLATAFORMA (Evita errores de selección manual)
-        let targetPlatform = currentPlatform;
-        if (url.includes('kick.com')) targetPlatform = 'kick';
-        else if (url.includes('tiktok.com')) targetPlatform = 'tiktok';
-        else if (url.includes('twitch.tv')) targetPlatform = 'twitch';
-        else if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
 
-        // 1. YouTube (Rápido en cliente)
-        if (targetPlatform === 'youtube') {
-            const ytId = extractYouTubeId(url);
-            if (ytId) {
-                const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-                thumbImg.src = maxUrl;
-                downloadBtn.href = maxUrl;
-                resultsDiv.style.display = 'block';
-            } else {
-                errorDiv.textContent = "Enlace de YouTube no válido.";
+        async function processUrl() {
+            const url = document.getElementById('mediaUrl').value.trim();
+            const errorDiv = document.getElementById('error');
+            const resultsDiv = document.getElementById('results');
+            const thumbImg = document.getElementById('thumbImg');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            errorDiv.style.display = 'none';
+
+            if (!url) {
+                errorDiv.textContent = "Por favor, pega un enlace válido.";
+                errorDiv.style.display = 'block';
+                resultsDiv.style.display = 'none';
+                return;
+            }
+
+            // Auto-detección por si el usuario olvida cambiar de pestaña
+            let targetPlatform = currentPlatform;
+            if (url.includes('twitch.tv')) targetPlatform = 'twitch';
+            if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
+
+            // 1. Lógica para YouTube (Instantánea)
+            if (targetPlatform === 'youtube') {
+                const ytId = extractYouTubeId(url);
+                if (ytId) {
+                    const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                    thumbImg.src = maxUrl;
+                    downloadBtn.href = maxUrl;
+                    resultsDiv.style.display = 'block';
+                } else {
+                    errorDiv.textContent = "El enlace de YouTube no parece ser válido.";
+                    errorDiv.style.display = 'block';
+                    resultsDiv.style.display = 'none';
+                }
+                return;
+            }
+
+            // 2. Lógica para Twitch (Vía API de Vercel)
+            try {
+                const res = await fetch(`/api/extract?platform=twitch&url=${encodeURIComponent(url)}`);
+                const data = await res.json();
+
+                if (res.ok && data.imgUrl) {
+                    thumbImg.src = data.imgUrl;
+                    downloadBtn.href = data.imgUrl;
+                    resultsDiv.style.display = 'block';
+                } else {
+                    errorDiv.textContent = "No se pudo obtener la imagen de Twitch. Revisa el enlace.";
+                    errorDiv.style.display = 'block';
+                    resultsDiv.style.display = 'none';
+                }
+            } catch (e) {
+                errorDiv.textContent = "Error al conectar con el servidor de imágenes.";
                 errorDiv.style.display = 'block';
                 resultsDiv.style.display = 'none';
             }
-            return;
         }
-
-        // 2. Twitch, Kick, TikTok (Backend en Vercel)
-        try {
-            const res = await fetch(`/api/extract?platform=${targetPlatform}&url=${encodeURIComponent(url)}`);
-            const data = await res.json();
-
-            if (res.ok && data.imgUrl) {
-                thumbImg.src = data.imgUrl;
-                downloadBtn.href = data.imgUrl;
-                resultsDiv.style.display = 'block';
-            } else {
-                errorDiv.textContent = "No se pudo obtener la miniatura. Verifica que el canal o video exista.";
-                errorDiv.style.display = 'block';
-                resultsDiv.style.display = 'none';
-            }
-        } catch (e) {
-            errorDiv.textContent = "Error al conectar con el servidor.";
-            errorDiv.style.display = 'block';
-            resultsDiv.style.display = 'none';
-        }
-    }
-</script>
+    </script>
 </body>
 </html>
