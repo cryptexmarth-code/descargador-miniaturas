@@ -1,85 +1,74 @@
-<script>
-    let currentPlatform = 'youtube';
+export default async function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
 
-    function setPlatform(platform) {
-        currentPlatform = platform;
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        // Marcar visualmente el botón presionado
-        const activeBtn = document.querySelector(`.tab-btn[onclick*="${platform}"]`);
-        if (activeBtn) activeBtn.classList.add('active');
+    const { url, platform } = req.query;
 
-        const input = document.getElementById('mediaUrl');
-        if (platform === 'youtube') input.placeholder = "Pega el enlace de YouTube...";
-        if (platform === 'twitch') input.placeholder = "Pega el enlace de Twitch...";
-        if (platform === 'kick') input.placeholder = "Pega el enlace de Kick...";
-        if (platform === 'tiktok') input.placeholder = "Pega el enlace de TikTok...";
+    if (!url) {
+        return res.status(400).json({ error: 'URL requerida' });
     }
 
-    function extractYouTubeId(url) {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
-    }
+    try {
+        // 1. TIKTOK
+        if (platform === 'tiktok') {
+            const cleanUrl = url.split('?')[0];
+            const oembedUrl = `https://www.tiktok.com/oembed?url=${encodeURIComponent(cleanUrl)}`;
+            
+            const response = await fetch(oembedUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                }
+            });
 
-    async function processUrl() {
-        const urlInput = document.getElementById('mediaUrl');
-        const url = urlInput.value.trim();
-        const errorDiv = document.getElementById('error');
-        const resultsDiv = document.getElementById('results');
-        const thumbImg = document.getElementById('thumbImg');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        errorDiv.style.display = 'none';
-
-        if (!url) {
-            errorDiv.textContent = "Por favor, pega un enlace válido.";
-            errorDiv.style.display = 'block';
-            resultsDiv.style.display = 'none';
-            return;
-        }
-
-        // AUTO-DETECCIÓN DE PLATAFORMA (Evita errores de selección manual)
-        let targetPlatform = currentPlatform;
-        if (url.includes('kick.com')) targetPlatform = 'kick';
-        else if (url.includes('tiktok.com')) targetPlatform = 'tiktok';
-        else if (url.includes('twitch.tv')) targetPlatform = 'twitch';
-        else if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
-
-        // 1. YouTube (Rápido en cliente)
-        if (targetPlatform === 'youtube') {
-            const ytId = extractYouTubeId(url);
-            if (ytId) {
-                const maxUrl = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
-                thumbImg.src = maxUrl;
-                downloadBtn.href = maxUrl;
-                resultsDiv.style.display = 'block';
-            } else {
-                errorDiv.textContent = "Enlace de YouTube no válido.";
-                errorDiv.style.display = 'block';
-                resultsDiv.style.display = 'none';
+            if (response.ok) {
+                const data = await response.json();
+                if (data.thumbnail_url) {
+                    return res.status(200).json({ imgUrl: data.thumbnail_url });
+                }
             }
-            return;
         }
 
-        // 2. Twitch, Kick, TikTok (Backend en Vercel)
-        try {
-            const res = await fetch(`/api/extract?platform=${targetPlatform}&url=${encodeURIComponent(url)}`);
-            const data = await res.json();
+        // 2. KICK
+        if (platform === 'kick') {
+            const cleanUrl = url.split('?')[0];
+            const channel = cleanUrl.split('kick.com/')[1]?.replace('/', '').trim();
 
-            if (res.ok && data.imgUrl) {
-                thumbImg.src = data.imgUrl;
-                downloadBtn.href = data.imgUrl;
-                resultsDiv.style.display = 'block';
-            } else {
-                errorDiv.textContent = "No se pudo obtener la miniatura. Verifica que el canal o video exista.";
-                errorDiv.style.display = 'block';
-                resultsDiv.style.display = 'none';
+            if (channel) {
+                // Intentamos obtener el stream/avatar desde la API pública de Kick
+                const response = await fetch(`https://kick.com/api/v2/channels/${channel}`, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.livestream?.thumbnail?.url) {
+                        return res.status(200).json({ imgUrl: data.livestream.thumbnail.url });
+                    }
+                    if (data.user?.profile_pic) {
+                        return res.status(200).json({ imgUrl: data.user.profile_pic });
+                    }
+                }
             }
-        } catch (e) {
-            errorDiv.textContent = "Error al conectar con el servidor.";
-            errorDiv.style.display = 'block';
-            resultsDiv.style.display = 'none';
         }
+
+        // 3. TWITCH
+        if (platform === 'twitch') {
+            const cleanUrl = url.split('?')[0];
+            if (cleanUrl.includes('/clip/')) {
+                const clipId = cleanUrl.split('/clip/')[1];
+                return res.status(200).json({ imgUrl: `https://clips-media-assets2.twitch.tv/${clipId}-preview-480x272.jpg` });
+            }
+            const channel = cleanUrl.split('twitch.tv/')[1]?.replace('/', '');
+            if (channel) {
+                return res.status(200).json({ imgUrl: `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel.toLowerCase()}-1920x1080.jpg` });
+            }
+        }
+
+        return res.status(400).json({ error: 'No se pudo procesar el enlace' });
+    } catch (err) {
+        return res.status(500).json({ error: 'Error en el servidor' });
     }
-</script>
+}
