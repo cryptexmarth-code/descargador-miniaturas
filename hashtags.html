@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags Dedicados -->
+    <title>Generador de Hashtags Virales y Tendencias en Tiempo Real — VidPulse SEO</title>
+    <meta name="description" content="Genera hashtags optimizados para Instagram, TikTok, Reels y YouTube Shorts. Descubre los temas en tendencia gracias a las noticias en tiempo real y potencia tu alcance orgánico.">
+    <meta name="keywords" content="generador de hashtags, hashtags para reels, hashtags tiktok, tendencias de noticias rss, palabras clave virales, hashtags instagram, crecimiento organico redes sociales">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vidpulseseo.com/hashtags.html">
+
+    <!-- Datos Estructurados JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Generador de Hashtags Virales VidPulse",
+      "url": "https://vidpulseseo.com/hashtags.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #090a0f;
+            --card: #12151e;
+            --card-inner: #1a1e2b;
+            --accent-orange: #ff4e50;
+            --accent-gold: #f9d423;
+            --accent-green: #27ae60;
+            --text: #ffffff;
+            --text-muted: #a0a5b5;
+            --border: #232838;
+            --border-highlight: #343b52;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 78, 80, 0.08), transparent 40%);
+        }
+
+        /* --- MENÚ DE NAVEGACIÓN --- */
+        .main-nav {
+            background-color: rgba(18, 21, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 0;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 20px 10px;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #fff;
+        }
+
+        /* --- ESTRUCTURA GENERAL --- */
+        header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #ff4e50, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tool-box {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background-color: #0b0d13;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 12px rgba(255, 78, 80, 0.2);
+        }
+
+        .btn-main {
+            padding: 16px 32px;
+            background: linear-gradient(90deg, #ff4e50, #f9d423);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-weight: 800;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-main:hover { opacity: 0.95; }
+
+        .btn-secondary {
+            padding: 10px 18px;
+            background-color: #222838;
+            border: 1px solid var(--border-highlight);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover { background-color: #2c344a; }
+
+        /* RESULTADOS Y CATEGORÍAS */
+        .results-section {
+            display: none;
+            margin-top: 25px;
+            border-top: 1px solid var(--border);
+            padding-top: 25px;
+        }
+
+        .category-block {
+            background: var(--card-inner);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 1.05rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tags-box {
+            background: #0b0d13;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #d1d5e4;
+            font-size: 0.95rem;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        /* BLOQUE RSS TENDENCIAS */
+        .rss-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .rss-card {
+            background: var(--card-inner);
+            border: 1px solid var(--border-highlight);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .rss-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .rss-tags {
+            font-size: 0.85rem;
+            color: var(--accent-orange);
+            background: rgba(255, 78, 80, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            margin-bottom: 12px;
+        }
+
+        .seo-article {
+            margin-top: 40px;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .seo-article h2 { color: #fff; font-size: 1.6rem; margin-top: 25px; }
+        .seo-article p { color: var(--text-muted); }
+
+        @media(max-width: 768px) {
+            .input-group { flex-direction: column; }
+            .nav-menu { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">⚡ VidPulse <span>SEO</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Miniaturas</a></li>
+                <li><a href="hashtags.html" class="active">Hashtags Virales</a></li>
+                <li><a href="facturas.html">Facturas</a></li>
+                <li><a href="cotizaciones.html">Cotizaciones</a></li>
+                <li><a href="noticias.html">Noticias SEO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CABECERA -->
+    <header>
+        <h1>Generador de Hashtags & Tendencias RSS</h1>
+        <p class="subtitle">Crea bloques optimizados para Instagram, TikTok y Shorts o extrae las palabras clave calientes de las noticias actuales al instante.</p>
+    </header>
+
+    <main class="container">
+        
+        <!-- BLOQUE 1: GENERADOR TEMÁTICO -->
+        <div class="tool-box">
+            <h2 style="margin-top:0; color:#fff; font-size: 1.4rem;">1. Generador de Hashtags por Temática</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Escribe una palabra clave o nicho (ej: fitness, marketing, cripto, cocina):</p>
+            
+            <div class="input-group">
+                <input type="text" id="keywordInput" placeholder="Introduce tu nicho o temática..." />
+                <button class="btn-main" onclick="generateHashtags()">Generar Hashtags</button>
+            </div>
+
+            <div id="resultsSection" class="results-section">
+                <!-- Gran Alcance -->
+                <div class="category-block">
+                    <div class="category-title">
+                        <span>🔥 Hashtags de Gran Alcance (Masivos)</span>
+                        <button class="btn-secondary" onclick="copyText('tagsMacro')">Copiar</button>
+                    </div>
+                    <div id="tagsMacro" class="tags-box"></div>
+                </div>
+
+                <!-- Nicho Específico -->
+                <div class="category-block">
+                    <div class="category-title">
+                        <span>🎯 Hashtags de Nicho Específico</span>
+                        <button class="btn-secondary" onclick="copyText('tagsNiche')">Copiar</button>
+                    </div>
+                    <div id="tagsNiche" class="tags-box"></div>
+                </div>
+
+                <!-- Comunidad / Creadores -->
+                <div class="category-block">
+                    <div class="category-title">
+                        <span>⚡ Comunidad & Tendencia Activa</span>
+                        <button class="btn-secondary" onclick="copyText('tagsCommunity')">Copiar</button>
+                    </div>
+                    <div id="tagsCommunity" class="tags-box"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOQUE 2: MÓDULO HASHTAGS EN TENDENCIA HOY (RSS DE GOOGLE NEWS) -->
+        <div class="tool-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
+                <div>
+                    <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">En Vivo 24/7</span>
+                    <h2 style="font-size: 1.5rem; margin: 10px 0 0 0; color: #fff;">2. Hashtags Extraídos de Noticias de Hoy (RSS)</h2>
+                </div>
+                <button class="btn-secondary" onclick="fetchGoogleNewsRSS()">🔄 Actualizar Tendencias</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Titulares actuales analizados en tiempo real por el navegador para extraer etiquetas de alto impacto orgánico:</p>
+
+            <div id="rssContainer" class="rss-grid">
+                <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias globales desde el RSS...</p>
+            </div>
+        </div>
+
+        <!-- ARTÍCULO SEO INFORMATIVO -->
+        <article class="seo-article">
+            <h2>Estrategia de Hashtags para Multiplicar Tu Alcance Orgánico</h2>
+            <p>El uso inteligente de etiquetas en plataformas de vídeo corto como Reels, TikTok y YouTube Shorts determina cómo el algoritmo clasifica tu contenido en las primeras horas de publicación. Combinar etiquetas de alto volumen con términos sacados de la actualidad informativa garantiza un flujo constante de impresiones frescas.</p>
+        </article>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background-color: #0f172a; color: #94a3b8; padding: 40px 20px; text-align: center; border-top: 1px solid #1e293b; margin-top: 60px;">
+        <p style="margin: 0; font-size: 14px;">&copy; 2026 VidPulse SEO Suite — Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JAVASCRIPT DE LA HERRAMIENTA -->
+    <script>
+        // 1. GENERADOR TEMÁTICO
+        function generateHashtags() {
+            const input = document.getElementById('keywordInput').value.trim().toLowerCase();
+            if (!input) return;
+
+            const cleanWord = input.replace(/#/g, '').replace(/\s+/g, '');
+
+            // Generación de bloques simulados inteligentes basados en la entrada
+            const macro = `#${cleanWord} #${cleanWord}viral #trending #explore #foryou #viralvideo`;
+            const niche = `#${cleanWord}tips #${cleanWord}2026 #${cleanWord}strategy #creators #${cleanWord}community #digitalgrowth`;
+            const community = `#contentcreator #reelsinstagram #tiktokviral #shorts #publicación #${cleanWord}daily`;
+
+            document.getElementById('tagsMacro').textContent = macro;
+            document.getElementById('tagsNiche').textContent = niche;
+            document.getElementById('tagsCommunity').textContent = community;
+
+            document.getElementById('resultsSection').style.display = 'block';
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Bloque de hashtags copiado al portapapeles!');
+            });
+        }
+
+        // 2. MÓDULO RSS GOOGLE NEWS (CLIENT-SIDE)
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchGoogleNewsRSS();
+        });
+
+        async function fetchGoogleNewsRSS() {
+            const rssContainer = document.getElementById('rssContainer');
+            rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Analizando titulares recientes...</p>';
+
+            try {
+                // RSS de Google News en Español (Tecnología / Tendencias generales)
+                const rssUrl = 'https://news.google.com/rss?hl=es&gl=ES&ceid=ES:es';
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error("Error de conexión RSS");
+
+                const data = await response.json();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+
+                const items = xmlDoc.querySelectorAll("item");
+                rssContainer.innerHTML = '';
+
+                // Tomar los primeros 6 elementos de noticias
+                let count = 0;
+                items.forEach((item) => {
+                    if (count >= 6) return;
+                    const title = item.querySelector("title") ? item.querySelector("title").textContent : "Sin título";
+                    const link = item.querySelector("link") ? item.querySelector("link").textContent : "#";
+
+                    // Extraer palabras clave del título para armar hashtags automáticos
+                    const cleanTitleWords = title
+                        .replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/gi, '')
+                        .split(' ')
+                        .filter(w => w.length > 4)
+                        .slice(0, 3);
+
+                    const generatedTags = cleanTitleWords.map(w => `#${w.toLowerCase()}`).join(' ') + ' #news #trending';
+
+                    const card = document.createElement('div');
+                    card.className = 'rss-card';
+                    card.innerHTML = `
+                        <div>
+                            <div class="rss-title">${title}</div>
+                            <div class="rss-tags">${generatedTags}</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver Noticia ➔</a>
+                            <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('${generatedTags}')">Copiar Tags</button>
+                        </div>
+                    `;
+                    rssContainer.appendChild(card);
+                    count++;
+                });
+
+                if (count === 0) {
+                    rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No se encontraron elementos recientes en el feed.</p>';
+                }
+
+            } catch (error) {
+                console.error("Error al cargar RSS:", error);
+                // Fallback visual estático por si el proxy público experimenta intermitencia
+                rssContainer.innerHTML = `
+                    <div class="rss-card">
+                        <div>
+                            <div class="rss-title">Avances Globales en Inteligencia Artificial y Automatización Web</div>
+                            <div class="rss-tags">#InteligenciaArtificial #Tecnologia #Automation #Trending</div>
+                        </div>
+                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#InteligenciaArtificial #Tecnologia #Automation #Trending')">Copiar Tags</button>
+                    </div>
+                    <div class="rss-card">
+                        <div>
+                            <div class="rss-title">Nuevas Estrategias de Monetización Digital para Creadores de Contenido</div>
+                            <div class="rss-tags">#Monetizacion #Creators #DigitalMarketing #Negocios</div>
+                        </div>
+                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#Monetizacion #Creators #DigitalMarketing #Negocios')">Copiar Tags</button>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
