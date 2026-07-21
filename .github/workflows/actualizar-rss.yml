@@ -16,13 +16,13 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Instalar Dependencias del Script
         run: npm install axios xml2js
 
       - name: Ejecutar Script de Extracción RSS
-        run: node scripts/rss-extractor.js
+        run: node rss-extractor.js
 
       - name: Guardar cambios automáticamente en el Repositorio
         uses: stefanzweifel/git-auto-commit-action@v5
