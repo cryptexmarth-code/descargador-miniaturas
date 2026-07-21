@@ -21,7 +21,7 @@ jobs:
         run: npm install axios xml2js
 
       - name: Ejecutar Script de Extracción RSS
-        run: node rss-extractor.js
+        run: node scripts/rss-extractor.js
 
       - name: Guardar cambios automáticamente en el Repositorio
         uses: stefanzweifel/git-auto-commit-action@v5
