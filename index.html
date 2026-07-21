@@ -724,21 +724,6 @@
         .badge-med { background-color: rgba(241, 196, 15, 0.2); color: #f1c40f; }
         .badge-low { background-color: rgba(231, 76, 60, 0.2); color: #e74c3c; }
 
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border);
-            margin-top: 80px;
-            background-color: #06070a;
-        }
-
-        footer a {
-            color: var(--accent-orange);
-            text-decoration: none;
-        }
-
         @media (max-width: 850px) {
             .nav-container {
                 flex-direction: column;
@@ -1241,9 +1226,71 @@
     </section>
 
 
-    <footer>
-        <p>&copy; 2026 <strong>VidPulse SEO</strong> — La Suite All-In-One para Creadores de Contenido. Herramientas SEO Gratuitas e Ilimitadas.</p>
+    <!-- ==========================================
+         FOOTER OPTIMIZADO PARA ADSENSE, COOKIES Y MODALES
+         ========================================== -->
+    <!-- FOOTER OPTIMIZADO PARA ADSENSE -->
+    <footer style="background-color: #0f172a; color: #94a3b8; padding: 40px 20px; font-family: system-ui, sans-serif; font-size: 14px; border-top: 1px solid #1e293b; margin-top: 60px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center;">
+            
+            <!-- Marca y Copyright -->
+            <div>
+                <p style="color: #f8fafc; font-weight: bold; margin: 0 0 5px 0;">VidPulse SEO Suite</p>
+                <p style="margin: 0;">&copy; 2026 Todos los derechos reservados.</p>
+            </div>
+
+            <!-- Enlaces Legales -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <a href="#" onclick="openModal('modal-privacidad'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Política de Privacidad</a>
+                <a href="#" onclick="openModal('modal-terminos'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Términos y Condiciones</a>
+                <a href="#" onclick="openModal('modal-copyright'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Aviso de Copyright</a>
+                <a href="mailto:contacto@tudominio.com" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Contacto</a>
+            </div>
+        </div>
+        
+        <!-- Descargo de responsabilidad corto exigido -->
+        <div style="max-width: 1200px; margin: 20px auto 0 auto; border-top: 1px solid #1e293b; padding-top: 15px; font-size: 12px; color: #64748b; text-align: center;">
+            Este sitio web no está afiliado, asociado, autorizado, respaldado por, ni oficialmente conectado de ninguna manera con YouTube, Twitch o Google. Las herramientas son de uso educativo y personal.
+        </div>
     </footer>
+
+    <!-- BANNER DE COOKIES -->
+    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: #1e293b; color: #f8fafc; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -4px 10px rgba(0,0,0,0.3); z-index: 9999; font-family: system-ui, sans-serif; display: none;">
+        <p style="margin: 0; font-size: 13px; max-width: 800px;">
+            Utilizamos cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación. Si continua navegando, consideramos que acepta su uso. 
+            <a href="#" onclick="openModal('modal-privacidad'); return false;" style="color: #38bdf8; text-decoration: underline;">Más información</a>.
+        </p>
+        <button onclick="acceptCookies()" style="background-color: #38bdf8; color: #0f172a; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; white-space: nowrap;">Aceptar</button>
+    </div>
+
+    <!-- VENTANAS MODALES PARA LAS POLÍTICAS -->
+    <div id="modal-backdrop" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;">
+        
+        <!-- Modal Privacidad -->
+        <div id="modal-privacidad" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <h2 style="margin-top: 0; color: #0f172a;">Política de Privacidad</h2>
+            <p>En este sitio web respetamos y protegemos la privacidad de los usuarios. Esta política de privacidad detalla cómo recopilamos y usamos la información.</p>
+            <p><strong>Uso de Cookies y Publicidad:</strong> Utilizamos Google AdSense para mostrar anuncios. Google utiliza cookies para publicar anuncios basados en las visitas anteriores de los usuarios a este sitio u otros sitios web. El uso de cookies de publicidad permite a Google y a sus socios mostrar anuncios a los usuarios basados en su visita a sus sitios y/o a otros sitios de Internet.</p>
+            <p>Los usuarios pueden inhabilitar la publicidad personalizada accediendo a la <a href="https://adssettings.google.com" target="_blank" rel="noopener">Configuración de anuncios</a>.</p>
+            <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
+        </div>
+
+        <!-- Modal Términos -->
+        <div id="modal-terminos" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <h2 style="margin-top: 0; color: #0f172a;">Términos y Condiciones</h2>
+            <p>Al acceder y utilizar esta plataforma, el usuario acepta cumplir con los presentes términos y condiciones de uso.</p>
+            <p>Las herramientas provistas en este sitio son de carácter gratuito y se ofrecen "tal cual", sin garantías de ningún tipo. El uso de las mismas es responsabilidad exclusiva del usuario final.</p>
+            <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
+        </div>
+
+        <!-- Modal Copyright -->
+        <div id="modal-copyright" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <h2 style="margin-top: 0; color: #0f172a;">Aviso de Derechos de Autor (DMCA)</h2>
+            <p>Nuestra plataforma funciona únicamente como una interfaz técnica de procesamiento de datos públicos en el cliente. No alojamos ningún tipo de material protegido por derechos de autor, videos, marcas registradas ni archivos multimedia en nuestros servidores.</p>
+            <p>Todas las miniaturas y contenidos procesados pertenecen exclusivamente a sus respectivos creadores y plataformas de origen. Si eres titular de derechos y deseas reportar alguna incidencia, puedes contactarnos directamente.</p>
+            <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
+        </div>
+    </div>
 
 
     <!-- ==========================================
@@ -1716,6 +1763,40 @@
         function runAudit() {
             document.getElementById('auditResults').style.display = 'block';
         }
+
+        // ==========================================
+        // JAVASCRIPT DE CONTROL PARA MODALES Y COOKIES
+        // ==========================================
+        // Mostrar banner de cookies si no ha aceptado
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookie-banner').style.display = 'flex';
+            }
+        });
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+
+        function openModal(modalId) {
+            document.getElementById('modal-backdrop').style.display = 'flex';
+            // Ocultar todos los modales primero
+            document.querySelectorAll('.legal-modal').forEach(m => m.style.display = 'none');
+            // Mostrar el seleccionado
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModals() {
+            document.getElementById('modal-backdrop').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.getElementById('modal-backdrop').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-backdrop') {
+                closeModals();
+            }
+        });
     </script>
 </body>
 </html>
