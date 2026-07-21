@@ -3,7 +3,6 @@ const axios = require('axios');
 const xml2js = require('xml2js');
 
 async function actualizarDatosCompetencia() {
-    // Canales masivos de referencia configurados
     const canales = [
         { nombre: "The Verge", id: "UCBJycsmduvYEL83R_U4JriQ" },
         { nombre: "Linus Tech Tips", id: "UCXuqSBlHAE6Xw-yeJA0Tunw" },
@@ -19,13 +18,11 @@ async function actualizarDatosCompetencia() {
             const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${canal.id}`;
             const response = await axios.get(rssUrl);
             
-            // Convertir XML a objeto JSON de forma limpia
             const parser = new xml2js.Parser({ explicitArray: false });
             const result = await parser.parseStringPromise(response.data);
 
             const entries = result.feed.entry;
             if (entries && Array.isArray(entries)) {
-                // Tomamos los últimos 3 vídeos del feed de cada canal
                 const ultimosVideos = entries.slice(0, 3).map(entry => ({
                     titulo: entry.title,
                     url: entry.link['$'].href,
@@ -41,7 +38,6 @@ async function actualizarDatosCompetencia() {
         }
     }
 
-    // Asegurar que la carpeta data exista y guardar el JSON estático
     const outputDir = './data';
     if (!fs.existsSync(outputDir)){
         fs.mkdirSync(outputDir, { recursive: true });
