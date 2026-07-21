@@ -1302,62 +1302,80 @@
                 return;
             }
 
-            // A) AUDITORÍA DE TÍTULO
-            let score = 50;
+            // A) AUDITORÍA DE TÍTULO DINÁMICA
+            let score = 40; // Base inicial neutra
             const len = rawInput.length;
             const auditList = document.getElementById('titleAuditList');
             auditList.innerHTML = '';
 
             const lower = rawInput.toLowerCase();
             
-            // 1. Longitud
+            // 1. Longitud (Óptima entre 40 y 65 caracteres)
             document.getElementById('charCountText').textContent = `${len} / 100 caracteres`;
             if (len >= 40 && len <= 65) {
-                score += 20;
+                score += 25;
                 document.getElementById('charFeedback').textContent = "✔ Longitud perfecta para dispositivos móviles y escritorio.";
                 document.getElementById('charFeedback').style.color = "var(--accent-green)";
-            } else if (len < 40) {
-                score += 5;
-                document.getElementById('charFeedback').textContent = "⚠ Título un poco corto. Agrega contexto o una palabra de alto impacto.";
+                auditList.innerHTML += `<li>✔ Longitud de caracteres optimizada.</li>`;
+            } else if (len >= 20 && len < 40) {
+                score += 15;
+                document.getElementById('charFeedback').textContent = "⚠ Título algo corto. Considera agregar más contexto.";
                 document.getElementById('charFeedback').style.color = "var(--accent-gold)";
-            } else {
+                auditList.innerHTML += `<li>⚠ El título es ligeramente corto.</li>`;
+            } else if (len > 65) {
                 score += 10;
-                document.getElementById('charFeedback').textContent = "⚠ Título largo. Puede cortarse con '...' en teléfonos móviles.";
+                document.getElementById('charFeedback').textContent = "⚠ Título extenso. Podría cortarse en pantallas pequeñas.";
                 document.getElementById('charFeedback').style.color = "#ff6b6b";
+                auditList.innerHTML += `<li>⚠ Riesgo de truncamiento móvil.</li>`;
+            } else {
+                score += 5;
+                document.getElementById('charFeedback').textContent = "✖ Demasiado corto para posicionar correctamente.";
+                document.getElementById('charFeedback').style.color = "#ff6b6b";
+                auditList.innerHTML += `<li>✖ Extensión insuficiente.</li>`;
             }
 
-            // 2. Power Words
-            const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso'];
+            // 2. Power Words (Palabras de alto impacto)
+            const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso', 'pro', 'epico'];
             const hasPowerWord = powerWords.some(pw => lower.includes(pw));
             if (hasPowerWord) {
-                score += 15;
+                score += 20;
                 document.getElementById('powerWordsStatus').textContent = "✔ Detectadas palabras de alto impacto";
                 document.getElementById('powerWordsStatus').style.color = "var(--accent-green)";
                 auditList.innerHTML += `<li>✔ Contiene términos de alto impacto psicológico.</li>`;
             } else {
                 document.getElementById('powerWordsStatus').textContent = "✖ Sin palabras de impacto directo";
                 document.getElementById('powerWordsStatus').style.color = "#ff6b6b";
-                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secretos", "Paso a paso" o "Definitivo".</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secreto", "Definitivo" o "Paso a paso".</li>`;
             }
 
-            // 3. Curiosidad / Números
+            // 3. Curiosidad / Números / Preguntas
             const hasNumbers = /\d/.test(rawInput);
-            if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?')) {
+            if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?') || lower.includes('¡')) {
                 score += 15;
                 document.getElementById('curiosityStatus').textContent = "✔ Provoca curiosidad / Datos cuantitativos";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-green)";
-                auditList.innerHTML += `<li>✔ Despierta interés activo en la audiencia.</li>`;
+                auditList.innerHTML += `<li>✔ Despierta interés activo mediante formato de pregunta, número o énfasis.</li>`;
             } else {
-                document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva pasiva";
+                document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva simple";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-gold)";
-                auditList.innerHTML += `<li>💡 Tip: Incluye números o formulación en forma de pregunta/desafío.</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Incluye números, signos de exclamación o formato de incógnita.</li>`;
             }
 
             document.getElementById('mobileStatus').textContent = len <= 65 ? "✔ Excelente (100% visible)" : "⚠ Riesgo de truncamiento";
 
-            // Limitar score entre 0 y 98
-            score = Math.min(Math.max(score, 25), 98);
-            document.getElementById('ctrScoreText').textContent = `${score}%`;
+            // Limitar puntuación realista entre 30% y 98%
+            score = Math.min(Math.max(score, 30), 98);
+            
+            // Asignación de color dinámica según la nota obtenida
+            const scoreElement = document.getElementById('ctrScoreText');
+            scoreElement.textContent = `${score}%`;
+            if (score >= 80) {
+                scoreElement.style.color = "var(--accent-green)";
+            } else if (score >= 60) {
+                scoreElement.style.color = "var(--accent-gold)";
+            } else {
+                scoreElement.style.color = "#ff6b6b";
+            }
 
             // B) GENERADOR DE VARIANTES VIRALES
             const container = document.getElementById('generatedTitlesContainer');
@@ -1367,12 +1385,12 @@
 
             const templates = [
                 { cat: "🔥 Alta Conversión / Urgencia", title: `¡NUNCA Hagas Esto! 🛑 ${rawInput} (Error Grave)` },
-                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject} Que Nadie Te Cuenta` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject}?` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject} Por 30 Días Y Pasó Esto...` },
+                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject || rawInput} Que Nadie Te Cuenta` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject || rawInput}?` },
+                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject || rawInput} Por 30 Días Y Pasó Esto...` },
                 { cat: "🚀 Guía Paso a Paso / Tutorial", title: `${rawInput}: Guía Definitiva [2026]` },
-                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject} En Solo 5 Pasos Sencillos` },
-                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject}` },
+                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject || rawInput} En Solo 5 Pasos Sencillos` },
+                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject || rawInput}` },
                 { cat: "⭐ Formato Lista / Resultados", title: `Top 5 Errores Al ${rawInput} (Y Cómo Evitarlos)` }
             ];
 
