@@ -201,6 +201,14 @@
 
         .news-link:hover { text-decoration: underline; }
 
+        .loading-text {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            padding: 40px;
+        }
+
         .seo-article {
             background-color: var(--card);
             border: 1px solid var(--border);
@@ -237,36 +245,9 @@
 
     <main class="container">
         
-        <!-- GRID DE ARTÍCULOS / NOTICIAS RECIENTES -->
-        <div class="news-grid">
-            
-            <div class="news-card">
-                <div>
-                    <span class="news-tag">Algoritmo YouTube</span>
-                    <h3 class="news-title">Nuevos cambios en la retención de audiencia y su impacto en Shorts</h3>
-                    <p class="news-desc">YouTube actualiza las métricas clave de visualización para priorizar el contenido interactivo y las retenciones sostenidas en los primeros 3 segundos.</p>
-                </div>
-                <a href="#" class="news-link">Leer artículo completo &rarr;</a>
-            </div>
-
-            <div class="news-card">
-                <div>
-                    <span class="news-tag">SEO & Tráfico</span>
-                    <h3 class="news-title">Cómo optimizar tus páginas web para Google Discover en 2026</h3>
-                    <p class="news-desc">Estrategias clave de redacción, metadatos y velocidad de carga para captar tráfico masivo directamente desde dispositivos móviles.</p>
-                </div>
-                <a href="#" class="news-link">Leer artículo completo &rarr;</a>
-            </div>
-
-            <div class="news-card">
-                <div>
-                    <span class="news-tag">Monetización</span>
-                    <h3 class="news-title">Aumento de RPM en nichos B2B y software corporativo</h3>
-                    <p class="news-desc">Análisis de los sectores con mayor retribución publicitaria para editores web independientes que implementan herramientas útiles en línea.</p>
-                </div>
-                <a href="#" class="news-link">Leer artículo completo &rarr;</a>
-            </div>
-
+        <!-- GRID DE ARTÍCULOS / NOTICIAS RECIENTES (DINÁMICO) -->
+        <div class="news-grid" id="news-container">
+            <div class="loading-text">Cargando noticias en tiempo real desde el feed RSS...</div>
         </div>
 
         <!-- CONTENIDO SEO ESTRATÉGICO -->
@@ -282,5 +263,57 @@
         <p style="margin: 0; font-size: 14px;">&copy; 2026 VidPulse SEO Suite — Todos los derechos reservados.</p>
     </footer>
 
+    <!-- SCRIPT PARA CONSUMIR RSS REAL -->
+    <script>
+        async function fetchRSS() {
+            const container = document.getElementById('news-container');
+            
+            // Usamos un feed de tecnología/marketing digital o puedes cambiarlo por cualquier URL RSS que desees
+            // RSS Example: WePlug / Genbeta / TechCrunch / Blog oficial en español
+            const rssUrl = 'https://feeds.feedburner.com/Genbeta'; // O usa un servicio como api.rss2json.com para parsear XML a JSON de forma limpia
+            const apiEndpoint = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent('https://news.google.com/rss/search?q=SEO+marketing+youtube&hl=es&gl=ES&ceid=ES:es')}`;
+
+            try {
+                const response = await fetch(apiEndpoint);
+                const data = await response.json();
+
+                if (data.status === 'ok' && data.items.length > 0) {
+                    container.innerHTML = ''; // Limpiar texto de carga
+                    
+                    // Tomamos las primeras 6 noticias reales
+                    const articles = data.items.slice(0, 6);
+
+                    articles.forEach(item => {
+                        // Limpiar un poco el texto HTML de la descripción que a veces trae Google News
+                        let cleanDesc = item.description.replace(/<[^>]*>?/gm, '');
+                        if (cleanDesc.length > 130) {
+                            cleanDesc = cleanDesc.substring(0, 130) + '...';
+                        }
+
+                        // Generar tarjeta HTML dinámica
+                        const card = document.createElement('div');
+                        card.className = 'news-card';
+                        card.innerHTML = `
+                            <div>
+                                <span class="news-tag">Tendencia SEO</span>
+                                <h3 class="news-title">${item.title}</h3>
+                                <p class="news-desc">${cleanDesc}</p>
+                            </div>
+                            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-link">Leer artículo completo &rarr;</a>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = `<p class="loading-text">No se pudieron cargar las noticias en este momento.</p>`;
+                }
+            } catch (error) {
+                console.error('Error al obtener el RSS:', error);
+                container.innerHTML = `<p class="loading-text">Error de conexión al cargar las fuentes de noticias.</p>`;
+            }
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', fetchRSS);
+    </script>
 </body>
 </html>
