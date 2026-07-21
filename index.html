@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags Avanzados -->
-    <title>Suite SEO: Descargador de Miniaturas, Extractor de Tags y Keyword Suggest Tools</title>
-    <meta name="description" content="Herramienta profesional para buscar palabras clave sugeridas, descargar miniaturas de YouTube en 4K/HD, extraer etiquetas ocultas y analizar directo de Twitch. Gratis y sin registro.">
-    <meta name="keywords" content="keyword suggest tool, buscador palabras clave gratis, descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas video youtube, bajar caratula twitch hd">
+    <title>Descargador de Miniaturas YouTube y Twitch HD + Extractor de Tags SEO</title>
+    <meta name="description" content="Herramienta profesional para descargar miniaturas de YouTube en 4K/HD, extraer etiquetas (tags) ocultas y analizar miniaturas de Twitch. Gratis y sin registro.">
+    <meta name="keywords" content="descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas video youtube, bajar caratula twitch hd, youtube thumbnail inspector">
     <meta name="robots" content="index, follow">
     <meta name="author" content="ROY RD">
 
     <!-- Open Graph / Redes Sociales -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Suite SEO: Descargador de Miniaturas y Extractor de Tags">
-    <meta property="og:description" content="Descarga miniaturas en Máxima Resolución, analiza las etiquetas SEO y descubre palabras clave autocompletadas gratis.">
+    <meta property="og:description" content="Descarga miniaturas en Máxima Resolución y analiza las etiquetas SEO de cualquier vídeo de YouTube al instante.">
 
-    <!-- Datos Estructurados JSON-LD -->
+    <!-- Datos Estructurados JSON-LD (WebApplication + FAQPage para destacar en Google) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "WebApplication",
-          "name": "Suite SEO ROY RD - Miniaturas, Tags & Keyword Suggest",
-          "applicationCategory": "SEO & Multimedia Application",
+          "name": "Extractor SEO de Miniaturas y Tags",
+          "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
           "offers": {
             "@type": "Offer",
@@ -37,18 +37,18 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "¿Cómo funciona la herramienta Suggest Tools?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Suggest Tools consulta los motores de autocompletado en tiempo real de Google y YouTube para extraer las búsquedas más populares y frecuentes relacionadas con tu palabra clave base."
-              }
-            },
-            {
-              "@type": "Question",
               "name": "¿Cuál es la resolución máxima de una miniatura de YouTube?",
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "La resolución máxima estándar ofrecida por YouTube es de 1920x1080 píxeles (Max Resolution HD), la cual puedes extraer directamente con nuestra herramienta."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Es legal descargar y reutilizar miniaturas de otros videos?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Las miniaturas tienen derechos de autor. Se recomienda descargarlas únicamente como referencia de diseño, análisis de competencia o uso personal."
               }
             }
           ]
@@ -63,7 +63,6 @@
             --card: #16181d;
             --accent-yt: #ff0000;
             --accent-tw: #9146ff;
-            --accent-glow: #ff4e50;
             --text: #ffffff;
             --text-muted: #9a9caf;
             --border: #262933;
@@ -166,7 +165,7 @@
             display: block;
         }
 
-        /* --- HEADER Y ESTRUCTURA --- */
+        /* --- ESTILOS HEADER Y ESTRUCTURA --- */
         header {
             text-align: center;
             padding: 40px 20px 20px;
@@ -199,19 +198,6 @@
             border-radius: 14px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 40px;
-        }
-
-        .tool-title {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-top: 0;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
         }
 
         .tabs {
@@ -249,7 +235,7 @@
             margin-bottom: 20px;
         }
 
-        input[type="text"], select {
+        input[type="text"] {
             flex: 1;
             padding: 16px;
             border-radius: 10px;
@@ -259,12 +245,7 @@
             font-size: 1rem;
         }
 
-        select {
-            flex: 0.4;
-            cursor: pointer;
-        }
-
-        input[type="text"]:focus, select:focus {
+        input[type="text"]:focus {
             outline: none;
             border-color: #ff4e50;
         }
@@ -285,7 +266,7 @@
             opacity: 0.9;
         }
 
-        .error-box {
+        #error {
             display: none;
             color: #ff5555;
             background: rgba(255,85,85,0.1);
@@ -373,69 +354,7 @@
             text-transform: uppercase;
         }
 
-        /* --- ESTILOS SUGGEST TOOL --- */
-        .kw-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .kw-count {
-            color: #27ae60;
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-
-        .copy-btn {
-            padding: 8px 16px;
-            background-color: #232730;
-            color: #fff;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background-color: #ff4e50;
-            border-color: #ff4e50;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .kw-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: #0a0b0d;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-        }
-
-        .kw-chip {
-            background: #1a1d24;
-            color: #e0e0e0;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: border 0.2s;
-        }
-
-        .kw-chip:hover {
-            border-color: #ff4e50;
-            color: #fff;
-        }
-
-        /* --- SEO CONTENT & FAQ SECTION --- */
+        /* SEO Content & FAQ Section */
         .seo-section {
             margin-top: 50px;
             background-color: var(--card);
@@ -494,9 +413,6 @@
             .input-group {
                 flex-direction: column;
             }
-            select {
-                flex: 1;
-            }
         }
     </style>
 </head>
@@ -510,11 +426,12 @@
                 <li class="dropdown">
                     <a href="#serps">Herramientas SERPs ▾</a>
                     <ul class="dropdown-content">
-                        <li><a href="#suggest-section">Suggest Tools (Autocompletar)</a></li>
+                        <li><a href="#serp-checker">Analizador de SERPs</a></li>
                         <li><a href="#local-rank">Local Rank Tracker</a></li>
                     </ul>
                 </li>
-                <li><a href="#suggest-section">Suggest Tools</a></li>
+                <li><a href="#kw-volume">KW Volume</a></li>
+                <li><a href="#suggest-tools">Suggest Tools</a></li>
                 <li class="dropdown">
                     <a href="#competencia">Competencia ▾</a>
                     <ul class="dropdown-content">
@@ -522,48 +439,24 @@
                         <li><a href="#seo-monitor">SEO Monitor</a></li>
                     </ul>
                 </li>
-                <li><a href="#suggest-section">Buscador Keywords</a></li>
+                <li><a href="#local-rank-tracker">Local Rank Tracker</a></li>
+                <li class="dropdown">
+                    <a href="#utilidades">Utilidades ▾</a>
+                    <ul class="dropdown-content">
+                        <li><a href="#seo-monitor-tool">SEO MONITOR</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
 
     <header>
-        <h1>Suite SEO & Generador de Palabras Clave</h1>
-        <p class="subtitle">Descubre ideas de contenido con Suggest Tools y extrae portadas HD de YouTube y Twitch en segundos.</p>
+        <h1>Suite de Miniaturas & Inspección SEO</h1>
+        <p class="subtitle">Descarga portadas en Máxima Resolución (1080p/4K) y analiza datos de rendimiento para YouTube y Twitch.</p>
     </header>
 
     <main class="container">
-
-        <!-- HERRAMIENTA 1: SUGGEST TOOLS (GENERADOR DE PALABRAS CLAVE) -->
-        <div class="tool-box" id="suggest-section">
-            <h2 class="tool-title">🔍 Suggest Tools — Generador de Palabras Clave</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
-                Obtén cientos de ideas de búsqueda real extraídas directamente del motor de autocompletado de Google y YouTube.
-            </p>
-
-            <div class="input-group">
-                <input type="text" id="kwInput" placeholder="Escribe una palabra clave (ej. miniatura youtube)..." onkeypress="if(event.key==='Enter') fetchSuggestions()" />
-                <select id="sourceSelect">
-                    <option value="youtube">YouTube Autocomplete</option>
-                    <option value="google">Google Search</option>
-                </select>
-                <button class="btn-main" onclick="fetchSuggestions()">Buscar Ideas</button>
-            </div>
-
-            <div id="kwError" class="error-box"></div>
-
-            <div id="kwResults" style="display: none;">
-                <div class="kw-stats">
-                    <span class="kw-count" id="kwCount">0 palabras clave encontradas</span>
-                    <button class="copy-btn" onclick="copyKeywords()">📋 Copiar Todas las Keywords</button>
-                </div>
-                <div class="kw-list" id="kwChipList"></div>
-            </div>
-        </div>
-
-        <!-- HERRAMIENTA 2: EXTRACTOR DE MINIATURAS & TAGS -->
         <div class="tool-box" id="extractor">
-            <h2 class="tool-title">🖼️ Extractor de Miniaturas & Inspección SEO</h2>
             <div class="tabs">
                 <button class="tab-btn active-yt" id="btnYt" onclick="setPlatform('youtube')">YouTube + SEO</button>
                 <button class="tab-btn" id="btnTw" onclick="setPlatform('twitch')">Twitch Stream</button>
@@ -574,7 +467,7 @@
                 <button class="btn-main" onclick="processUrl()">Analizar y Extraer</button>
             </div>
 
-            <div id="error" class="error-box"></div>
+            <div id="error"></div>
 
             <div id="results">
                 <div class="result-grid">
@@ -610,25 +503,25 @@
 
         <!-- SECCIÓN DE CONTENIDO EDUCATIVO & SEO COMPLETO -->
         <article class="seo-section">
-            <h2>Herramientas de Análisis de Keywords, Miniaturas y Optimización SEO</h2>
-            <p>El uso de herramientas de **Suggest Tools** te ayuda a identificar exactamente lo que tu audiencia busca en tiempo real. Combinar un buen estudio de palabras clave con una miniatura atractiva garantiza el éxito en posicionamiento y clics (CTR).</p>
+            <h2>Herramientas de Análisis de Miniaturas y Optimización SEO</h2>
+            <p>La miniatura (o thumbnail) es el factor número uno que determina el <strong>CTR (Click-Through Rate)</strong> de un video en YouTube. Un CTR elevado le indica al algoritmo que tu contenido es atractivo, lo que resulta en más recomendaciones en la página principal.</p>
 
-            <h2>¿Cómo usar las sugerencias de búsqueda para crear contenido viral?</h2>
-            <p>Las sugerencias autocompletadas de Google y YouTube representan consultas con demanda real activa:</p>
+            <h2>¿Cómo usar las miniaturas de la competencia para mejorar tu CTR?</h2>
+            <p>Analizar las portadas de los creadores referentes en tu nicho te permite identificar patrones visuales ganadores:</p>
             <ul>
-                <li><strong>Keywords Long-Tail (Cola larga):</strong> Tienen menor competencia y una intención de búsqueda mucho más específica.</li>
-                <li><strong>Títulos Imantados:</strong> Utiliza los primeros 3 términos arrojados por Suggest Tools directamente en el título de tu vídeo o entrada de blog.</li>
-                <li><strong>Diseño Estratégico:</strong> Adapta el texto de tu miniatura según las variaciones de búsqueda más frecuentes de tu nicho.</li>
+                <li><strong>Contraste de Colores:</strong> Observa si utilizan tonos brillantes (amarillo, rojo, verde neón) para destacar sobre el modo oscuro de YouTube.</li>
+                <li><strong>Expresiones Faciales:</strong> Los rostros en primer plano con emociones marcadas aumentan la tasa de clics hasta un 38%.</li>
+                <li><strong>Texto Legible:</strong> Menos de 4 palabras en tipografía gruesa para asegurar legibilidad en dispositivos móviles.</li>
             </ul>
 
             <h2>Preguntas Frecuentes (FAQ)</h2>
             <div class="faq-item">
-                <div class="faq-question">¿Cómo funciona la herramienta Suggest Tools?</div>
-                <p>Nuestra herramienta se conecta con los servicios de autocompletado de Google y YouTube para mostrarte los términos y preguntas que las personas están buscando en este preciso momento.</p>
+                <div class="faq-question">¿Cuál es el tamaño recomendado para una miniatura de YouTube?</div>
+                <p>El tamaño ideal es de <strong>1280 x 720 píxeles</strong> (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB en formatos JPG, GIF o PNG.</p>
             </div>
             <div class="faq-item">
-                <div class="faq-question">¿Cuál es el tamaño recomendado para una miniatura de YouTube?</div>
-                <p>El tamaño ideal es de <strong>1280 x 720 píxeles</strong> (con un ancho mínimo de 640 píxeles), relación de aspecto 16:9 y un peso inferior a 2 MB.</p>
+                <div class="faq-question">¿Cómo obtener la portada de un directo de Twitch en tiempo real?</div>
+                <p>Selecciona la pestaña de Twitch, pega el enlace del canal del streamer y nuestro sistema obtendrá la captura de pantalla actualizada del directo a 1080p.</p>
             </div>
         </article>
     </main>
@@ -638,79 +531,6 @@
     </footer>
 
     <script>
-        // --- LÓGICA DE SUGGEST TOOLS (GENERADOR DE KEYWORDS) ---
-        let currentKeywords = [];
-
-        async function fetchSuggestions() {
-            const query = document.getElementById('kwInput').value.trim();
-            const source = document.getElementById('sourceSelect').value;
-            const kwError = document.getElementById('kwError');
-            const kwResults = document.getElementById('kwResults');
-            const kwChipList = document.getElementById('kwChipList');
-            const kwCount = document.getElementById('kwCount');
-
-            kwError.style.display = 'none';
-
-            if (!query) {
-                kwError.textContent = "Por favor, ingresa una palabra clave para buscar sugerencias.";
-                kwError.style.display = 'block';
-                kwResults.style.display = 'none';
-                return;
-            }
-
-            // Usamos un proxy JSONP/CORS para acceder a la API pública de Autocompletado
-            const clientParam = source === 'youtube' ? 'youtube' : 'firefox';
-            const apiUrl = `https://suggestqueries.google.com/complete/search?client=${clientParam}&ds=yt&q=${encodeURIComponent(query)}`;
-
-            try {
-                // Solicitud vía JSONP para saltar restricciones CORS del navegador
-                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`);
-                const data = await response.json();
-                
-                let parsedData;
-                try {
-                    parsedData = JSON.parse(data.contents);
-                } catch(e) {
-                    parsedData = null;
-                }
-
-                if (parsedData && parsedData[1] && parsedData[1].length > 0) {
-                    currentKeywords = parsedData[1];
-                    kwChipList.innerHTML = '';
-
-                    currentKeywords.forEach(kw => {
-                        const chip = document.createElement('div');
-                        chip.className = 'kw-chip';
-                        chip.innerHTML = `🔍 ${kw}`;
-                        chip.onclick = () => {
-                            navigator.clipboard.writeText(kw);
-                            alert(`Palabra clave copiada: "${kw}"`);
-                        };
-                        kwChipList.appendChild(chip);
-                    });
-
-                    kwCount.textContent = `✔ ${currentKeywords.length} palabras clave encontradas`;
-                    kwResults.style.display = 'block';
-                } else {
-                    kwError.textContent = "No se encontraron sugerencias para esta búsqueda. Intenta con otra palabra.";
-                    kwError.style.display = 'block';
-                    kwResults.style.display = 'none';
-                }
-            } catch (err) {
-                kwError.textContent = "Error al conectar con la API de sugerencias. Inténtalo de nuevo.";
-                kwError.style.display = 'block';
-                kwResults.style.display = 'none';
-            }
-        }
-
-        function copyKeywords() {
-            if (currentKeywords.length === 0) return;
-            const textToCopy = currentKeywords.join('\n');
-            navigator.clipboard.writeText(textToCopy);
-            alert('¡Todas las palabras clave se han copiado al portapapeles!');
-        }
-
-        // --- LÓGICA DE EXTRACTOR DE MINIATURAS & TWITCH ---
         let currentPlatform = 'youtube';
 
         function setPlatform(platform) {
