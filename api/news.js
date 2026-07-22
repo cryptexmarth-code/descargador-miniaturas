@@ -13,15 +13,32 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        return Promise.all(data.items.map(async (item) => {
-          let imageUrl = item.thumbnail || '';
+        return data.items.map(item => {
+          let imageUrl = '';
 
-          // Si no hay miniatura, intentamos obtener la imagen OpenGraph (og:image) del artículo o usamos un servicio de favicon/screenshot dinámico
+          // 1. Revisar si viene en el thumbnail directo
+          if (item.thumbnail) {
+            imageUrl = item.thumbnail;
+          } 
+          // 2. Revisar si viene en enclosure (multimedia adjunta de RSS)
+          else if (item.enclosure && item.enclosure.link) {
+            imageUrl = item.enclosure.link;
+          } 
+          // 3. Buscar etiquetas <img> dentro del contenido o descripción completa
+          else if (item.content) {
+            const imgMatch = item.content.match(/<img[^>]+src=["']([^"']+)["']/i);
+            if (imgMatch) imageUrl = imgMatch[1];
+          } else if (item.description) {
+            const imgMatchDesc = item.description.match(/<img[^>]+src=["']([^"']+)["']/i);
+            if (imgMatchDesc) imageUrl = imgMatchDesc[1];
+          }
+
+          // 4. Si de plano no hay imagen en el RSS, generamos una miniatura limpia basada en el dominio de la fuente
           if (!imageUrl && item.link) {
             try {
-              // Usamos un servicio gratuito de miniaturas de webs basado en la URL del artículo
-              const domain = new URL(item.link).hostname;
-              imageUrl = `https://unavatar.io/${domain}`; // Extrae el logo/icono representativo de la fuente de la noticia de forma dinámica
+              const urlObj = new URL(item.link);
+              // Usamos un servicio de captura limpia del icono/og-image o la dejamos vacía para control CSS
+              imageUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`;
             } catch (e) {
               imageUrl = '';
             }
@@ -34,7 +51,7 @@ export default async function handler(req, res) {
             description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : '',
             image: imageUrl
           };
-        }));
+        });
       }
       return [];
     }
@@ -47,10 +64,10 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       categories: {
-        general: (await generalItems).slice(0, 4),
-        youtube: (await youtubeItems).slice(0, 4),
-        seo: (await seoItems).slice(0, 4),
-        tech: (await techItems).slice(0, 4)
+        general: generalItems.slice(0, 4),
+        youtube: youtubeItems.slice(0, 4),
+        seo: seoItems.slice(0, 4),
+        tech: techItems.slice(0, 4)
       }
     });
 
