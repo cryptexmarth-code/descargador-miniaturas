@@ -3,7 +3,6 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   try {
-    // Función auxiliar para buscar por término o URL directa
     async function fetchFeed(urlOrQuery, isSearch = true) {
       const url = isSearch 
         ? `https://news.google.com/rss/search?q=${encodeURIComponent(urlOrQuery)}&hl=es-419&gl=US&ceid=US:es-419`
@@ -14,17 +13,27 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        return data.items.map(item => ({
-          title: item.title,
-          link: item.link,
-          pubDate: item.pubDate,
-          description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : ''
-        }));
+        return data.items.map(item => {
+          // Extraer imagen de la propiedad thumbnail de rss2json o buscarla en el contenido HTML si no existe
+          let imageUrl = item.thumbnail || '';
+          
+          if (!imageUrl && item.content) {
+            const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch) imageUrl = imgMatch[1];
+          }
+
+          return {
+            title: item.title,
+            link: item.link,
+            pubDate: item.pubDate,
+            description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : '',
+            image: imageUrl // <--- Propiedad lista para la miniatura
+          };
+        });
       }
       return [];
     }
 
-    // Consultamos las categorías temáticas y el feed general de noticias destacadas
     const generalItems = await fetchFeed('https://news.google.com/rss?hl=es-419&gl=US&ceid=US:es-419', false);
     const youtubeItems = await fetchFeed('YouTube algoritmo monetizacion', true);
     const seoItems = await fetchFeed('SEO posicionamiento web trafico', true);
