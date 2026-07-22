@@ -1,17 +1,31 @@
 [
   {
-    "titulo": "What happens to Schrödinger's cat?",
-    "url": "https://www.youtube.com/shorts/2_VB-oc_pmk",
-    "videoId": "2_VB-oc_pmk",
-    "publicado": "2026-07-21T15:31:18+00:00",
-    "canal": "Veritasium"
+    "titulo": "The Best Wii Remote EVER!",
+    "url": "https://www.youtube.com/shorts/Ute2wSwml4o",
+    "videoId": "Ute2wSwml4o",
+    "publicado": "2026-07-21T01:01:05+00:00",
+    "canal": "Linus Tech Tips"
   },
   {
-    "titulo": "This ZOOM is Insane!",
-    "url": "https://www.youtube.com/shorts/kUnR9dO4EnA",
-    "videoId": "kUnR9dO4EnA",
-    "publicado": "2026-07-20T20:39:08+00:00",
-    "canal": "MKBHD"
+    "titulo": "This Upgrade is Dangerous - AMD $5,000 Ultimate Tech Upgrade",
+    "url": "https://www.youtube.com/watch?v=QAA7b1Av0jM",
+    "videoId": "QAA7b1Av0jM",
+    "publicado": "2026-07-20T17:40:16+00:00",
+    "canal": "Linus Tech Tips"
+  },
+  {
+    "titulo": "This $12 billion startup finally shipped something...",
+    "url": "https://www.youtube.com/watch?v=M51asSwRLxA",
+    "videoId": "M51asSwRLxA",
+    "publicado": "2026-07-20T17:02:30+00:00",
+    "canal": "Fireship"
+  },
+  {
+    "titulo": "True 4k Gaming PC (2026) - Classic LTT Build Guide",
+    "url": "https://www.youtube.com/watch?v=zIgmgMLZrrc",
+    "videoId": "zIgmgMLZrrc",
+    "publicado": "2026-07-19T17:00:34+00:00",
+    "canal": "Linus Tech Tips"
   },
   {
     "titulo": "Welcome to the Game 3: Markiplier's Redemption",
@@ -21,18 +35,18 @@
     "canal": "Markiplier"
   },
   {
-    "titulo": "Why Waves Travel Faster At The Top",
-    "url": "https://www.youtube.com/shorts/RmHcX5oVzvs",
-    "videoId": "RmHcX5oVzvs",
-    "publicado": "2026-07-17T13:28:38+00:00",
-    "canal": "Veritasium"
+    "titulo": "OpenAI gets sued for stealing, again…",
+    "url": "https://www.youtube.com/watch?v=5D4Zqp9GLSc",
+    "videoId": "5D4Zqp9GLSc",
+    "publicado": "2026-07-17T17:56:42+00:00",
+    "canal": "Fireship"
   },
   {
-    "titulo": "Only One English Word Has This Property",
-    "url": "https://www.youtube.com/shorts/EupTKqL3f1E",
-    "videoId": "EupTKqL3f1E",
-    "publicado": "2026-07-17T04:52:17+00:00",
-    "canal": "Vsauce"
+    "titulo": "The most controversial rewrite in history just shipped...",
+    "url": "https://www.youtube.com/watch?v=CXSvKcLovAk",
+    "videoId": "CXSvKcLovAk",
+    "publicado": "2026-07-15T17:39:02+00:00",
+    "canal": "Fireship"
   },
   {
     "titulo": "Five Nights at Freddy's 2: Markiplier's Redemption",
@@ -42,13 +56,6 @@
     "canal": "Markiplier"
   },
   {
-    "titulo": "The Scariest Chart in Electrical Engineering",
-    "url": "https://www.youtube.com/watch?v=GK2pZ_oVU1o",
-    "videoId": "GK2pZ_oVU1o",
-    "publicado": "2026-07-14T18:03:28+00:00",
-    "canal": "Veritasium"
-  },
-  {
     "titulo": "BAD END B",
     "url": "https://www.youtube.com/watch?v=sfBiR5Fo93k",
     "videoId": "sfBiR5Fo93k",
@@ -56,73 +63,24 @@
     "canal": "Markiplier"
   },
   {
-    "titulo": "iOS 27 Hands-On: Top 5 New Features!",
-    "url": "https://www.youtube.com/watch?v=_oRgdlJUD18",
-    "videoId": "_oRgdlJUD18",
-    "publicado": "2026-07-13T22:27:02+00:00",
-    "canal": "MKBHD"
+    "titulo": "What’s It Like to Be Killed by Nature’s Most Brutal Predator",
+    "url": "https://www.youtube.com/watch?v=Xf-uUy5pdUI",
+    "videoId": "Xf-uUy5pdUI",
+    "publicado": "2026-07-07T14:00:16+00:00",
+    "canal": "Kurzgesagt"
   },
   {
-    "titulo": "My Best Friend Wrote A Book!",
-    "url": "https://www.youtube.com/shorts/l5aVdFu9ZQI",
-    "videoId": "l5aVdFu9ZQI",
-    "publicado": "2026-07-09T01:43:06+00:00",
-    "canal": "Vsauce"
+    "titulo": "The True Cost of War",
+    "url": "https://www.youtube.com/shorts/uVlMWVP5GJk",
+    "videoId": "uVlMWVP5GJk",
+    "publicado": "2026-07-06T14:00:09+00:00",
+    "canal": "Kurzgesagt"
   },
   {
-    "titulo": "Apple Lost the AI Race",
-    "url": "https://www.youtube.com/watch?v=eWKY0OnPByg",
-    "videoId": "eWKY0OnPByg",
-    "publicado": "2026-07-08T19:44:58+00:00",
-    "canal": "MKBHD"
-  },
-  {
-    "titulo": "The Vista Paradox",
-    "url": "https://www.youtube.com/shorts/dyzzvenwOgc",
-    "videoId": "dyzzvenwOgc",
-    "publicado": "2026-07-07T04:31:42+00:00",
-    "canal": "Vsauce"
-  },
-  {
-    "titulo": "10 YouTubers vs 2 Secret Traitors",
-    "url": "https://www.youtube.com/watch?v=nH9R0Jpqeqc",
-    "videoId": "nH9R0Jpqeqc",
-    "publicado": "2026-07-04T16:00:41+00:00",
-    "canal": "MrBeast Gaming"
-  },
-  {
-    "titulo": "Meet our newest family member",
-    "url": "https://www.youtube.com/watch?v=upZTN2INpDc",
-    "videoId": "upZTN2INpDc",
-    "publicado": "2026-07-02T13:44:17+00:00",
-    "canal": "PewDiePie"
-  },
-  {
-    "titulo": "I tried to make a Manga",
-    "url": "https://www.youtube.com/watch?v=iRRpvuMG7AM",
-    "videoId": "iRRpvuMG7AM",
-    "publicado": "2026-06-22T08:30:16+00:00",
-    "canal": "PewDiePie"
-  },
-  {
-    "titulo": "If You Build It, I'll Buy It!",
-    "url": "https://www.youtube.com/watch?v=wZW016nna48",
-    "videoId": "wZW016nna48",
-    "publicado": "2026-06-20T16:00:01+00:00",
-    "canal": "MrBeast Gaming"
-  },
-  {
-    "titulo": "I Survived 100 Days In Realistic Minecraft",
-    "url": "https://www.youtube.com/watch?v=5F5MKI_jXJw",
-    "videoId": "5F5MKI_jXJw",
-    "publicado": "2026-06-06T16:00:01+00:00",
-    "canal": "MrBeast Gaming"
-  },
-  {
-    "titulo": "MY trillion $Dollar Project is finally OUT!",
-    "url": "https://www.youtube.com/watch?v=rAzT5lcezPs",
-    "videoId": "rAzT5lcezPs",
-    "publicado": "2026-05-31T15:05:46+00:00",
-    "canal": "PewDiePie"
+    "titulo": "What is El Niño?",
+    "url": "https://www.youtube.com/shorts/N2FOxjtv5ns",
+    "videoId": "N2FOxjtv5ns",
+    "publicado": "2026-07-01T14:00:35+00:00",
+    "canal": "Kurzgesagt"
   }
 ]
