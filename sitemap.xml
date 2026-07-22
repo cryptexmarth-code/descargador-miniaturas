@@ -12,4 +12,22 @@
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+    <url>
+        <loc>https://www.descargadorminiaturas.com/facturas.html</loc>
+        <lastmod>2026-07-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.descargadorminiaturas.com/hashtags.html</loc>
+        <lastmod>2026-07-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://www.descargadorminiaturas.com/noticias.html</loc>
+        <lastmod>2026-07-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
