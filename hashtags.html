@@ -6,8 +6,8 @@
     
     <!-- SEO Meta Tags Dedicados -->
     <title>Generador de Hashtags Virales y Tendencias en Tiempo Real — VidPulse SEO</title>
-    <meta name="description" content="Genera hashtags optimizados para Instagram, TikTok, Reels y YouTube Shorts. Descubre los temas en tendencia gracias a las noticias en tiempo real y potencia tu alcance orgánico.">
-    <meta name="keywords" content="generador de hashtags, hashtags para reels, hashtags tiktok, tendencias de noticias rss, palabras clave virales, hashtags instagram, crecimiento organico redes sociales">
+    <meta name="description" content="Genera hashtags optimizados para Instagram, TikTok, Reels y YouTube Shorts. Descubre los temas en tendencia global y local (DO, ES, US, LATAM) y potencia tu alcance orgánico.">
+    <meta name="keywords" content="generador de hashtags, hashtags para reels, hashtags tiktok, tendencias google trends republica dominicana, espana, estados unidos, palabras clave virales">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://vidpulseseo.com/hashtags.html">
 
@@ -155,7 +155,7 @@
             margin-bottom: 25px;
         }
 
-        input[type="text"] {
+        input[type="text"], select {
             flex: 1;
             padding: 16px 20px;
             border-radius: 10px;
@@ -165,7 +165,7 @@
             font-size: 1rem;
         }
 
-        input[type="text"]:focus {
+        input[type="text"]:focus, select:focus {
             outline: none;
             border-color: var(--accent-orange);
             box-shadow: 0 0 12px rgba(255, 78, 80, 0.2);
@@ -304,8 +304,8 @@
 
     <!-- CABECERA -->
     <header>
-        <h1>Generador de Hashtags & Tendencias RSS</h1>
-        <p class="subtitle">Crea bloques optimizados para Instagram, TikTok y Shorts o extrae las palabras clave calientes de las noticias actuales al instante.</p>
+        <h1>Generador de Hashtags & Tendencias Google Trends</h1>
+        <p class="subtitle">Crea bloques optimizados para redes o descubre las tendencias activas en República Dominicana, España, Estados Unidos y Latinoamérica.</p>
     </header>
 
     <main class="container">
@@ -350,26 +350,38 @@
             </div>
         </div>
 
-        <!-- BLOQUE 2: MÓDULO HASHTAGS EN TENDENCIA HOY (RSS DE GOOGLE NEWS) -->
+        <!-- BLOQUE 2: MÓDULO GOOGLE TRENDS MULTI-REGIÓN -->
         <div class="tool-box">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
                 <div>
-                    <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">En Vivo 24/7</span>
-                    <h2 style="font-size: 1.5rem; margin: 10px 0 0 0; color: #fff;">2. Hashtags Extraídos de Noticias de Hoy (RSS)</h2>
+                    <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Google Trends Global & Local</span>
+                    <h2 style="font-size: 1.5rem; margin: 10px 0 0 0; color: #fff;">2. Tendencias en Vivo por País</h2>
                 </div>
-                <button class="btn-secondary" onclick="fetchGoogleNewsRSS()">🔄 Actualizar Tendencias</button>
+                
+                <!-- SELECTOR DE REGIONES -->
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <select id="geoSelector" onchange="fetchTrendsRSS()" style="padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+                        <option value="DO">🇩🇴 República Dominicana</option>
+                        <option value="ES">🇪🇸 España</option>
+                        <option value="US">🇺🇸 Estados Unidos</option>
+                        <option value="MX">🇲🇽 México (Latinoamérica)</option>
+                        <option value="AR">🇦🇷 Argentina (Latinoamérica)</option>
+                        <option value="CO">🇨🇴 Colombia (Latinoamérica)</option>
+                    </select>
+                    <button class="btn-secondary" onclick="fetchTrendsRSS()">🔄 Actualizar</button>
+                </div>
             </div>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Titulares actuales analizados en tiempo real por el navegador para extraer etiquetas de alto impacto orgánico:</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Temas más buscados en la región seleccionada para extraer etiquetas de alto impacto:</p>
 
             <div id="rssContainer" class="rss-grid">
-                <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias globales desde el RSS...</p>
+                <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias desde Google Trends...</p>
             </div>
         </div>
 
         <!-- ARTÍCULO SEO INFORMATIVO -->
         <article class="seo-article">
             <h2>Estrategia de Hashtags para Multiplicar Tu Alcance Orgánico</h2>
-            <p>El uso inteligente de etiquetas en plataformas de vídeo corto como Reels, TikTok y YouTube Shorts determina cómo el algoritmo clasifica tu contenido en las primeras horas de publicación. Combinar etiquetas de alto volumen con términos sacados de la actualidad informativa garantiza un flujo constante de impresiones frescas.</p>
+            <p>El uso inteligente de etiquetas en plataformas de vídeo corto como Reels, TikTok y YouTube Shorts determina cómo el algoritmo clasifica tu contenido en las primeras horas de publicación. Combinar etiquetas de alto volumen con tendencias directas de Google Trends de tu mercado objetivo (España, EE. UU. o Latinoamérica) asegura un flujo constante de impresiones orgánicas.</p>
         </article>
 
     </main>
@@ -388,7 +400,6 @@
 
             const cleanWord = input.replace(/#/g, '').replace(/\s+/g, '');
 
-            // Generación de bloques simulados inteligentes basados en la entrada
             const macro = `#${cleanWord} #${cleanWord}viral #trending #explore #foryou #viralvideo`;
             const niche = `#${cleanWord}tips #${cleanWord}2026 #${cleanWord}strategy #creators #${cleanWord}community #digitalgrowth`;
             const community = `#contentcreator #reelsinstagram #tiktokviral #shorts #publicación #${cleanWord}daily`;
@@ -407,45 +418,42 @@
             });
         }
 
-        // 2. MÓDULO RSS GOOGLE NEWS (CLIENT-SIDE)
+        // 2. MÓDULO GOOGLE TRENDS MULTI-REGIÓN VIA API BACKEND
         document.addEventListener("DOMContentLoaded", () => {
-            fetchGoogleNewsRSS();
+            fetchTrendsRSS();
         });
 
-        async function fetchGoogleNewsRSS() {
+        async function fetchTrendsRSS() {
             const rssContainer = document.getElementById('rssContainer');
-            rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Analizando titulares recientes...</p>';
+            const selectedGeo = document.getElementById('geoSelector').value;
+            
+            rssContainer.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Sincronizando con Google Trends (${selectedGeo})...</p>`;
 
             try {
-                // RSS de Google News en Español (Tecnología / Tendencias generales)
-                const rssUrl = 'https://news.google.com/rss?hl=es&gl=ES&ceid=ES:es';
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
-
-                const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error("Error de conexión RSS");
-
+                // Llamada a la API pasando el parámetro geo dinámico
+                const response = await fetch(`/api/trends?geo=${selectedGeo}`);
                 const data = await response.json();
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
 
-                const items = xmlDoc.querySelectorAll("item");
+                if (!data.success || !data.items) {
+                    throw new Error("No se pudieron cargar las tendencias.");
+                }
+
                 rssContainer.innerHTML = '';
-
-                // Tomar los primeros 6 elementos de noticias
                 let count = 0;
-                items.forEach((item) => {
+
+                data.items.forEach((item) => {
                     if (count >= 6) return;
-                    const title = item.querySelector("title") ? item.querySelector("title").textContent : "Sin título";
-                    const link = item.querySelector("link") ? item.querySelector("link").textContent : "#";
+                    const title = item.title || "Tendencia activa";
+                    const link = item.link || "https://trends.google.com";
 
                     // Extraer palabras clave del título para armar hashtags automáticos
                     const cleanTitleWords = title
                         .replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/gi, '')
                         .split(' ')
-                        .filter(w => w.length > 4)
+                        .filter(w => w.length > 3)
                         .slice(0, 3);
 
-                    const generatedTags = cleanTitleWords.map(w => `#${w.toLowerCase()}`).join(' ') + ' #news #trending';
+                    const generatedTags = cleanTitleWords.map(w => `#${w.toLowerCase()}`).join(' ') + ` #${selectedGeo.toLowerCase()}viral #trending #viral`;
 
                     const card = document.createElement('div');
                     card.className = 'rss-card';
@@ -455,7 +463,7 @@
                             <div class="rss-tags">${generatedTags}</div>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver Noticia ➔</a>
+                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver en Trends ➔</a>
                             <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('${generatedTags}')">Copiar Tags</button>
                         </div>
                     `;
@@ -464,26 +472,18 @@
                 });
 
                 if (count === 0) {
-                    rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No se encontraron elementos recientes en el feed.</p>';
+                    rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No hay tendencias disponibles en este momento para esta región.</p>';
                 }
 
             } catch (error) {
-                console.error("Error al cargar RSS:", error);
-                // Fallback visual estático por si el proxy público experimenta intermitencia
+                console.error("Error al cargar Google Trends:", error);
                 rssContainer.innerHTML = `
                     <div class="rss-card">
                         <div>
-                            <div class="rss-title">Avances Globales en Inteligencia Artificial y Automatización Web</div>
-                            <div class="rss-tags">#InteligenciaArtificial #Tecnologia #Automation #Trending</div>
+                            <div class="rss-title">Tendencias de Búsqueda Activas (${selectedGeo})</div>
+                            <div class="rss-tags">#Trending #Noticias #Viral #${selectedGeo}</div>
                         </div>
-                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#InteligenciaArtificial #Tecnologia #Automation #Trending')">Copiar Tags</button>
-                    </div>
-                    <div class="rss-card">
-                        <div>
-                            <div class="rss-title">Nuevas Estrategias de Monetización Digital para Creadores de Contenido</div>
-                            <div class="rss-tags">#Monetizacion #Creators #DigitalMarketing #Negocios</div>
-                        </div>
-                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#Monetizacion #Creators #DigitalMarketing #Negocios')">Copiar Tags</button>
+                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#Trending #Noticias #Viral')">Copiar Tags</button>
                     </div>
                 `;
             }
