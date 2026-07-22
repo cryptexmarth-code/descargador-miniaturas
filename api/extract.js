@@ -34,7 +34,6 @@ export default async function handler(req, res) {
             const channel = cleanUrl.split('kick.com/')[1]?.replace('/', '').trim();
 
             if (channel) {
-                // Intentamos obtener el stream/avatar desde la API pública de Kick
                 const response = await fetch(`https://kick.com/api/v2/channels/${channel}`, {
                     headers: {
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
