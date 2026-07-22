@@ -13,44 +13,48 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        // Procesamos cada item aplicando múltiples estrategias de rescate de imágenes
+        // Usamos Promise.all para consultar la imagen real de cada enlace en paralelo
         const itemsPromises = data.items.map(async (item) => {
           let imageUrl = '';
 
-          // Estrategia 1: Thumbnail o Enclosure directo del RSS
+          // 1. Intentar rescatar la imagen tradicional del RSS si por milagro viene ahí
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
           } else if (item.enclosure && item.enclosure.link) {
             imageUrl = item.enclosure.link;
-          } 
+          } else if (item.content) {
+            const imgMatch = item.content.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
+            if (imgMatch) imageUrl = imgMatch[1];
+          } else if (item.description) {
+            const imgMatchDesc = item.description.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
+            if (imgMatchDesc) imageUrl = imgMatchDesc[1];
+          }
 
-          // Estrategia 2: Regex exhaustiva en contenido o descripción (src, data-src, srcset)
-          if (!imageUrl && (item.content || item.description)) {
-            const textSource = item.content || item.description;
-            const imgMatch = textSource.match(/<img[^>]+(?:src|data-src)=["']([^"'#]+)["']/i);
-            if (imgMatch) {
-              imageUrl = imgMatch[1];
-            } else {
-              // Buscar URLs sueltas de imágenes dentro de etiquetas de medios o atributos anidados
-              const urlMatch = textSource.match(/(https?:\/\/[^\s"'<>]+?\.(?:jpg|jpeg|png|webp))/i);
-              if (urlMatch) imageUrl = urlMatch[1];
+          // 2. Si el RSS no trae imagen, consultamos a Microlink usando el enlace de la noticia para extraer su imagen real de Open Graph
+          if (!imageUrl && item.link) {
+            try {
+              const microlinkRes = await fetch(`https://api.microlink.co/?url=${encodeURIComponent(item.link)}`);
+              const microlinkData = await microlinkRes.json();
+              if (microlinkData.status === 'success' && microlinkData.data && microlinkData.data.image) {
+                imageUrl = microlinkData.data.image.url;
+              }
+            } catch (err) {
+              // Si falla Microlink, pasamos al siguiente respaldo
             }
           }
 
-          // Ajuste de protocolos incompletos tipo '//'
-          if (imageUrl && imageUrl.startsWith('//')) {
-            imageUrl = 'https:' + imageUrl;
-          }
-
-          // Estrategia 3: Si aún no hay imagen, intentamos un enlace alternativo o miniatura de previsualización web basada en servicios públicos de Open Graph / Favicon dinámico de alta calidad
+          // 3. Respaldo definitivo: si todo lo demás falla, usamos el favicon de alta calidad del dominio
           if (!imageUrl && item.link) {
             try {
               const urlObj = new URL(item.link);
-              // Usamos un servicio de captura de iconos corporativos grandes o previsualización de dominio
               imageUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=256`;
             } catch (e) {
               imageUrl = '';
             }
+          }
+
+          if (imageUrl && imageUrl.startsWith('//')) {
+            imageUrl = 'https:' + imageUrl;
           }
 
           return {
