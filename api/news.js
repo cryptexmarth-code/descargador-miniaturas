@@ -13,23 +13,10 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        const itemsPromises = data.items.map(async (item) => {
+        return data.items.map((item) => {
           let imageUrl = '';
-          let finalArticleUrl = item.link;
 
-          // 0. Resolver la URL real del artículo si viene encapsulada por Google News
-          try {
-            if (finalArticleUrl && finalArticleUrl.includes('news.google.com')) {
-              const resRedirect = await fetch(finalArticleUrl, { method: 'HEAD', redirect: 'follow' });
-              if (resRedirect.url) {
-                finalArticleUrl = resRedirect.url;
-              }
-            }
-          } catch (e) {
-            // Si falla la redirección, mantenemos el link original
-          }
-
-          // 1. Intentar extraer imagen del contenido RSS tradicional
+          // 1. Intentar capturar la imagen directa del RSS (thumbnail, enclosure o HTML interno)
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
           } else if (item.enclosure && item.enclosure.link) {
@@ -42,20 +29,24 @@ export default async function handler(req, res) {
             if (imgMatchDesc) imageUrl = imgMatchDesc[1];
           }
 
-          // 2. Si no hay imagen, consultamos a Microlink usando la URL ya desacoplada del medio real
-          if (!imageUrl && finalArticleUrl) {
+          // 2. Regla de respaldo inteligente por dominio o temática si el RSS no trae imagen
+          if (!imageUrl && item.link) {
             try {
-              const microlinkRes = await fetch(`https://api.microlink.co/?url=${encodeURIComponent(finalArticleUrl)}`);
-              const microlinkData = await microlinkRes.json();
-              if (microlinkData.status === 'success' && microlinkData.data && microlinkData.data.image) {
-                imageUrl = microlinkData.data.image.url;
-              }
-            } catch (err) {}
-          }
+              const urlObj = new URL(item.link);
+              const domain = urlObj.hostname.toLowerCase();
 
-          // 3. En lugar del favicon de Google (que causa la "G" pixelada), dejamos una imagen por defecto elegante o vacía para que tu CSS la gestione
-          if (!imageUrl) {
-            imageUrl = ''; // O una URL de una imagen predeterminada de respaldo para tu web
+              // Asignación limpia según la fuente o palabras clave en el título/enlace
+              if (domain.includes('youtube') || domain.includes.google) {
+                imageUrl = 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60';
+              } else if (domain.includes('xataka') || domain.includes('tech') || domain.includes('infobae')) {
+                imageUrl = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=60';
+              } else {
+                // Imagen genérica corporativa y moderna de respaldo para cualquier otro dominio
+                imageUrl = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60';
+              }
+            } catch (e) {
+              imageUrl = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60';
+            }
           }
 
           if (imageUrl && imageUrl.startsWith('//')) {
@@ -64,14 +55,12 @@ export default async function handler(req, res) {
 
           return {
             title: item.title,
-            link: finalArticleUrl, // Devolvemos el link limpio del diario
+            link: item.link,
             pubDate: item.pubDate,
             description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : '',
             image: imageUrl
           };
         });
-
-        return await Promise.all(itemsPromises);
       }
       return [];
     }
