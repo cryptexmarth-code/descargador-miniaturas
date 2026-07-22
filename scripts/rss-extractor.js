@@ -1,63 +1,53 @@
 const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-async function actualizarDatosCompetencia() {
-    const canales = [
-        // --- 5 Originales ---
-        { nombre: "The Verge", id: "UCBJycsmduvYEL83R_U4JriQ" },
-        { nombre: "Linus Tech Tips", id: "UCXuqSBlHAE6Xw-yeJA0Tunw" },
-        { nombre: "AuronPlay", id: "UC0V8u0c4OEqCsCH0pKBnEeg" },
-        { nombre: "MrBeast", id: "UCX6OQ3DkcsbYNE6H8uQQuVA" },
-        { nombre: "Fazt Code", id: "UCrQ3fJPmgCGIIWdE8_4SrgQ" },
+// Lista de canales (puedes incluir más canales virales o de gaming/tech del momento para asegurar variedad)
+const channels = [
+  { name: "The Verge", id: "UCRUjdVOsuuevUNSLJ2nAFUA" },
+  { name: "Linus Tech Tips", id: "UCXuqSBlHAE6Xw-yeJA0Tunw" },
+  { name: "MrBeast", id: "UCX6OQ3DkcsbYNE6H8uQQuVA" },
+  { name: "MKBHD", id: "UCBJycsmduvYEL83R_U4JriQ" },
+  { name: "Devdreaming", id: "UCi8e0iOVk1fEOohdfu4HglA" }
+];
 
-        // --- 10 Nuevos en Español e Inglés ---
-        { nombre: "Midudev", id: "UC8LeimukJW82MLSWNVjW3sw" },
-        { nombre: "Dalto", id: "UC9nxKNLyvyaN19UDUf24Pmw" },
-        { nombre: "Ibai", id: "UC02yQWv68_c8wR299E0-lTA" },
-        { nombre: "El Rubius", id: "UCpwgnzQc3mCjWwz_bB1b14Q" },
-        { nombre: "The Wild Project", id: "UCwz8m4nJz8c_p_J07a3lO5w" },
-        { nombre: "DotCSV", id: "UCyBVqKsrW219-X8k-wV-lYw" },
-        { nombre: "MKBHD", id: "UCBJycsmduvYEL83R_U4JriQ" }, // (Nota: MKBHD / Marques Brownlee)
-        { nombre: "Programación ATS", id: "UCT5ZgCeyC5Y4aT_yJ5jZ1sQ" },
-        { nombre: "Devdreaming", id: "UC-lHJZR3Gqxm24_Vd_AJ5Yw" },
-        { nombre: "Pelado Nerd", id: "UCu3774KYXcaUD2pS3C8C9sg" }
-    ];
+async function fetchRSS() {
+  let allVideos = [];
+  const parser = new xml2js.Parser();
 
-    let resultadosGlobales = [];
-
-    for (let canal of canales) {
-        try {
-            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${canal.id}`;
-            const response = await axios.get(rssUrl);
-            
-            const parser = new xml2js.Parser({ explicitArray: false });
-            const result = await parser.parseStringPromise(response.data);
-
-            const entries = result.feed.entry;
-            if (entries && Array.isArray(entries)) {
-                const ultimosVideos = entries.slice(0, 3).map(entry => ({
-                    titulo: entry.title,
-                    url: entry.link['$'].href,
-                    videoId: entry['yt:videoId'],
-                    publicado: entry.published,
-                    canal: canal.nombre
-                }));
-
-                resultadosGlobales.push(...ultimosVideos);
-            }
-        } catch (error) {
-            console.error(`Error al leer el RSS del canal ${canal.nombre}:`, error.message);
+  for (const channel of channels) {
+    try {
+      const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channel.id}`;
+      const response = await axios.get(rssUrl);
+      const result = await parser.parseStringPromise(response.data);
+      
+      if (result.feed && result.feed.entry) {
+        for (const entry of result.feed.entry) {
+          allVideos.push({
+            titulo: entry.title[0],
+            url: entry.link[0].$.href,
+            videoId: entry['yt:videoId'][0],
+            publicado: entry.published[0],
+            canal: channel.name
+          });
         }
+      }
+    } catch (error) {
+      console.error(`Error obteniendo RSS de ${channel.name}:`, error.message);
     }
+  }
 
-    const outputDir = './data';
-    if (!fs.existsSync(outputDir)){
-        fs.mkdirSync(outputDir, { recursive: true });
-    }
+  // Ordenar estrictamente del más reciente al más antiguo para reflejar tendencias reales
+  allVideos.sort((a, b) => new Date(b.publicado) - new Date(a.publicado));
 
-    fs.writeFileSync('./data/competencia-rss.json', JSON.stringify(resultadosGlobales, null, 2));
-    console.log("¡Datos de RSS de competencia actualizados con éxito en data/competencia-rss.json!");
+  // Guardar un pool fresco de los 25 videos más recientes globales
+  const finalVideos = allVideos.slice(0, 25);
+
+  const filePath = path.join(__dirname, '../data/competencia-rss.json');
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(finalVideos, null, 2), 'utf8');
+  console.log("RSS sincronizado y ordenado correctamente por fecha de tendencia.");
 }
 
-actualizarDatosCompetencia();
+fetchRSS();
