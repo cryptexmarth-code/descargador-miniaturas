@@ -3,7 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const xml2js = require('xml2js');
 
-// Lista maestra optimizada con IDs de YouTube reales y verificados (Inglés y Español)
+// Lista maestra con los ID oficiales reales de YouTube (Formato UC...)
 const masterChannels = [
   // --- INGLÉS ---
   { name: "MrBeast", id: "UCX6OQ3DkcsbYNE6H8uQQuVA" },
@@ -27,7 +27,7 @@ const masterChannels = [
   { name: "Sidemen", id: "UCDogdizlMdCs8dZk1w_u9_g" },
 
   // --- ESPAÑOL ---
-  { name: "Ibai Llanos", id: "UCv628SZXudW9n-1gW0A7L-Q" },
+  { name: "Ibai Llanos", id: "UCIsXmj8IJ7SmW3kCT3orYyw" },
   { name: "AuronPlay", id: "UC0V926_A1sO9aKxI6u8879Q" },
   { name: "ElRubius", id: "UCXujkky4Hn3X9TqW43x_Bvw" },
   { name: "Vegetta777", id: "UCjKhicR2Eci9A7hJdFz1Aww" },
@@ -57,7 +57,7 @@ async function fetchRSS() {
   let allVideos = [];
   const parser = new xml2js.Parser();
 
-  // Seleccionar aleatoriamente 10 canales en cada ejecución para garantizar rotación
+  // Seleccionar 10 canales aleatorios por ciclo para asegurar rotación
   const shuffledChannels = shuffleArray([...masterChannels]);
   const activeChannels = shuffledChannels.slice(0, 10);
 
@@ -65,6 +65,7 @@ async function fetchRSS() {
 
   for (const channel of activeChannels) {
     try {
+      // Usar estrictamente channel_id para evitar errores 404
       const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channel.id}`;
       const response = await axios.get(rssUrl);
       const result = await parser.parseStringPromise(response.data);
@@ -85,21 +86,16 @@ async function fetchRSS() {
     }
   }
 
-  // Ordenar cronológicamente del más nuevo al más antiguo
   allVideos.sort((a, b) => new Date(b.publicado) - new Date(a.publicado));
-
-  // Cortar exactamente a los 25 principales para mantener el archivo limpio
   const finalVideos = allVideos.slice(0, 25);
 
   if (finalVideos.length === 0) {
-    console.error("Advertencia: No se recolectó ningún video. No se sobrescribirá el archivo para evitar dejarlo vacío.");
+    console.error("Advertencia: No se recolectó ningún video. No se sobrescribirá el archivo.");
     return;
   }
 
   const filePath = path.join(__dirname, '../data/competencia-rss.json');
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  
-  // Guardar con formato JSON estricto y seguro
   fs.writeFileSync(filePath, JSON.stringify(finalVideos, null, 2), 'utf8');
   console.log("¡RSS rotativo actualizado con éxito y JSON validado!");
 }
