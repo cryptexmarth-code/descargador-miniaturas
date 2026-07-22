@@ -40,6 +40,7 @@
             --text-muted: #a0a5b5;
             --border: #232838;
             --border-highlight: #343b52;
+            --danger: #e74c3c;
         }
 
         * { box-sizing: border-box; }
@@ -202,6 +203,53 @@
             box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
         }
 
+        /* ESTILOS PARA ITEMS DINÁMICOS */
+        .item-row-builder {
+            background: var(--card-inner);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .btn-remove-item {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-remove-item:hover {
+            text-decoration: underline;
+        }
+
+        .btn-add-item {
+            background-color: transparent;
+            border: 2px dashed var(--border-highlight);
+            color: var(--accent-blue);
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .btn-add-item:hover {
+            border-color: var(--accent-blue);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
         /* VISTA PREVIA DE COTIZACIÓN */
         .invoice-preview {
             background: #ffffff;
@@ -350,21 +398,14 @@
                     <textarea id="quoteClient" rows="2" oninput="updateQuote()">Empresa o Cliente / Contacto</textarea>
                 </div>
 
-                <h2 style="margin-top: 25px;">3. Concepto del Proyecto</h2>
-                <div class="form-group">
-                    <label>Descripción del Servicio</label>
-                    <input type="text" id="quoteDesc" value="Campaña Integral de Marketing Digital y SEO" oninput="updateQuote()">
+                <h2 style="margin-top: 25px;">3. Conceptos del Proyecto</h2>
+                
+                <!-- CONTENEDOR DE ÍTEMS DINÁMICOS -->
+                <div id="itemsContainer">
+                    <!-- Los ítems se inyectarán vía JS -->
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Cantidad / Horas</label>
-                        <input type="number" id="quoteQty" value="1" min="1" oninput="updateQuote()">
-                    </div>
-                    <div class="form-group">
-                        <label>Precio Estimado ($)</label>
-                        <input type="number" id="quotePrice" value="1200" min="0" oninput="updateQuote()">
-                    </div>
-                </div>
+
+                <button type="button" class="btn-add-item" onclick="addItemRow()">+ Agregar otro recurso</button>
             </div>
 
             <!-- PANEL DE VISTA PREVIA -->
@@ -402,17 +443,13 @@
                                     <th style="text-align: right;">Total Estimado</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="previewDesc">Campaña Integral de Marketing Digital y SEO</td>
-                                    <td id="previewQty" style="text-align: center;">1</td>
-                                    <td id="previewSubtotal" style="text-align: right;">$1,200.00</td>
-                                </tr>
+                            <tbody id="previewTableBody">
+                                <!-- Filas de la tabla de vista previa -->
                             </tbody>
                         </table>
 
                         <div class="invoice-total">
-                            Inversión Total: <span id="previewTotal" style="color: #3498db;">$1,200.00</span>
+                            Inversión Total: <span id="previewTotal" style="color: #3498db;">$0.00</span>
                         </div>
                     </div>
                 </div>
@@ -425,7 +462,7 @@
         <article class="seo-article">
             <h2>Claves para una Cotización Comercial Exitosa y Cómo Gestionar Presupuestos B2B</h2>
             <p>Enviar presupuestos claros y detallados mediante un <strong>generador de presupuestos</strong> optimizado incrementa considerablemente la tasa de cierre en tratos comerciales B2B. Al estructurar los alcances del servicio y los plazos de validez directamente en un documento limpio, reduces las fricciones con los tomadores de decisiones antes de emitir la factura formal.</p>
-            <p>Utilizar herramientas en línea para <strong>crear cotización online</strong> te permite ofrecer una imagen mucho más profesional. Ya sea que necesites una <strong>plantilla de cotizacion comercial</strong> para agencias o un formato rápido para autónomos, contar con un <strong>presupuesto en linea gratis</strong> agiliza el flujo de trabajo y te ayuda a <strong>hacer cotizacion rapida</strong> sin complicaciones.</p>
+            <p>Utilizar herramientas en línea para <strong>crear cotizacion online</strong> te permite ofrecer una imagen mucho más profesional. Ya sea que necesites una <strong>plantilla de cotizacion comercial</strong> para agencias o un formato rápido para autónomos, contar con un <strong>presupuesto en linea gratis</strong> agiliza el flujo de trabajo y te ayuda a <strong>hacer cotizacion rapida</strong> sin complicaciones.</p>
             <p>Un buen <strong>cotizador automatico B2B</strong> calcula al instante los subtotales y totales, facilitando la exportación a formatos universales como una <strong>cotizacion comercial en PDF</strong>. Implementar una correcta <strong>calculadora de cotizaciones online</strong> y disponer de una adecuada <strong>plantilla para cotizar proyectos</strong> asegura que cada propuesta enviada cumpla con los estándares de la industria digital moderna.</p>
         </article>
 
@@ -436,31 +473,108 @@
         <p style="margin: 0; font-size: 14px;">&copy; 2026 VidPulse SEO Suite — Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO -->
+    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO Y GESTIÓN DINÁMICA -->
     <script>
+        // Arreglo inicial para los ítems
+        let quoteItems = [
+            { desc: "Campaña Integral de Marketing Digital y SEO", qty: 1, price: 2000 }
+        ];
+
         document.addEventListener("DOMContentLoaded", () => {
+            renderItemsBuilder();
             updateQuote();
         });
+
+        function renderItemsBuilder() {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            quoteItems.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-row-builder';
+                itemDiv.innerHTML = `
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label>Descripción del Servicio #${index + 1}</label>
+                        <input type="text" value="${escapeHtml(item.desc)}" oninput="updateItemData(${index}, 'desc', this.value)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Cantidad / Horas</label>
+                            <input type="number" value="${item.qty}" min="1" oninput="updateItemData(${index}, 'qty', this.value)">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Precio Unitario ($)</label>
+                            <input type="number" value="${item.price}" min="0" oninput="updateItemData(${index}, 'price', this.value)">
+                        </div>
+                    </div>
+                    ${quoteItems.length > 1 ? `<button type="button" class="btn-remove-item" onclick="removeItemRow(${index})">🗑️ Eliminar recurso</button>` : ''}
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function addItemRow() {
+            quoteItems.push({ desc: "Nuevo Servicio o Recurso", qty: 1, price: 500 });
+            renderItemsBuilder();
+            updateQuote();
+        }
+
+        function removeItemRow(index) {
+            quoteItems.splice(index, 1);
+            renderItemsBuilder();
+            updateQuote();
+        }
+
+        function updateItemData(index, field, value) {
+            if (field === 'qty' || field === 'price') {
+                quoteItems[index][field] = parseFloat(value) || 0;
+            } else {
+                quoteItems[index][field] = value;
+            }
+            updateQuote();
+        }
 
         function updateQuote() {
             const number = document.getElementById('quoteNumber').value;
             const valid = document.getElementById('quoteValid').value;
             const issuer = document.getElementById('quoteIssuer').value;
             const client = document.getElementById('quoteClient').value;
-            const desc = document.getElementById('quoteDesc').value;
-            const qty = parseFloat(document.getElementById('quoteQty').value) || 0;
-            const price = parseFloat(document.getElementById('quotePrice').value) || 0;
-            
-            const total = qty * price;
 
             document.getElementById('previewNumber').textContent = number;
             document.getElementById('previewValid').textContent = valid;
             document.getElementById('previewIssuer').textContent = issuer;
             document.getElementById('previewClient').textContent = client;
-            document.getElementById('previewDesc').textContent = desc;
-            document.getElementById('previewQty').textContent = qty;
-            document.getElementById('previewSubtotal').textContent = '$' + total.toFixed(2);
-            document.getElementById('previewTotal').textContent = '$' + total.toFixed(2);
+
+            const tbody = document.getElementById('previewTableBody');
+            tbody.innerHTML = '';
+
+            let grandTotal = 0;
+
+            quoteItems.forEach(item => {
+                const subtotal = item.qty * item.price;
+                grandTotal += subtotal;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${escapeHtml(item.desc)}</td>
+                    <td style="text-align: center;">${item.qty}</td>
+                    <td style="text-align: right;">$${subtotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('previewTotal').textContent = '$' + grandTotal.toFixed(2);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
         }
     </script>
 </body>
