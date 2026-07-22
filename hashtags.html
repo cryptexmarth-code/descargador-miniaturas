@@ -234,7 +234,7 @@
             margin-bottom: 12px;
         }
 
-        /* BLOQUE RSS TENDENCIAS */
+        /* BLOQUE TENDENCIAS */
         .rss-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -304,8 +304,8 @@
 
     <!-- CABECERA -->
     <header>
-        <h1>Generador de Hashtags & Tendencias Google Trends</h1>
-        <p class="subtitle">Crea bloques optimizados para redes o descubre las tendencias activas en República Dominicana, España, Estados Unidos y Latinoamérica.</p>
+        <h1>Generador de Hashtags & Tendencias Activas</h1>
+        <p class="subtitle">Crea bloques optimizados para redes o descubre las tendencias clave en República Dominicana, España, Estados Unidos y Latinoamérica.</p>
     </header>
 
     <main class="container">
@@ -350,11 +350,11 @@
             </div>
         </div>
 
-        <!-- BLOQUE 2: MÓDULO GOOGLE TRENDS MULTI-REGIÓN -->
+        <!-- BLOQUE 2: MÓDULO TENDENCIAS MULTI-REGIÓN -->
         <div class="tool-box">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
                 <div>
-                    <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Google Trends Global & Local</span>
+                    <span style="background: rgba(249, 212, 35, 0.15); color: var(--accent-gold); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">Tendencias Globales & Locales</span>
                     <h2 style="font-size: 1.5rem; margin: 10px 0 0 0; color: #fff;">2. Tendencias en Vivo por País</h2>
                 </div>
                 
@@ -374,14 +374,14 @@
             <p style="color: var(--text-muted); font-size: 0.95rem;">Temas más buscados en la región seleccionada para extraer etiquetas de alto impacto:</p>
 
             <div id="rssContainer" class="rss-grid">
-                <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias desde Google Trends...</p>
+                <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias...</p>
             </div>
         </div>
 
         <!-- ARTÍCULO SEO INFORMATIVO -->
         <article class="seo-article">
             <h2>Estrategia de Hashtags para Multiplicar Tu Alcance Orgánico</h2>
-            <p>El uso inteligente de etiquetas en plataformas de vídeo corto como Reels, TikTok y YouTube Shorts determina cómo el algoritmo clasifica tu contenido en las primeras horas de publicación. Combinar etiquetas de alto volumen con tendencias directas de Google Trends de tu mercado objetivo (España, EE. UU. o Latinoamérica) asegura un flujo constante de impresiones orgánicas.</p>
+            <p>El uso inteligente de etiquetas en plataformas de vídeo corto como Reels, TikTok y YouTube Shorts determina cómo el algoritmo clasifica tu contenido en las primeras horas de publicación. Combinar etiquetas de alto volumen con tendencias directas de tu mercado objetivo asegura un flujo constante de impresiones orgánicas.</p>
         </article>
 
     </main>
@@ -418,7 +418,7 @@
             });
         }
 
-        // 2. MÓDULO GOOGLE TRENDS MULTI-REGIÓN VIA API BACKEND
+        // 2. MÓDULO TENDENCIAS MULTI-REGIÓN VIA API BACKEND
         document.addEventListener("DOMContentLoaded", () => {
             fetchTrendsRSS();
         });
@@ -427,7 +427,7 @@
             const rssContainer = document.getElementById('rssContainer');
             const selectedGeo = document.getElementById('geoSelector').value;
             
-            rssContainer.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias oficiales para ${selectedGeo}...</p>`;
+            rssContainer.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias para ${selectedGeo}...</p>`;
 
             try {
                 const response = await fetch(`/api/trends?geo=${selectedGeo}`);
@@ -467,7 +467,7 @@
                             <div class="rss-tags" style="margin-bottom: 12px;">${generatedTags}</div>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 10px;">
-                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver en Google Trends ➔</a>
+                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver más ➔</a>
                             <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('${generatedTags}')">Copiar Tags</button>
                         </div>
                     `;
