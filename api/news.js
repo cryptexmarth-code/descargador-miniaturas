@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         return data.items.map((item) => {
           let imageUrl = '';
 
-          // 1. Intentar capturar la imagen directa del RSS (thumbnail, enclosure o HTML interno)
+          // 1. Intentar capturar la imagen directa del RSS
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
           } else if (item.enclosure && item.enclosure.link) {
@@ -29,22 +29,24 @@ export default async function handler(req, res) {
             if (imgMatchDesc) imageUrl = imgMatchDesc[1];
           }
 
-          // 2. Regla de respaldo inteligente por dominio o temática si el RSS no trae imagen
-          if (!imageUrl && item.link) {
-            try {
-              const urlObj = new URL(item.link);
-              const domain = urlObj.hostname.toLowerCase();
+          // 2. Si no hay imagen, analizamos el TÍTULO para asignarle una imagen dinámica y coherente
+          if (!imageUrl && item.title) {
+            const titleLower = item.title.toLowerCase();
 
-              // Asignación limpia según la fuente o palabras clave en el título/enlace
-              if (domain.includes('youtube') || domain.includes.google) {
-                imageUrl = 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60';
-              } else if (domain.includes('xataka') || domain.includes('tech') || domain.includes('infobae')) {
-                imageUrl = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=60';
-              } else {
-                // Imagen genérica corporativa y moderna de respaldo para cualquier otro dominio
-                imageUrl = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60';
-              }
-            } catch (e) {
+            if (titleLower.includes('youtube') || titleLower.includes('video') || titleLower.includes('canal') || titleLower.includes('stream')) {
+              // Imagen relacionada a video / streaming
+              imageUrl = 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60';
+            } else if (titleLower.includes('seo') || titleLower.includes('google') || titleLower.includes('ranking') || titleLower.includes('web') || titleLower.includes('trafico')) {
+              // Imagen relacionada a SEO / analíticas
+              imageUrl = 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&auto=format&fit=crop&q=60';
+            } else if (titleLower.includes('ia') || titleLower.includes('inteligencia artificial') || titleLower.includes('gpt') || titleLower.includes('tecnologia') || titleLower.includes('app')) {
+              // Imagen relacionada a Inteligencia Artificial / Código
+              imageUrl = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=60';
+            } else if (titleLower.includes('dinero') || titleLower.includes('banco') || titleLower.includes('monetiz') || titleLower.includes('econom') || titleLower.includes('juez') || titleLower.includes('legal')) {
+              // Imagen relacionada a finanzas / legal / noticias generales
+              imageUrl = 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600&auto=format&fit=crop&q=60';
+            } else {
+              // Imagen genérica moderna de respaldo para noticias generales
               imageUrl = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60';
             }
           }
