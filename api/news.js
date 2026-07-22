@@ -13,7 +13,25 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        return data.items.map((item) => {
+        // Banco ampliado de imágenes únicas y profesionales de Unsplash
+        const imagePool = [
+          'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60', // Streaming / Video
+          'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&auto=format&fit=crop&q=60', // Analíticas / Gráficas
+          'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=60', // Abstracto / IA
+          'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600&auto=format&fit=crop&q=60', // Finanzas / Dólares
+          'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60', // Periódico / Noticias
+          'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=60', // Hardware / Servidores
+          'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=60', // Marketing / Estadísticas
+          'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=60', // Dashboard digital
+          'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=60', // Código / Programación
+          'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=60', // Trabajo en equipo / Oficina
+          'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&auto=format&fit=crop&q=60', // Seguridad / Ciberseguridad
+          'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=60', // Redes sociales / Conectividad
+          'https://images.unsplash.com/photo-1579389083078-4e7018379f7e?w=600&auto=format&fit=crop&q=60', // Diseño / Creatividad
+          'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&auto=format&fit=crop&q=60'  // Laptop / Negocios
+        ];
+
+        return data.items.map((item, index) => {
           let imageUrl = '';
 
           // 1. Intentar capturar la imagen directa del RSS
@@ -29,26 +47,11 @@ export default async function handler(req, res) {
             if (imgMatchDesc) imageUrl = imgMatchDesc[1];
           }
 
-          // 2. Si no hay imagen, analizamos el TÍTULO para asignarle una imagen dinámica y coherente
-          if (!imageUrl && item.title) {
-            const titleLower = item.title.toLowerCase();
-
-            if (titleLower.includes('youtube') || titleLower.includes('video') || titleLower.includes('canal') || titleLower.includes('stream')) {
-              // Imagen relacionada a video / streaming
-              imageUrl = 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60';
-            } else if (titleLower.includes('seo') || titleLower.includes('google') || titleLower.includes('ranking') || titleLower.includes('web') || titleLower.includes('trafico')) {
-              // Imagen relacionada a SEO / analíticas
-              imageUrl = 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=600&auto=format&fit=crop&q=60';
-            } else if (titleLower.includes('ia') || titleLower.includes('inteligencia artificial') || titleLower.includes('gpt') || titleLower.includes('tecnologia') || titleLower.includes('app')) {
-              // Imagen relacionada a Inteligencia Artificial / Código
-              imageUrl = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=60';
-            } else if (titleLower.includes('dinero') || titleLower.includes('banco') || titleLower.includes('monetiz') || titleLower.includes('econom') || titleLower.includes('juez') || titleLower.includes('legal')) {
-              // Imagen relacionada a finanzas / legal / noticias generales
-              imageUrl = 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600&auto=format&fit=crop&q=60';
-            } else {
-              // Imagen genérica moderna de respaldo para noticias generales
-              imageUrl = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=60';
-            }
+          // 2. Si no hay imagen, generamos un índice único mezclando la longitud del título y la posición del elemento
+          if (!imageUrl) {
+            const titleLength = item.title ? item.title.length : 0;
+            const uniqueIndex = (index + titleLength) % imagePool.length;
+            imageUrl = imagePool[uniqueIndex];
           }
 
           if (imageUrl && imageUrl.startsWith('//')) {
