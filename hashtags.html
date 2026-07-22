@@ -427,63 +427,59 @@
             const rssContainer = document.getElementById('rssContainer');
             const selectedGeo = document.getElementById('geoSelector').value;
             
-            rssContainer.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Sincronizando con Google Trends (${selectedGeo})...</p>`;
+            rssContainer.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias oficiales para ${selectedGeo}...</p>`;
 
             try {
-                // Llamada a la API pasando el parámetro geo dinámico
                 const response = await fetch(`/api/trends?geo=${selectedGeo}`);
                 const data = await response.json();
 
-                if (!data.success || !data.items) {
-                    throw new Error("No se pudieron cargar las tendencias.");
+                if (!data.success || !data.items || data.items.length === 0) {
+                    throw new Error("No se encontraron tendencias activas.");
                 }
 
                 rssContainer.innerHTML = '';
-                let count = 0;
+                
+                data.items.forEach((item, index) => {
+                    if (index >= 8) return; // Mostrar top 8
 
-                data.items.forEach((item) => {
-                    if (count >= 6) return;
-                    const title = item.title || "Tendencia activa";
-                    const link = item.link || "https://trends.google.com";
+                    const title = item.title;
+                    const traffic = item.traffic;
+                    const link = item.link;
 
-                    // Extraer palabras clave del título para armar hashtags automáticos
-                    const cleanTitleWords = title
+                    // Generar hashtags optimizados basados en el tema real
+                    const cleanWords = title
                         .replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/gi, '')
                         .split(' ')
                         .filter(w => w.length > 3)
                         .slice(0, 3);
 
-                    const generatedTags = cleanTitleWords.map(w => `#${w.toLowerCase()}`).join(' ') + ` #${selectedGeo.toLowerCase()}viral #trending #viral`;
+                    const generatedTags = cleanWords.map(w => `#${w.toLowerCase().replace(/\s+/g, '')}`).join(' ') + ` #${selectedGeo.toLowerCase()} #tendencias #viral`;
 
                     const card = document.createElement('div');
                     card.className = 'rss-card';
                     card.innerHTML = `
                         <div>
-                            <div class="rss-title">${title}</div>
-                            <div class="rss-tags">${generatedTags}</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--accent-gold); font-weight: bold;">#0${index + 1} Tendencia</span>
+                                <span style="font-size: 0.75rem; background: rgba(39, 174, 96, 0.15); color: #27ae60; padding: 2px 8px; border-radius: 4px; font-weight: bold;">🔥 ${traffic}</span>
+                            </div>
+                            <div class="rss-title" style="font-size: 1.05rem; margin-bottom: 8px;">${title}</div>
+                            <div class="rss-tags" style="margin-bottom: 12px;">${generatedTags}</div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver en Trends ➔</a>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 10px;">
+                            <a href="${link}" target="_blank" style="color: var(--accent-orange); font-size: 0.85rem; text-decoration: none; font-weight: bold;">Ver en Google Trends ➔</a>
                             <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('${generatedTags}')">Copiar Tags</button>
                         </div>
                     `;
                     rssContainer.appendChild(card);
-                    count++;
                 });
 
-                if (count === 0) {
-                    rssContainer.innerHTML = '<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No hay tendencias disponibles en este momento para esta región.</p>';
-                }
-
             } catch (error) {
-                console.error("Error al cargar Google Trends:", error);
+                console.error("Error al renderizar tendencias:", error);
                 rssContainer.innerHTML = `
-                    <div class="rss-card">
-                        <div>
-                            <div class="rss-title">Tendencias de Búsqueda Activas (${selectedGeo})</div>
-                            <div class="rss-tags">#Trending #Noticias #Viral #${selectedGeo}</div>
-                        </div>
-                        <button class="btn-secondary" style="margin-top: 10px; font-size: 0.75rem;" onclick="navigator.clipboard.writeText('#Trending #Noticias #Viral')">Copiar Tags</button>
+                    <div class="rss-card" style="grid-column: 1/-1; text-align: center; padding: 30px;">
+                        <div class="rss-title">No se pudieron sincronizar las tendencias en este momento.</div>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Intenta hacer clic en "Actualizar" nuevamente en unos segundos.</p>
                     </div>
                 `;
             }
