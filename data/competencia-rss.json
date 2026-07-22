@@ -1,24 +1,10 @@
 [
   {
-    "titulo": "The Best Wii Remote EVER!",
-    "url": "https://www.youtube.com/shorts/Ute2wSwml4o",
-    "videoId": "Ute2wSwml4o",
-    "publicado": "2026-07-21T01:01:05+00:00",
-    "canal": "Linus Tech Tips"
-  },
-  {
-    "titulo": "This Upgrade is Dangerous - AMD $5,000 Ultimate Tech Upgrade",
-    "url": "https://www.youtube.com/watch?v=QAA7b1Av0jM",
-    "videoId": "QAA7b1Av0jM",
-    "publicado": "2026-07-20T17:40:16+00:00",
-    "canal": "Linus Tech Tips"
-  },
-  {
-    "titulo": "True 4k Gaming PC (2026) - Classic LTT Build Guide",
-    "url": "https://www.youtube.com/watch?v=zIgmgMLZrrc",
-    "videoId": "zIgmgMLZrrc",
-    "publicado": "2026-07-19T17:00:34+00:00",
-    "canal": "Linus Tech Tips"
+    "titulo": "Read My Book, You Could Win $1,000,000",
+    "url": "https://www.youtube.com/shorts/Df5Y-2ndQyU",
+    "videoId": "Df5Y-2ndQyU",
+    "publicado": "2026-07-17T16:00:06+00:00",
+    "canal": "MrBeast"
   },
   {
     "titulo": "Only One English Word Has This Property",
@@ -26,6 +12,13 @@
     "videoId": "EupTKqL3f1E",
     "publicado": "2026-07-17T04:52:17+00:00",
     "canal": "Vsauce"
+  },
+  {
+    "titulo": "Don't Pop the Balloon",
+    "url": "https://www.youtube.com/shorts/egvLKQe6I4I",
+    "videoId": "egvLKQe6I4I",
+    "publicado": "2026-07-10T16:00:09+00:00",
+    "canal": "MrBeast"
   },
   {
     "titulo": "My Best Friend Wrote A Book!",
@@ -40,5 +33,54 @@
     "videoId": "dyzzvenwOgc",
     "publicado": "2026-07-07T04:31:42+00:00",
     "canal": "Vsauce"
+  },
+  {
+    "titulo": "10 YouTubers vs 2 Secret Traitors",
+    "url": "https://www.youtube.com/watch?v=nH9R0Jpqeqc",
+    "videoId": "nH9R0Jpqeqc",
+    "publicado": "2026-07-04T16:00:41+00:00",
+    "canal": "MrBeast Gaming"
+  },
+  {
+    "titulo": "$1 vs $10,000 Cake",
+    "url": "https://www.youtube.com/shorts/LgbyEFILLJI",
+    "videoId": "LgbyEFILLJI",
+    "publicado": "2026-07-03T16:00:02+00:00",
+    "canal": "MrBeast"
+  },
+  {
+    "titulo": "If You Build It, I'll Buy It!",
+    "url": "https://www.youtube.com/watch?v=wZW016nna48",
+    "videoId": "wZW016nna48",
+    "publicado": "2026-06-20T16:00:01+00:00",
+    "canal": "MrBeast Gaming"
+  },
+  {
+    "titulo": "I Survived 100 Days In Realistic Minecraft",
+    "url": "https://www.youtube.com/watch?v=5F5MKI_jXJw",
+    "videoId": "5F5MKI_jXJw",
+    "publicado": "2026-06-06T16:00:01+00:00",
+    "canal": "MrBeast Gaming"
+  },
+  {
+    "titulo": "They Call it \"The Taco Turn\" and it's Genius - Smarter Every Day 315",
+    "url": "https://www.youtube.com/watch?v=5lCWqEFVzbY",
+    "videoId": "5lCWqEFVzbY",
+    "publicado": "2026-05-31T14:20:12+00:00",
+    "canal": "SmarterEveryDay"
+  },
+  {
+    "titulo": "What Everyone Sees... But I Don't (The Johari Window) - Smarter Every Day 314",
+    "url": "https://www.youtube.com/watch?v=WtQ64nSbdY4",
+    "videoId": "WtQ64nSbdY4",
+    "publicado": "2026-04-11T14:16:34+00:00",
+    "canal": "SmarterEveryDay"
+  },
+  {
+    "titulo": "Everything About Disc Golf Aerodynamics - Smarter Every Day 313",
+    "url": "https://www.youtube.com/watch?v=-0JKHuzJ67A",
+    "videoId": "-0JKHuzJ67A",
+    "publicado": "2026-03-06T20:30:16+00:00",
+    "canal": "SmarterEveryDay"
   }
 ]
