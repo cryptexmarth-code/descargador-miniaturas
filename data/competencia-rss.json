@@ -1,10 +1,31 @@
 [
   {
+    "titulo": "Valve Accidentally Made the Best Desktop PC I’ve Ever Used",
+    "url": "https://www.youtube.com/watch?v=5fXAELrljqs",
+    "videoId": "5fXAELrljqs",
+    "publicado": "2026-07-22T18:18:57+00:00",
+    "canal": "Linus Tech Tips"
+  },
+  {
+    "titulo": "Samsung Z Fold 8 (Wide) Impressions: Better Than I Thought!",
+    "url": "https://www.youtube.com/watch?v=8Hx2yvWSgs0",
+    "videoId": "8Hx2yvWSgs0",
+    "publicado": "2026-07-22T13:01:05+00:00",
+    "canal": "MKBHD"
+  },
+  {
     "titulo": "The Best Wii Remote EVER!",
     "url": "https://www.youtube.com/shorts/Ute2wSwml4o",
     "videoId": "Ute2wSwml4o",
     "publicado": "2026-07-21T01:01:05+00:00",
     "canal": "Linus Tech Tips"
+  },
+  {
+    "titulo": "This ZOOM is Insane!",
+    "url": "https://www.youtube.com/shorts/kUnR9dO4EnA",
+    "videoId": "kUnR9dO4EnA",
+    "publicado": "2026-07-20T20:39:08+00:00",
+    "canal": "MKBHD"
   },
   {
     "titulo": "This Upgrade is Dangerous - AMD $5,000 Ultimate Tech Upgrade",
@@ -14,25 +35,25 @@
     "canal": "Linus Tech Tips"
   },
   {
-    "titulo": "True 4k Gaming PC (2026) - Classic LTT Build Guide",
-    "url": "https://www.youtube.com/watch?v=zIgmgMLZrrc",
-    "videoId": "zIgmgMLZrrc",
-    "publicado": "2026-07-19T17:00:34+00:00",
-    "canal": "Linus Tech Tips"
+    "titulo": "Read My Book, You Could Win $1,000,000",
+    "url": "https://www.youtube.com/shorts/Df5Y-2ndQyU",
+    "videoId": "Df5Y-2ndQyU",
+    "publicado": "2026-07-17T16:00:06+00:00",
+    "canal": "MrBeast"
   },
   {
-    "titulo": "Only One English Word Has This Property",
-    "url": "https://www.youtube.com/shorts/EupTKqL3f1E",
-    "videoId": "EupTKqL3f1E",
-    "publicado": "2026-07-17T04:52:17+00:00",
-    "canal": "Vsauce"
+    "titulo": "iOS 27 Hands-On: Top 5 New Features!",
+    "url": "https://www.youtube.com/watch?v=_oRgdlJUD18",
+    "videoId": "_oRgdlJUD18",
+    "publicado": "2026-07-13T22:27:02+00:00",
+    "canal": "MKBHD"
   },
   {
-    "titulo": "My Best Friend Wrote A Book!",
-    "url": "https://www.youtube.com/shorts/l5aVdFu9ZQI",
-    "videoId": "l5aVdFu9ZQI",
-    "publicado": "2026-07-09T01:43:06+00:00",
-    "canal": "Vsauce"
+    "titulo": "Don't Pop the Balloon",
+    "url": "https://www.youtube.com/shorts/egvLKQe6I4I",
+    "videoId": "egvLKQe6I4I",
+    "publicado": "2026-07-10T16:00:09+00:00",
+    "canal": "MrBeast"
   },
   {
     "titulo": "What’s It Like to Be Killed by Nature’s Most Brutal Predator",
@@ -42,13 +63,6 @@
     "canal": "Kurzgesagt"
   },
   {
-    "titulo": "The Vista Paradox",
-    "url": "https://www.youtube.com/shorts/dyzzvenwOgc",
-    "videoId": "dyzzvenwOgc",
-    "publicado": "2026-07-07T04:31:42+00:00",
-    "canal": "Vsauce"
-  },
-  {
     "titulo": "The True Cost of War",
     "url": "https://www.youtube.com/shorts/uVlMWVP5GJk",
     "videoId": "uVlMWVP5GJk",
@@ -56,11 +70,11 @@
     "canal": "Kurzgesagt"
   },
   {
-    "titulo": "Meet our newest family member",
-    "url": "https://www.youtube.com/watch?v=upZTN2INpDc",
-    "videoId": "upZTN2INpDc",
-    "publicado": "2026-07-02T13:44:17+00:00",
-    "canal": "PewDiePie"
+    "titulo": "$1 vs $10,000 Cake",
+    "url": "https://www.youtube.com/shorts/LgbyEFILLJI",
+    "videoId": "LgbyEFILLJI",
+    "publicado": "2026-07-03T16:00:02+00:00",
+    "canal": "MrBeast"
   },
   {
     "titulo": "What is El Niño?",
@@ -68,19 +82,5 @@
     "videoId": "N2FOxjtv5ns",
     "publicado": "2026-07-01T14:00:35+00:00",
     "canal": "Kurzgesagt"
-  },
-  {
-    "titulo": "I tried to make a Manga",
-    "url": "https://www.youtube.com/watch?v=iRRpvuMG7AM",
-    "videoId": "iRRpvuMG7AM",
-    "publicado": "2026-06-22T08:30:16+00:00",
-    "canal": "PewDiePie"
-  },
-  {
-    "titulo": "MY trillion $Dollar Project is finally OUT!",
-    "url": "https://www.youtube.com/watch?v=rAzT5lcezPs",
-    "videoId": "rAzT5lcezPs",
-    "publicado": "2026-05-31T15:05:46+00:00",
-    "canal": "PewDiePie"
   }
 ]
