@@ -6,7 +6,7 @@
     
     <!-- SEO Meta Tags Dedicados y Optimizados -->
     <title>Generador de Facturas en Línea Gratis y Profesionales — VidPulse SEO</title>
-    <meta name="description" content="Crea, edita y descarga facturas profesionales en formato PDF o imprímelas directamente en línea gratis. Herramienta rápida para freelancers, autónomos y PyMEs.">
+    <meta name="description" content="Crea, edita y descarga facturas profesionales en formato PDF o imprímellas directamente en línea gratis. Herramienta rápida para freelancers, autónomos y PyMEs.">
     <meta name="keywords" content="hacer factura gratis, facturas online gratis, crear factura online gratis, generador de facturas, factura en linea, software de facturacion, plantilla de factura editable, hacer factura sin registrarse, generar factura pdf gratis, creador de facturas para autonomos, facturacion rapida online">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://vidpulseseo.com/facturas.html">
@@ -40,6 +40,7 @@
             --text-muted: #a0a5b5;
             --border: #232838;
             --border-highlight: #343b52;
+            --danger: #e74c3c;
         }
 
         * { box-sizing: border-box; }
@@ -200,6 +201,53 @@
             outline: none;
             border-color: var(--accent-green);
             box-shadow: 0 0 10px rgba(39, 174, 96, 0.2);
+        }
+
+        /* ESTILOS PARA ITEMS DINÁMICOS */
+        .item-row-builder {
+            background: var(--card-inner);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .btn-remove-item {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-remove-item:hover {
+            text-decoration: underline;
+        }
+
+        .btn-add-item {
+            background-color: transparent;
+            border: 2px dashed var(--border-highlight);
+            color: var(--accent-green);
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .btn-add-item:hover {
+            border-color: var(--accent-green);
+            background-color: rgba(39, 174, 96, 0.05);
         }
 
         /* VISTA PREVIA DE FACTURA */
@@ -377,21 +425,14 @@
                     <textarea id="invClient" rows="2" oninput="updateInvoice()">Nombre del Cliente / Empresa / RNC</textarea>
                 </div>
 
-                <h2 style="margin-top: 25px;">3. Detalle del Servicio o Producto</h2>
-                <div class="form-group">
-                    <label>Descripción del Servicio / Producto</label>
-                    <input type="text" id="itemDesc" value="Desarrollo Web & Optimización SEO" oninput="updateInvoice()">
+                <h2 style="margin-top: 25px;">3. Detalle de Servicios o Productos</h2>
+                
+                <!-- CONTENEDOR DE ÍTEMS DINÁMICOS -->
+                <div id="itemsContainer">
+                    <!-- Los ítems se inyectarán vía JS -->
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Cantidad (Unidades)</label>
-                        <input type="number" id="itemQty" value="10" min="1" oninput="updateInvoice()">
-                    </div>
-                    <div class="form-group">
-                        <label>Costo Unitario ($)</label>
-                        <input type="number" id="itemPrice" value="20" min="0" step="0.01" oninput="updateInvoice()">
-                    </div>
-                </div>
+
+                <button type="button" class="btn-add-item" onclick="addItemRow()">+ Agregar otro producto o servicio</button>
             </div>
 
             <!-- PANEL DE VISTA PREVIA -->
@@ -431,24 +472,19 @@
                                         <th style="text-align: right;">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="previewDesc">Desarrollo Web & Optimización SEO</td>
-                                        <td id="previewQty" style="text-align: center;">10</td>
-                                        <td id="previewPrice" style="text-align: right;">$20.00</td>
-                                        <td id="previewLineTotal" style="text-align: right;">$200.00</td>
-                                    </tr>
+                                <tbody id="previewTableBody">
+                                    <!-- Filas de la tabla de vista previa -->
                                 </tbody>
                             </table>
 
                             <div class="invoice-totals-box">
                                 <div class="total-row">
                                     <span>Subtotal:</span>
-                                    <span id="previewSubtotal">$200.00</span>
+                                    <span id="previewSubtotal">$0.00</span>
                                 </div>
                                 <div class="total-row final-total">
                                     <span>Total a Pagar:</span>
-                                    <span id="previewTotal">$200.00</span>
+                                    <span id="previewTotal">$0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -487,16 +523,70 @@
         <p style="margin: 0; font-size: 14px;">&copy; 2026 VidPulse SEO Suite — Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO Y CORRECCIÓN DE CARGA -->
+    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO Y GESTIÓN DINÁMICA DE ÍTEMS -->
     <script>
+        let invoiceItems = [
+            { desc: "Desarrollo Web & Optimización SEO", qty: 10, price: 20 }
+        ];
+
         document.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('invDate');
             if (dateInput && !dateInput.value) {
                 dateInput.value = today;
             }
+            renderItemsBuilder();
             updateInvoice();
         });
+
+        function renderItemsBuilder() {
+            const container = document.getElementById('itemsContainer');
+            container.innerHTML = '';
+
+            invoiceItems.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-row-builder';
+                itemDiv.innerHTML = `
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label>Descripción del Servicio / Producto #${index + 1}</label>
+                        <input type="text" value="${escapeHtml(item.desc)}" oninput="updateItemData(${index}, 'desc', this.value)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Cantidad (Unidades)</label>
+                            <input type="number" value="${item.qty}" min="1" oninput="updateItemData(${index}, 'qty', this.value)">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Costo Unitario ($)</label>
+                            <input type="number" value="${item.price}" min="0" step="0.01" oninput="updateItemData(${index}, 'price', this.value)">
+                        </div>
+                    </div>
+                    ${invoiceItems.length > 1 ? `<button type="button" class="btn-remove-item" onclick="removeItemRow(${index})">🗑️ Eliminar producto</button>` : ''}
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function addItemRow() {
+            invoiceItems.push({ desc: "Nuevo Servicio o Producto", qty: 1, price: 50 });
+            renderItemsBuilder();
+            updateInvoice();
+        }
+
+        function removeItemRow(index) {
+            invoiceItems.splice(index, 1);
+            renderItemsBuilder();
+            updateInvoice();
+        }
+
+        function updateItemData(index, field, value) {
+            if (field === 'qty' || field === 'price') {
+                invoiceItems[index][field] = parseFloat(value) || 0;
+            } else {
+                invoiceItems[index][field] = value;
+            }
+            updateInvoice();
+        }
 
         function updateInvoice() {
             const companyTitle = document.getElementById('invCompanyTitle').value || 'FACTURA COMERCIAL';
@@ -504,23 +594,45 @@
             const date = document.getElementById('invDate').value;
             const issuer = document.getElementById('invIssuer').value;
             const client = document.getElementById('invClient').value;
-            const desc = document.getElementById('itemDesc').value;
-            const qty = parseFloat(document.getElementById('itemQty').value) || 0;
-            const price = parseFloat(document.getElementById('itemPrice').value) || 0;
-            
-            const lineTotal = qty * price;
 
             document.getElementById('previewCompanyTitle').textContent = companyTitle;
             document.getElementById('previewNumber').textContent = number;
             document.getElementById('previewDate').textContent = date || '--/--/----';
             document.getElementById('previewIssuer').textContent = issuer;
             document.getElementById('previewClient').textContent = client;
-            document.getElementById('previewDesc').textContent = desc;
-            document.getElementById('previewQty').textContent = qty;
-            document.getElementById('previewPrice').textContent = '$' + price.toFixed(2);
-            document.getElementById('previewLineTotal').textContent = '$' + lineTotal.toFixed(2);
-            document.getElementById('previewSubtotal').textContent = '$' + lineTotal.toFixed(2);
-            document.getElementById('previewTotal').textContent = '$' + lineTotal.toFixed(2);
+
+            const tbody = document.getElementById('previewTableBody');
+            tbody.innerHTML = '';
+
+            let grandTotal = 0;
+
+            invoiceItems.forEach(item => {
+                const lineTotal = item.qty * item.price;
+                grandTotal += lineTotal;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${escapeHtml(item.desc)}</td>
+                    <td style="text-align: center;">${item.qty}</td>
+                    <td style="text-align: right;">$${item.price.toFixed(2)}</td>
+                    <td style="text-align: right;">$${lineTotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('previewSubtotal').textContent = '$' + grandTotal.toFixed(2);
+            document.getElementById('previewTotal').textContent = '$' + grandTotal.toFixed(2);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
         }
     </script>
 </body>
