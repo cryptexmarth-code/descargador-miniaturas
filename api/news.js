@@ -16,29 +16,31 @@ export default async function handler(req, res) {
         return data.items.map(item => {
           let imageUrl = '';
 
-          // 1. Revisar thumbnail directo o enclosure estándar
+          // 1. Revisar si viene en el thumbnail directo
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
-          } else if (item.enclosure && item.enclosure.link) {
+          } 
+          // 2. Revisar si viene en enclosure (multimedia adjunta de RSS)
+          else if (item.enclosure && item.enclosure.link) {
             imageUrl = item.enclosure.link;
           } 
+          // 3. Buscar etiquetas <img> o data-src dentro del contenido o descripción
+          else if (item.content) {
+            const imgMatch = item.content.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
+            if (imgMatch) imageUrl = imgMatch[1];
+          } 
           
-          // 2. Buscar en el contenido HTML o descripción (etiquetas <img> o data-src)
-          if (!imageUrl && (item.content || item.description)) {
-            const textSource = item.content || item.description;
-            // Busca tanto src como data-src (muy usado en lazy loading)
-            const imgMatch = textSource.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
-            if (imgMatch) {
-              imageUrl = imgMatch[1];
-            }
+          if (!imageUrl && item.description) {
+            const imgMatchDesc = item.description.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
+            if (imgMatchDesc) imageUrl = imgMatchDesc[1];
           }
 
-          // 3. Validación de URLs relativas y limpieza de parámetros de Google News si aplica
+          // Ajuste por si la URL viene incompleta empezando en //
           if (imageUrl && imageUrl.startsWith('//')) {
             imageUrl = 'https:' + imageUrl;
           }
 
-          // 4. Si no hay imagen o la encontrada es un marcador/icono vacío, usar favicon como respaldo limpio
+          // 4. Si de plano no hay imagen en el RSS, generamos una miniatura limpia basada en el dominio de la fuente
           if (!imageUrl && item.link) {
             try {
               const urlObj = new URL(item.link);
@@ -75,7 +77,7 @@ export default async function handler(req, res) {
       }
     });
 
--  } catch (error) {
+  } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }
 }
