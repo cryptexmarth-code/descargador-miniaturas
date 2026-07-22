@@ -13,11 +13,23 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        // Usamos Promise.all para consultar la imagen real de cada enlace en paralelo
         const itemsPromises = data.items.map(async (item) => {
           let imageUrl = '';
+          let finalArticleUrl = item.link;
 
-          // 1. Intentar rescatar la imagen tradicional del RSS si por milagro viene ahí
+          // 0. Resolver la URL real del artículo si viene encapsulada por Google News
+          try {
+            if (finalArticleUrl && finalArticleUrl.includes('news.google.com')) {
+              const resRedirect = await fetch(finalArticleUrl, { method: 'HEAD', redirect: 'follow' });
+              if (resRedirect.url) {
+                finalArticleUrl = resRedirect.url;
+              }
+            }
+          } catch (e) {
+            // Si falla la redirección, mantenemos el link original
+          }
+
+          // 1. Intentar extraer imagen del contenido RSS tradicional
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
           } else if (item.enclosure && item.enclosure.link) {
@@ -30,27 +42,20 @@ export default async function handler(req, res) {
             if (imgMatchDesc) imageUrl = imgMatchDesc[1];
           }
 
-          // 2. Si el RSS no trae imagen, consultamos a Microlink usando el enlace de la noticia para extraer su imagen real de Open Graph
-          if (!imageUrl && item.link) {
+          // 2. Si no hay imagen, consultamos a Microlink usando la URL ya desacoplada del medio real
+          if (!imageUrl && finalArticleUrl) {
             try {
-              const microlinkRes = await fetch(`https://api.microlink.co/?url=${encodeURIComponent(item.link)}`);
+              const microlinkRes = await fetch(`https://api.microlink.co/?url=${encodeURIComponent(finalArticleUrl)}`);
               const microlinkData = await microlinkRes.json();
               if (microlinkData.status === 'success' && microlinkData.data && microlinkData.data.image) {
                 imageUrl = microlinkData.data.image.url;
               }
-            } catch (err) {
-              // Si falla Microlink, pasamos al siguiente respaldo
-            }
+            } catch (err) {}
           }
 
-          // 3. Respaldo definitivo: si todo lo demás falla, usamos el favicon de alta calidad del dominio
-          if (!imageUrl && item.link) {
-            try {
-              const urlObj = new URL(item.link);
-              imageUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=256`;
-            } catch (e) {
-              imageUrl = '';
-            }
+          // 3. En lugar del favicon de Google (que causa la "G" pixelada), dejamos una imagen por defecto elegante o vacía para que tu CSS la gestione
+          if (!imageUrl) {
+            imageUrl = ''; // O una URL de una imagen predeterminada de respaldo para tu web
           }
 
           if (imageUrl && imageUrl.startsWith('//')) {
@@ -59,7 +64,7 @@ export default async function handler(req, res) {
 
           return {
             title: item.title,
-            link: item.link,
+            link: finalArticleUrl, // Devolvemos el link limpio del diario
             pubDate: item.pubDate,
             description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : '',
             image: imageUrl
