@@ -4,33 +4,13 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="N7jXmgKDnq-R0ugPdpYJ8ZcGxVROskRZ6xh0N8hMYbs" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VidPulse SEO — Descargador de Miniaturas</title>
-    <script defer src="/_vercel/insights/script.js"></script>
-</head>
-<body>
-    <!-- MENÚ DE NAVEGACIÓN ÚNICO EN UNA SOLA LÍNEA -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <a href="index.html" class="logo">⚡ VidPulse <span>SEO</span></a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="active">Miniaturas</a></li>
-                <li><a href="hashtags.html">Hashtags Virales</a></li>
-                <li><a href="facturas.html">Facturas</a></li>
-                <li><a href="cotizaciones.html">Cotizaciones</a></li>
-                <li><a href="noticias.html">Noticias SEO</a></li>
-            </ul>
-        </div>
-    </nav>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO Meta Tags Avanzados -->
     <title>VidPulse SEO — Descargador de Miniaturas HD 4K, Extractor de Tags y Análisis SERP</title>
     <meta name="description" content="Suite SEO profesional y gratuita para creadores de contenido. Descarga miniaturas de YouTube y Twitch en 4K/HD, extrae tags ocultas, analiza canales, audita títulos para CTR y optimiza tu posicionamiento.">
     <meta name="keywords" content="descargar miniatura youtube 4k, extractor de tags youtube, ver etiquetas ocultas youtube, descargar caratula twitch hd, suite seo creadores, analizador serp youtube, generador de titulos virales, auditor ctr titulos, keyword research creadores, miniaturas alta resolucion, seo para streamers">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="canonical" href="https://vidpulseseo.com">
+    <link rel="canonical" href="https://www.descargadorminiaturas.com">
 
     <!-- Open Graph / Redes Sociales -->
     <meta property="og:type" content="website">
@@ -38,13 +18,15 @@
     <meta property="og:site_name" content="VidPulse SEO">
     <meta property="og:title" content="VidPulse SEO — Herramientas Gratuitas para Creadores y Streamers">
     <meta property="og:description" content="Extrae miniaturas en 4K, inspecciona tags de la competencia, genera títulos virales optimizados para CTR y audita tu canal con nuestra suite SEO ilimitada.">
-    <meta property="og:url" content="https://vidpulseseo.com">
+    <meta property="og:url" content="https://www.descargadorminiaturas.com">
     <meta property="og:image" content="https://img.youtube.com/vi/default/maxresdefault.jpg">
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="VidPulse SEO — Herramientas para YouTubers y Streamers">
     <meta name="twitter:description" content="Herramientas profesionales para creadores de contenido: Miniaturas 4K, Extractor de Tags, Generador de Títulos CTR y Análisis SERP gratis.">
+
+    <script defer src="/_vercel/insights/script.js"></script>
 
     <!-- Datos Estructurados JSON-LD Expandidos -->
     <script type="application/ld+json">
@@ -55,7 +37,7 @@
           "@type": "WebApplication",
           "name": "VidPulse SEO",
           "alternateName": "VidPulse Creator Tools",
-          "url": "https://vidpulseseo.com",
+          "url": "https://www.descargadorminiaturas.com",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
           "browserRequirements": "Requires JavaScript. Requires HTML5.",
@@ -138,7 +120,7 @@
             background-image: radial-gradient(circle at 50% 0%, rgba(255, 78, 80, 0.08), transparent 40%);
         }
 
-        /* --- BARRA DE NAVEGACIÓN Y MENÚ --- */
+        /* --- BARRA DE NAVEGACIÓN Y MENÚ EN UNA SOLA LÍNEA --- */
         .main-nav {
             background-color: rgba(18, 21, 30, 0.95);
             backdrop-filter: blur(10px);
@@ -146,19 +128,28 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            width: 100%;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .nav-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
 
         .logo {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: #fff;
             text-decoration: none;
@@ -168,6 +159,7 @@
             align-items: center;
             gap: 8px;
             padding: 15px 0;
+            flex-shrink: 0;
         }
 
         .logo span {
@@ -179,50 +171,34 @@
         .nav-menu {
             list-style: none;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 2px;
             margin: 0;
             padding: 0;
+            flex-wrap: nowrap !important;
+            white-space: nowrap;
         }
 
-        .nav-menu > li {
+        .nav-menu li {
             position: relative;
+            flex-shrink: 0;
         }
 
         .nav-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
-            padding: 20px 12px;
+            padding: 18px 10px;
             display: block;
             transition: all 0.2s;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .nav-menu a:hover,
         .nav-menu li.active > a {
             color: #fff;
-        }
-
-        /* --- SOLUCIÓN DE DESBORDE DE PESTAÑAS EN EL MENÚ --- */
-        .main-nav .nav-container {
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Oculta la barra en Firefox */
-        }
-
-        .main-nav .nav-container::-webkit-scrollbar {
-            display: none; /* Oculta la barra en Chrome, Safari y Opera */
-        }
-
-        .nav-menu {
-            flex-wrap: nowrap !important;
-            white-space: nowrap;
-        }
-
-        .nav-menu li a {
-            white-space: nowrap;
         }
 
         .dropdown-content {
@@ -554,7 +530,7 @@
             gap: 10px;
         }
 
-        /* TENDENCIAS DE COMPETENCIA - ESTILO LLAMATIVO CON MINIATURAS */
+        /* TENDENCIAS DE COMPETENCIA */
         .competencia-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -767,18 +743,6 @@
         .badge-low { background-color: rgba(231, 76, 60, 0.2); color: #e74c3c; }
 
         @media (max-width: 850px) {
-            .nav-container {
-                flex-direction: column;
-                padding: 10px;
-            }
-            .nav-menu {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 5px;
-            }
-            .nav-menu a {
-                padding: 10px 8px;
-            }
             .result-grid {
                 grid-template-columns: 1fr;
             }
@@ -796,22 +760,22 @@
 </head>
 <body>
 
-    <!-- MENÚ SUPERIOR DE NAVEGACIÓN COMPLETO (UNA SOLA LÍNEA ORGANIZADA) -->
+    <!-- MENÚ SUPERIOR DE NAVEGACIÓN ORGANIZADO Y EN UNA SOLA LÍNEA -->
     <nav class="main-nav">
         <div class="nav-container">
             <a onclick="showTab('tab-thumb-downloader')" class="logo">
                 ⚡ VidPulse <span>SEO</span>
             </a>
-            <ul class="nav-menu" style="display: flex; flex-direction: row; align-items: center; flex-wrap: nowrap; gap: 5px; margin: 0;">
-                <li><a onclick="showTab('tab-thumb-downloader')" style="white-space: nowrap; padding: 15px 10px;">Miniaturas</a></li>
-                <li><a onclick="showTab('tab-tag-extractor')" style="white-space: nowrap; padding: 15px 10px;">Tags YouTube</a></li>
-                <li><a onclick="showTab('tab-title-generator')" style="white-space: nowrap; padding: 15px 10px;">Títulos CTR</a></li>
-                <li><a onclick="showTab('tab-serp-checker')" style="white-space: nowrap; padding: 15px 10px;">SERP</a></li>
-                <li><a onclick="showTab('tab-local-rank')" style="white-space: nowrap; padding: 15px 10px;">Local Rank</a></li>
-                <li><a onclick="showTab('tab-kw-volume')" style="white-space: nowrap; padding: 15px 10px;">Volumen KW</a></li>
-                <li><a onclick="showTab('tab-suggest-tools')" style="white-space: nowrap; padding: 15px 10px;">Suggest</a></li>
-                <li><a onclick="showTab('tab-seo-monitor')" style="white-space: nowrap; padding: 15px 10px;">SEO Monitor</a></li>
-                <li><a onclick="showTab('tab-competencia')" style="color: var(--accent-gold); white-space: nowrap; padding: 15px 10px;">🔥 Competencia</a></li>
+            <ul class="nav-menu">
+                <li><a onclick="showTab('tab-thumb-downloader')">Miniaturas</a></li>
+                <li><a onclick="showTab('tab-tag-extractor')">Tags YouTube</a></li>
+                <li><a onclick="showTab('tab-title-generator')">Títulos CTR</a></li>
+                <li><a onclick="showTab('tab-serp-checker')">SERP</a></li>
+                <li><a onclick="showTab('tab-local-rank')">Local Rank</a></li>
+                <li><a onclick="showTab('tab-kw-volume')">Volumen KW</a></li>
+                <li><a onclick="showTab('tab-suggest-tools')">Suggest</a></li>
+                <li><a onclick="showTab('tab-seo-monitor')">SEO Monitor</a></li>
+                <li><a onclick="showTab('tab-competencia')" style="color: var(--accent-gold);">🔥 Competencia</a></li>
             </ul>
         </div>
     </nav>
@@ -842,7 +806,6 @@
 
                 <div id="results" class="results-container">
                     <div class="result-grid">
-                        <!-- Columna Izquierda: Vista previa y Descargas -->
                         <div class="img-preview-box">
                             <img id="thumbImg" src="" alt="Miniatura extraída en alta calidad">
                             <div class="download-options">
@@ -852,7 +815,6 @@
                             </div>
                         </div>
 
-                        <!-- Columna Derecha: Inspector SEO -->
                         <div class="seo-inspector">
                             <h3>Inspector Metadatos de la Imagen</h3>
                             <div class="info-item">
@@ -880,7 +842,6 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN LLAMATIVA DE TENDENCIAS CON MINIATURAS EN LA PÁGINA PRINCIPAL -->
             <div class="tool-box" style="margin-top: 50px; background: linear-gradient(135deg, #121622 0%, #1a1e2f 100%); border-color: var(--border-highlight);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px;">
                     <div>
@@ -890,14 +851,12 @@
                     </div>
                     <button class="btn-secondary" onclick="showTab('tab-competencia')">Ver Todos en Pestaña Dedicada ➔</button>
                 </div>
-                
+
                 <div id="homeCompetenciaContainer" class="competencia-grid">
-                    <!-- Cargado dinámicamente -->
                     <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 20px;">Cargando tendencias de competencia...</p>
                 </div>
             </div>
 
-            <!-- ARTÍCULO SEO EXTREMADAMENTE DETALLADO -->
             <article class="seo-article">
                 <h2>Guía Definitiva de Optimización de Miniaturas para YouTube y Twitch</h2>
                 <p>Las miniaturas (thumbnails) son el elemento visual número uno para determinar la tasa de clics de tus contenidos audiovisuales. En un ecosistema donde se suben más de 500 horas de vídeo por minuto a plataformas como YouTube, la miniatura actúa como la portada de un libro: es la primera línea de conversión antes de que el espectador decida consumir tu contenido.</p>
@@ -932,7 +891,7 @@
 
 
     <!-- ==========================================
-         PESTAÑA NUEVA: TENDENCIAS DE COMPETENCIA (DEDICADA)
+         PESTAÑA: TENDENCIAS DE COMPETENCIA
          ========================================== -->
     <section id="tab-competencia" class="page-section">
         <header>
@@ -977,10 +936,8 @@
                 <div id="tagResults" class="results-container">
                     <h3>Etiquetas Detectadas en el Vídeo:</h3>
                     <p style="color: var(--text-muted); font-size: 0.9rem;">Copia las palabras clave con un solo clic para añadirlas a tus estrategias SEO:</p>
-                    
-                    <div id="tagsCloud" class="tags-cloud">
-                        <!-- Las tags se renderizan aquí -->
-                    </div>
+
+                    <div id="tagsCloud" class="tags-cloud"></div>
 
                     <div class="copy-box">
                         <button class="btn-secondary" onclick="copyAllTags()">📋 Copiar Todas las Tags (Separadas por Comas)</button>
@@ -1005,7 +962,7 @@
 
 
     <!-- ==========================================
-         PESTAÑA NUEVA: GENERADOR Y AUDITOR DE TÍTULOS CTR
+         PESTAÑA: GENERADOR Y AUDITOR DE TÍTULOS CTR
          ========================================== -->
     <section id="tab-title-generator" class="page-section">
         <header>
@@ -1024,7 +981,6 @@
 
                 <div id="titleResults" class="results-container">
                     <div class="result-grid">
-                        <!-- Columna Izquierda: Puntuación CTR y Métricas -->
                         <div class="seo-inspector">
                             <h3>Auditoría del Título Ingresado</h3>
                             <div class="info-item">
@@ -1038,12 +994,10 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Diagnóstico Algorítmico:</span>
-                                <ul id="titleAuditList" style="padding-left: 18px; margin-top: 5px; font-size: 0.88rem; color: #d1d5e4;">
-                                </ul>
+                                <ul id="titleAuditList" style="padding-left: 18px; margin-top: 5px; font-size: 0.88rem; color: #d1d5e4;"></ul>
                             </div>
                         </div>
 
-                        <!-- Columna Derecha: Recomendación de estructura -->
                         <div class="seo-inspector">
                             <h3>Factores Psicológicos Analizados</h3>
                             <div class="info-item">
@@ -1061,14 +1015,11 @@
                         </div>
                     </div>
 
-                    <!-- Generador de Variaciones Virales -->
                     <div style="margin-top: 35px;">
                         <h3>Ideas de Títulos Optimizados por Categorías</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem;">Haz clic en cualquier título para copiarlo al portapapeles:</p>
-                        
-                        <div id="generatedTitlesContainer" style="display: grid; gap: 12px; margin-top: 15px;">
-                            <!-- Títulos generados dinámicamente -->
-                        </div>
+
+                        <div id="generatedTitlesContainer" style="display: grid; gap: 12px; margin-top: 15px;"></div>
                     </div>
                 </div>
             </div>
@@ -1114,9 +1065,7 @@
                                 <th>Nivel de Competencia</th>
                             </tr>
                         </thead>
-                        <tbody id="serpTableBody">
-                            <!-- Datos dinámicos -->
-                        </tbody>
+                        <tbody id="serpTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -1191,9 +1140,7 @@
                                 <th>Potencial CTR</th>
                             </tr>
                         </thead>
-                        <tbody id="kwTableBody">
-                            <!-- Datos generados dinámicamente -->
-                        </tbody>
+                        <tbody id="kwTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -1244,7 +1191,7 @@
                     <h3>Puntuación General de Optimización: <span style="color: var(--accent-gold);">88 / 100</span></h3>
                     <ul>
                         <li>✔ Título SEO correctamente estructurado.</li>
-                        <li>✔ Etiquetas Meta Meta-Description detectadas.</li>
+                        <li>✔ Etiquetas Meta Description detectadas.</li>
                         <li>⚠ Se recomienda incluir Schema.org tipo FAQPage.</li>
                     </ul>
                 </div>
@@ -1256,33 +1203,28 @@
     <!-- ==========================================
          FOOTER OPTIMIZADO PARA ADSENSE, COOKIES Y MODALES
          ========================================== -->
-    <!-- FOOTER OPTIMIZADO PARA ADSENSE -->
     <footer style="background-color: #0f172a; color: #94a3b8; padding: 40px 20px; font-family: system-ui, sans-serif; font-size: 14px; border-top: 1px solid #1e293b; margin-top: 60px;">
         <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center;">
-            
-            <!-- Marca y Copyright -->
             <div>
                 <p style="color: #f8fafc; font-weight: bold; margin: 0 0 5px 0;">VidPulse SEO Suite</p>
                 <p style="margin: 0;">&copy; 2026 Todos los derechos reservados.</p>
             </div>
 
-            <!-- Enlaces Legales -->
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                <a href="#" onclick="openModal('modal-privacidad'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Política de Privacidad</a>
-                <a href="#" onclick="openModal('modal-terminos'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Términos y Condiciones</a>
-                <a href="#" onclick="openModal('modal-copyright'); return false;" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Aviso de Copyright</a>
-                <a href="mailto:contacto@tudominio.com" style="color: #94a3b8; text-decoration: none; transition: color 0.2s;">Contacto</a>
+                <a href="#" onclick="openModal('modal-privacidad'); return false;" style="color: #94a3b8; text-decoration: none;">Política de Privacidad</a>
+                <a href="#" onclick="openModal('modal-terminos'); return false;" style="color: #94a3b8; text-decoration: none;">Términos y Condiciones</a>
+                <a href="#" onclick="openModal('modal-copyright'); return false;" style="color: #94a3b8; text-decoration: none;">Aviso de Copyright</a>
+                <a href="mailto:contacto@descargadorminiaturas.com" style="color: #94a3b8; text-decoration: none;">Contacto</a>
             </div>
         </div>
-        
-        <!-- Descargo de responsabilidad corto exigido -->
+
         <div style="max-width: 1200px; margin: 20px auto 0 auto; border-top: 1px solid #1e293b; padding-top: 15px; font-size: 12px; color: #64748b; text-align: center;">
             Este sitio web no está afiliado, asociado, autorizado, respaldado por, ni oficialmente conectado de ninguna manera con YouTube, Twitch o Google. Las herramientas son de uso educativo y personal.
         </div>
     </footer>
 
     <!-- BANNER DE COOKIES -->
-    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: #1e293b; color: #f8fafc; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -4px 10px rgba(0,0,0,0.3); z-index: 9999; font-family: system-ui, sans-serif; display: none;">
+    <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background-color: #1e293b; color: #f8fafc; padding: 15px 20px; justify-content: space-between; align-items: center; box-shadow: 0 -4px 10px rgba(0,0,0,0.3); z-index: 9999; font-family: system-ui, sans-serif; display: none;">
         <p style="margin: 0; font-size: 13px; max-width: 800px;">
             Utilizamos cookies propias y de terceros para mejorar nuestros servicios y mostrarle publicidad relacionada con sus preferencias mediante el análisis de sus hábitos de navegación. Si continua navegando, consideramos que acepta su uso. 
             <a href="#" onclick="openModal('modal-privacidad'); return false;" style="color: #38bdf8; text-decoration: underline;">Más información</a>.
@@ -1292,29 +1234,25 @@
 
     <!-- VENTANAS MODALES PARA LAS POLÍTICAS -->
     <div id="modal-backdrop" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.7); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px;">
-        
-        <!-- Modal Privacidad -->
         <div id="modal-privacidad" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
             <h2 style="margin-top: 0; color: #0f172a;">Política de Privacidad</h2>
             <p>En este sitio web respetamos y protegemos la privacidad de los usuarios. Esta política de privacidad detalla cómo recopilamos y usamos la información.</p>
-            <p><strong>Uso de Cookies y Publicidad:</strong> Utilizamos Google AdSense para mostrar anuncios. Google utiliza cookies para publicar anuncios basados en las visitas anteriores de los usuarios a este sitio u otros sitios web. El uso de cookies de publicidad permite a Google y a sus socios mostrar anuncios a los usuarios basados en su visita a sus sitios y/o a otros sitios de Internet.</p>
+            <p><strong>Uso de Cookies y Publicidad:</strong> Utilizamos Google AdSense para mostrar anuncios. Google utiliza cookies para publicar anuncios basados en las visitas anteriores de los usuarios a este sitio u otros sitios web.</p>
             <p>Los usuarios pueden inhabilitar la publicidad personalizada accediendo a la <a href="https://adssettings.google.com" target="_blank" rel="noopener">Configuración de anuncios</a>.</p>
             <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
         </div>
 
-        <!-- Modal Términos -->
         <div id="modal-terminos" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
             <h2 style="margin-top: 0; color: #0f172a;">Términos y Condiciones</h2>
             <p>Al acceder y utilizar esta plataforma, el usuario acepta cumplir con los presentes términos y condiciones de uso.</p>
-            <p>Las herramientas provistas en este sitio son de carácter gratuito y se ofrecen "tal cual", sin garantías de ningún tipo. El uso de las mismas es responsabilidad exclusiva del usuario final.</p>
+            <p>Las herramientas provistas en este sitio son de carácter gratuito y se ofrecen "tal cual", sin garantías de ningún tipo.</p>
             <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
         </div>
 
-        <!-- Modal Copyright -->
         <div id="modal-copyright" class="legal-modal" style="background: #ffffff; color: #1e293b; padding: 30px; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
             <h2 style="margin-top: 0; color: #0f172a;">Aviso de Derechos de Autor (DMCA)</h2>
-            <p>Nuestra plataforma funciona únicamente como una interfaz técnica de procesamiento de datos públicos en el cliente. No alojamos ningún tipo de material protegido por derechos de autor, videos, marcas registradas ni archivos multimedia en nuestros servidores.</p>
-            <p>Todas las miniaturas y contenidos procesados pertenecen exclusivamente a sus respectivos creadores y plataformas de origen. Si eres titular de derechos y deseas reportar alguna incidencia, puedes contactarnos directamente.</p>
+            <p>Nuestra plataforma funciona únicamente como una interfaz técnica de procesamiento de datos públicos en el cliente. No alojamos ningún tipo de material protegido por derechos de autor en nuestros servidores.</p>
+            <p>Todas las miniaturas y contenidos procesados pertenecen exclusivamente a sus respectivos creadores.</p>
             <button onclick="closeModals()" style="background: #0f172a; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px;">Cerrar</button>
         </div>
     </div>
@@ -1324,7 +1262,6 @@
          LÓGICA JAVASCRIPT TOTALMENTE FUNCIONAL
          ========================================== -->
     <script>
-        // 1. SISTEMA DE CAMBIO DE PESTAÑAS (SPA)
         function showTab(tabId) {
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => sec.classList.remove('active-section'));
@@ -1337,7 +1274,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // CARGAR AUTOMÁTICAMENTE LOS DATOS DE COMPETENCIA AL INICIO
         document.addEventListener("DOMContentLoaded", () => {
             cargarDatosCompetencia();
         });
@@ -1348,8 +1284,8 @@
 
             try {
                 const response = await fetch('/data/competencia-rss.json');
-                if (!response.ok) throw new Error("No se pudo cargar el archivo JSON de competencia.");
-                
+                if (!response.ok) throw new Error("No se pudo cargar el archivo JSON.");
+
                 const videos = await response.json();
 
                 if (!videos || videos.length === 0) {
@@ -1359,7 +1295,6 @@
                     return;
                 }
 
-                // Renderizar en página principal (primeros 6 vídeos)
                 if(homeContainer) {
                     homeContainer.innerHTML = '';
                     videos.slice(0, 6).forEach(item => {
@@ -1367,7 +1302,6 @@
                     });
                 }
 
-                // Renderizar en pestaña completa
                 if(fullContainer) {
                     fullContainer.innerHTML = '';
                     videos.forEach(item => {
@@ -1377,7 +1311,7 @@
 
             } catch (error) {
                 console.error("Error cargando competencia:", error);
-                const errorMsg = '<p style="color: #ff6b6b; grid-column: 1/-1; text-align: center;">Error al cargar las tendencias de competencia. Ejecuta la Action en GitHub si es la primera vez.</p>';
+                const errorMsg = '<p style="color: #ff6b6b; grid-column: 1/-1; text-align: center;">Error al cargar las tendencias de competencia.</p>';
                 if(homeContainer) homeContainer.innerHTML = errorMsg;
                 if(fullContainer) fullContainer.innerHTML = errorMsg;
             }
@@ -1392,12 +1326,11 @@
         function crearTarjetaCompetencia(item) {
             const card = document.createElement('div');
             card.className = 'competencia-card';
-            
+
             const fechaFormateada = new Date(item.publicado).toLocaleDateString('es-ES', {
                 day: '2-digit', month: 'short', year: 'numeric'
             });
 
-            // Extraer ID de YouTube para mostrar la miniatura automáticamente
             const ytId = extractYouTubeId(item.url);
             const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'https://img.youtube.com/vi/default/maxresdefault.jpg';
 
@@ -1417,7 +1350,6 @@
             return card;
         }
 
-        // 2. DESCARGADOR DE MINIATURAS (YOUTUBE Y TWITCH FIXED)
         let currentPlatform = 'youtube';
 
         function setPlatform(platform) {
@@ -1440,8 +1372,7 @@
         function extractTwitchChannel(url) {
             const cleanUrl = url.trim().toLowerCase();
             if (cleanUrl.includes('twitch.tv/')) {
-                const parts = cleanUrl.split('twitch.tv/')[1].split('/')[0].split('?')[0];
-                return parts;
+                return cleanUrl.split('twitch.tv/')[1].split('/')[0].split('?')[0];
             }
             if (!cleanUrl.includes('/') && cleanUrl.length > 2) {
                 return cleanUrl;
@@ -1468,7 +1399,6 @@
             if (url.includes('twitch.tv')) targetPlatform = 'twitch';
             if (url.includes('youtube.com') || url.includes('youtu.be')) targetPlatform = 'youtube';
 
-            // PROCESAR YOUTUBE
             if (targetPlatform === 'youtube') {
                 const ytId = extractYouTubeId(url);
                 if (ytId) {
@@ -1477,7 +1407,6 @@
                     const mqUrl = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
 
                     thumbImg.src = maxUrl;
-                    
                     document.getElementById('dlMax').href = maxUrl;
                     document.getElementById('dlHq').href = hqUrl;
                     document.getElementById('dlMq').href = mqUrl;
@@ -1488,21 +1417,19 @@
 
                     resultsDiv.style.display = 'block';
                 } else {
-                    errorDiv.textContent = "El enlace de YouTube no parece válido. Verifica el formato.";
+                    errorDiv.textContent = "El enlace de YouTube no parece válido.";
                     errorDiv.style.display = 'block';
                     resultsDiv.style.display = 'none';
                 }
                 return;
             }
 
-            // PROCESAR TWITCH (SOLUCIÓN CLIENT-SIDE DIRECTA)
             if (targetPlatform === 'twitch') {
                 const channel = extractTwitchChannel(url);
                 if (channel) {
                     const twitchLiveImg = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${channel}-1920x1080.jpg`;
 
                     thumbImg.src = twitchLiveImg;
-                    
                     document.getElementById('dlMax').href = twitchLiveImg;
                     document.getElementById('dlHq').href = twitchLiveImg;
                     document.getElementById('dlMq').href = twitchLiveImg;
@@ -1513,15 +1440,13 @@
 
                     resultsDiv.style.display = 'block';
                 } else {
-                    errorDiv.textContent = "No se pudo identificar el canal de Twitch. Introduce una URL válida.";
+                    errorDiv.textContent = "No se pudo identificar el canal de Twitch.";
                     errorDiv.style.display = 'block';
                     resultsDiv.style.display = 'none';
                 }
             }
         }
 
-
-        // 3. EXTRACTOR DE TAGS DE YOUTUBE (PROXIED CLIENTE)
         let currentExtractedTags = [];
 
         async function extractTags() {
@@ -1547,7 +1472,7 @@
 
                 const response = await fetch(proxyUrl);
                 const data = await response.json();
-                
+
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(data.contents, 'text/html');
 
@@ -1573,13 +1498,13 @@
                     });
                     tagResults.style.display = 'block';
                 } else {
-                    tagError.textContent = "El vídeo no contiene etiquetas públicas o no se pudieron procesar.";
+                    tagError.textContent = "El vídeo no contiene etiquetas públicas.";
                     tagError.style.display = 'block';
                     tagResults.style.display = 'none';
                 }
 
             } catch (err) {
-                tagError.textContent = "Error al conectar con los servidores. Inténtalo de nuevo más tarde.";
+                tagError.textContent = "Error al conectar con los servidores.";
                 tagError.style.display = 'block';
                 tagResults.style.display = 'none';
             }
@@ -1589,12 +1514,10 @@
             if (currentExtractedTags.length === 0) return;
             const textToCopy = currentExtractedTags.join(', ');
             navigator.clipboard.writeText(textToCopy).then(() => {
-                alert('¡Tags copiadas al portapapeles con éxito!');
+                alert('¡Tags copiadas al portapapeles!');
             });
         }
 
-
-        // 4. LÓGICA DEL GENERADOR Y AUDITOR DE TÍTULOS CTR
         function analyzeAndGenerateTitles() {
             const rawInput = document.getElementById('titleInput').value.trim();
             const titleError = document.getElementById('titleError');
@@ -1603,21 +1526,19 @@
             titleError.style.display = 'none';
 
             if (!rawInput) {
-                titleError.textContent = "Ingresa una idea o título para poder analizarlo y generar variantes.";
+                titleError.textContent = "Ingresa una idea o título para poder analizarlo.";
                 titleError.style.display = 'block';
                 titleResults.style.display = 'none';
                 return;
             }
 
-            // A) AUDITORÍA DE TÍTULO
             let score = 50;
             const len = rawInput.length;
             const auditList = document.getElementById('titleAuditList');
             auditList.innerHTML = '';
 
             const lower = rawInput.toLowerCase();
-            
-            // 1. Longitud
+
             document.getElementById('charCountText').textContent = `${len} / 100 caracteres`;
             if (len >= 40 && len <= 65) {
                 score += 20;
@@ -1625,15 +1546,14 @@
                 document.getElementById('charFeedback').style.color = "var(--accent-green)";
             } else if (len < 40) {
                 score += 5;
-                document.getElementById('charFeedback').textContent = "⚠ Título un poco corto. Agrega contexto o una palabra de alto impacto.";
+                document.getElementById('charFeedback').textContent = "⚠ Título un poco corto.";
                 document.getElementById('charFeedback').style.color = "var(--accent-gold)";
             } else {
                 score += 10;
-                document.getElementById('charFeedback').textContent = "⚠ Título largo. Puede cortarse con '...' en teléfonos móviles.";
+                document.getElementById('charFeedback').textContent = "⚠ Título largo. Puede cortarse en móviles.";
                 document.getElementById('charFeedback').style.color = "#ff6b6b";
             }
 
-            // 2. Power Words
             const powerWords = ['increible', 'secretos', 'secreto', 'definitivo', 'truco', 'trucos', 'error', 'errores', 'nunca', 'fácil', 'gratis', 'top', 'mejor', 'peor', 'garantizado', 'paso a paso'];
             const hasPowerWord = powerWords.some(pw => lower.includes(pw));
             if (hasPowerWord) {
@@ -1644,43 +1564,37 @@
             } else {
                 document.getElementById('powerWordsStatus').textContent = "✖ Sin palabras de impacto directo";
                 document.getElementById('powerWordsStatus').style.color = "#ff6b6b";
-                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secretos", "Paso a paso" o "Definitivo".</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Agrega palabras clave como "Secretos" o "Definitivo".</li>`;
             }
 
-            // 3. Curiosidad / Números
             const hasNumbers = /\d/.test(rawInput);
             if (hasNumbers || lower.includes('por que') || lower.includes('como') || lower.includes('?')) {
                 score += 15;
-                document.getElementById('curiosityStatus').textContent = "✔ Provoca curiosidad / Datos cuantitativos";
+                document.getElementById('curiosityStatus').textContent = "✔ Provoca curiosidad";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-green)";
                 auditList.innerHTML += `<li>✔ Despierta interés activo en la audiencia.</li>`;
             } else {
                 document.getElementById('curiosityStatus').textContent = "⚠ Estructura descriptiva pasiva";
                 document.getElementById('curiosityStatus').style.color = "var(--accent-gold)";
-                auditList.innerHTML += `<li>💡 Tip: Incluye números o formulación en forma de pregunta/desafío.</li>`;
+                auditList.innerHTML += `<li>💡 Tip: Incluye números o preguntas.</li>`;
             }
 
             document.getElementById('mobileStatus').textContent = len <= 65 ? "✔ Excelente (100% visible)" : "⚠ Riesgo de truncamiento";
 
-            // Limitar score entre 0 y 98
             score = Math.min(Math.max(score, 25), 98);
             document.getElementById('ctrScoreText').textContent = `${score}%`;
 
-            // B) GENERADOR DE VARIANTES VIRALES
             const container = document.getElementById('generatedTitlesContainer');
             container.innerHTML = '';
 
             const cleanSubject = rawInput.replace(/como|hacer|para|el|la|los|las|de|un|una/gi, '').trim();
 
             const templates = [
-                { cat: "🔥 Alta Conversión / Urgencia", title: `¡NUNCA Hagas Esto! 🛑 ${rawInput} (Error Grave)` },
-                { cat: "🔥 Alta Conversión / Urgencia", title: `La Verdad Sobre ${cleanSubject} Que Nadie Te Cuenta` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `¿Por Qué Todos Están Hablando De ${cleanSubject}?` },
-                { cat: "💡 Curiosidad / Gatillo Mental", title: `Probé ${cleanSubject} Por 30 Días Y Pasó Esto...` },
-                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `${rawInput}: Guía Definitiva [2026]` },
-                { cat: "🚀 Guía Paso a Paso / Tutorial", title: `Cómo Masterizar ${cleanSubject} En Solo 5 Pasos Sencillos` },
-                { cat: "⭐ Formato Lista / Resultados", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject}` },
-                { cat: "⭐ Formato Lista / Resultados", title: `Top 5 Errores Al ${rawInput} (Y Cómo Evitarlos)` }
+                { cat: "🔥 Urgencia", title: `¡NUNCA Hagas Esto! 🛑 ${rawInput} (Error Grave)` },
+                { cat: "🔥 Revelación", title: `La Verdad Sobre ${cleanSubject} Que Nadie Te Cuenta` },
+                { cat: "💡 Curiosidad", title: `¿Por Qué Todos Están Hablando De ${cleanSubject}?` },
+                { cat: "🚀 Tutorial", title: `${rawInput}: Guía Definitiva [2026]` },
+                { cat: "⭐ Lista", title: `Los 7 Secretos Mejor Guardados De ${cleanSubject}` }
             ];
 
             templates.forEach(item => {
@@ -1696,7 +1610,7 @@
 
                 titleCard.onclick = () => {
                     navigator.clipboard.writeText(item.title).then(() => {
-                        alert(`¡Título copiado al portapapeles!\n\n"${item.title}"`);
+                        alert(`¡Título copiado!\n\n"${item.title}"`);
                     });
                 };
 
@@ -1709,8 +1623,6 @@
             titleResults.style.display = 'block';
         }
 
-
-        // 5. HERRAMIENTAS ADICIONALES INTERACTIVAS
         function analyzeSerp() {
             const kw = document.getElementById('serpKw').value.trim();
             if (!kw) return;
@@ -1751,7 +1663,7 @@
                 const term = k.trim();
                 if(!term) return;
                 const randomVol = Math.floor(Math.random() * 45000) + 1200;
-                
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><strong>${term}</strong></td>
@@ -1791,10 +1703,6 @@
             document.getElementById('auditResults').style.display = 'block';
         }
 
-        // ==========================================
-        // JAVASCRIPT DE CONTROL PARA MODALES Y COOKIES
-        // ==========================================
-        // Mostrar banner de cookies si no ha aceptado
         window.addEventListener('DOMContentLoaded', () => {
             if (!localStorage.getItem('cookiesAccepted')) {
                 document.getElementById('cookie-banner').style.display = 'flex';
@@ -1808,9 +1716,7 @@
 
         function openModal(modalId) {
             document.getElementById('modal-backdrop').style.display = 'flex';
-            // Ocultar todos los modales primero
             document.querySelectorAll('.legal-modal').forEach(m => m.style.display = 'none');
-            // Mostrar el seleccionado
             document.getElementById(modalId).style.display = 'block';
         }
 
@@ -1818,7 +1724,6 @@
             document.getElementById('modal-backdrop').style.display = 'none';
         }
 
-        // Cerrar modal al hacer clic fuera del contenido
         document.getElementById('modal-backdrop').addEventListener('click', (e) => {
             if (e.target.id === 'modal-backdrop') {
                 closeModals();
