@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags Dedicados -->
+    <!-- SEO Meta Tags Dedicados y Optimizados -->
     <title>Generador de Facturas en Línea Gratis y Profesionales — VidPulse SEO</title>
     <meta name="description" content="Crea, edita y descarga facturas profesionales en formato PDF o imprímelas directamente en línea gratis. Herramienta rápida para freelancers, autónomos y PyMEs.">
-    <meta name="keywords" content="crear factura online gratis, generador de facturas, factura en linea, software de facturacion, plantilla de factura editable">
+    <meta name="keywords" content="hacer factura gratis, facturas online gratis, crear factura online gratis, generador de facturas, factura en linea, software de facturacion, plantilla de factura editable, hacer factura sin registrarse, generar factura pdf gratis, creador de facturas para autonomos, facturacion rapida online">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://vidpulseseo.com/facturas.html">
 
@@ -203,13 +203,17 @@
         }
 
         /* VISTA PREVIA DE FACTURA */
-        .invoice-preview {
+        .invoice-preview-wrapper {
             background: #ffffff;
-            color: #111111;
-            padding: 30px;
             border-radius: 10px;
-            font-family: Arial, sans-serif;
+            padding: 30px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .invoice-preview {
+            color: #111111;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
         }
 
         .invoice-header {
@@ -256,13 +260,29 @@
         }
 
         .items-table th { background-color: #f4f6f8; color: #333; font-weight: bold; }
-        .items-table td input { background: #f9f9f9; color: #111; border: 1px solid #ccc; padding: 6px; }
+        .items-table td { color: #111; }
 
-        .invoice-total {
-            text-align: right;
-            font-size: 1.1rem;
+        .invoice-totals-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            font-size: 0.95rem;
+            color: #333;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+
+        .invoice-totals-box .total-row {
+            display: flex;
+            justify-content: space-between;
+            width: 220px;
+        }
+
+        .invoice-totals-box .final-total {
+            font-size: 1.2rem;
             font-weight: bold;
-            color: #111;
+            color: #27ae60;
         }
 
         .btn-action {
@@ -290,12 +310,15 @@
         }
 
         .seo-article h2 { color: #fff; font-size: 1.5rem; margin-top: 25px; }
-        .seo-article p { color: var(--text-muted); }
+        .seo-article p, .seo-article li { color: var(--text-muted); }
+        .seo-article ul { margin-top: 10px; padding-left: 20px; }
+        .seo-article li { margin-bottom: 8px; }
 
         @media print {
             body { background: #fff; color: #000; }
-            .main-nav, header, .panel, .btn-action, footer, .seo-article { display: none !important; }
-            .invoice-preview { box-shadow: none; padding: 0; width: 100%; }
+            .main-nav, header, .panel:first-child, .btn-action, footer, .seo-article { display: none !important; }
+            .panel { background: #fff !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+            .invoice-preview-wrapper { box-shadow: none !important; padding: 0 !important; width: 100% !important; background: #fff !important; }
         }
     </style>
 </head>
@@ -328,6 +351,11 @@
             <div class="panel">
                 <h2>1. Datos de la Factura</h2>
                 
+                <div class="form-group">
+                    <label>Título / Nombre de la Compañía</label>
+                    <input type="text" id="invCompanyTitle" value="FACTURA COMERCIAL" oninput="updateInvoice()">
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label>Nº de Factura</label>
@@ -351,17 +379,17 @@
 
                 <h2 style="margin-top: 25px;">3. Detalle del Servicio o Producto</h2>
                 <div class="form-group">
-                    <label>Descripción del Servicio</label>
+                    <label>Descripción del Servicio / Producto</label>
                     <input type="text" id="itemDesc" value="Desarrollo Web & Optimización SEO" oninput="updateInvoice()">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Cantidad</label>
-                        <input type="number" id="itemQty" value="1" min="1" oninput="updateInvoice()">
+                        <label>Cantidad (Unidades)</label>
+                        <input type="number" id="itemQty" value="10" min="1" oninput="updateInvoice()">
                     </div>
                     <div class="form-group">
-                        <label>Precio Unitario ($)</label>
-                        <input type="number" id="itemPrice" value="350" min="0" oninput="updateInvoice()">
+                        <label>Costo Unitario ($)</label>
+                        <input type="number" id="itemPrice" value="20" min="0" step="0.01" oninput="updateInvoice()">
                     </div>
                 </div>
             </div>
@@ -371,47 +399,58 @@
                 <div>
                     <h2>Vista Previa del Documento</h2>
                     
-                    <div id="invoicePrintArea" class="invoice-preview">
-                        <div class="invoice-header">
-                            <div>
-                                <h2 class="invoice-title">FACTURA</h2>
-                                <p id="previewNumber" style="margin: 5px 0 0 0; font-weight: bold; color: #333;">FACT-2026-001</p>
+                    <div class="invoice-preview-wrapper">
+                        <div id="invoicePrintArea" class="invoice-preview">
+                            <div class="invoice-header">
+                                <div>
+                                    <h2 id="previewCompanyTitle" class="invoice-title">FACTURA COMERCIAL</h2>
+                                    <p id="previewNumber" style="margin: 5px 0 0 0; font-weight: bold; color: #333;">FACT-2026-001</p>
+                                </div>
+                                <div class="invoice-details">
+                                    <p><strong>Fecha:</strong> <span id="previewDate">--/--/----</span></p>
+                                </div>
                             </div>
-                            <div class="invoice-details">
-                                <p><strong>Fecha:</strong> <span id="previewDate">2026-07-21</span></p>
-                            </div>
-                        </div>
 
-                        <div class="parties-grid">
-                            <div class="party-box">
-                                <h4>Emitido por:</h4>
-                                <p id="previewIssuer" style="white-space: pre-line;">Tu Nombre o Empresa</p>
+                            <div class="parties-grid">
+                                <div class="party-box">
+                                    <h4>Emitido por:</h4>
+                                    <p id="previewIssuer" style="white-space: pre-line;">Tu Nombre o Empresa</p>
+                                </div>
+                                <div class="party-box">
+                                    <h4>Facturar a:</h4>
+                                    <p id="previewClient" style="white-space: pre-line;">Nombre del Cliente</p>
+                                </div>
                             </div>
-                            <div class="party-box">
-                                <h4>Facturar a:</h4>
-                                <p id="previewClient" style="white-space: pre-line;">Nombre del Cliente</p>
+
+                            <table class="items-table">
+                                <thead>
+                                    <tr>
+                                        <th>Descripción</th>
+                                        <th style="text-align: center;">Cant.</th>
+                                        <th style="text-align: right;">Precio Unit.</th>
+                                        <th style="text-align: right;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="previewDesc">Desarrollo Web & Optimización SEO</td>
+                                        <td id="previewQty" style="text-align: center;">10</td>
+                                        <td id="previewPrice" style="text-align: right;">$20.00</td>
+                                        <td id="previewLineTotal" style="text-align: right;">$200.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="invoice-totals-box">
+                                <div class="total-row">
+                                    <span>Subtotal:</span>
+                                    <span id="previewSubtotal">$200.00</span>
+                                </div>
+                                <div class="total-row final-total">
+                                    <span>Total a Pagar:</span>
+                                    <span id="previewTotal">$200.00</span>
+                                </div>
                             </div>
-                        </div>
-
-                        <table class="items-table">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th style="text-align: center;">Cant.</th>
-                                    <th style="text-align: right;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="previewDesc">Desarrollo Web & Optimización SEO</td>
-                                    <td id="previewQty" style="text-align: center;">1</td>
-                                    <td id="previewSubtotal" style="text-align: right;">$350.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="invoice-total">
-                            Total a Pagar: <span id="previewTotal" style="color: #27ae60;">$350.00</span>
                         </div>
                     </div>
                 </div>
@@ -422,8 +461,23 @@
 
         <!-- CONTENIDO SEO -->
         <article class="seo-article">
-            <h2>¿Por qué utilizar un generador de facturas en línea?</h2>
-            <p>Para los profesionales independientes, freelancers y pequeñas agencias, contar con un comprobante formal y rápido de cobro agiliza los ciclos de pago de los clientes corporativos. Esta herramienta opera 100% en el navegador del usuario garantizando total privacidad de sus datos fiscales, sin almacenar información en servidores externos.</p>
+            <h2>¿Por qué utilizar nuestro generador de facturas en línea?</h2>
+            <p>Para los profesionales independientes, freelancers y pequeñas agencias, contar con un comprobante formal y rápido de cobro agiliza los ciclos de pago de los clientes corporativos. Nuestra herramienta opera 100% en el navegador del usuario garantizando total privacidad de sus datos fiscales, sin almacenar información en servidores externos.</p>
+            
+            <h2>Frases clave más buscadas (SEO optimizado)</h2>
+            <p>Este portal está posicionado con las consultas más populares en motores de búsqueda para ayudarte a encontrar soluciones inmediatas:</p>
+            <ul>
+                <li><strong>Hacer factura gratis:</strong> Diseña y descarga tus comprobantes sin costo oculto ni suscripciones obligatorias.</li>
+                <li><strong>Facturas online gratis:</strong> Genera documentos fiscales directamente en la web de forma ágil y segura.</li>
+                <li><strong>Crear factura online gratis:</strong> Herramienta intuitiva para autónomos que necesitan emitir cobros profesionales al instante.</li>
+                <li>Generador de facturas automáticas para pequeños negocios y comercios minoristas.</li>
+                <li>Plantilla de factura editable en formato digital lista para imprimir o exportar a PDF.</li>
+                <li>Software de facturación online sin registro previo para freelancers.</li>
+                <li>Cómo hacer una factura comercial paso a paso y sin programas pesados.</li>
+                <li>Generador de recibos y facturas en línea con cálculo automático de totales.</li>
+                <li>Plataforma web gratuita para gestión rápida de cobros y presupuestos.</li>
+                <li>Creador de facturas profesionales para autónomos y PyMEs.</li>
+            </ul>
         </article>
 
     </main>
@@ -433,17 +487,19 @@
         <p style="margin: 0; font-size: 14px;">&copy; 2026 VidPulse SEO Suite — Todos los derechos reservados.</p>
     </footer>
 
-    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO -->
+    <!-- SCRIPT DE ACTUALIZACIÓN EN VIVO Y CORRECCIÓN DE CARGA -->
     <script>
-        // Establecer fecha actual por defecto si está vacía
         document.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('invDate').value = today;
-            document.getElementById('previewDate').textContent = today;
+            const dateInput = document.getElementById('invDate');
+            if (dateInput && !dateInput.value) {
+                dateInput.value = today;
+            }
             updateInvoice();
         });
 
         function updateInvoice() {
+            const companyTitle = document.getElementById('invCompanyTitle').value || 'FACTURA COMERCIAL';
             const number = document.getElementById('invNumber').value;
             const date = document.getElementById('invDate').value;
             const issuer = document.getElementById('invIssuer').value;
@@ -452,16 +508,19 @@
             const qty = parseFloat(document.getElementById('itemQty').value) || 0;
             const price = parseFloat(document.getElementById('itemPrice').value) || 0;
             
-            const total = qty * price;
+            const lineTotal = qty * price;
 
+            document.getElementById('previewCompanyTitle').textContent = companyTitle;
             document.getElementById('previewNumber').textContent = number;
-            document.getElementById('previewDate').textContent = date;
+            document.getElementById('previewDate').textContent = date || '--/--/----';
             document.getElementById('previewIssuer').textContent = issuer;
             document.getElementById('previewClient').textContent = client;
             document.getElementById('previewDesc').textContent = desc;
             document.getElementById('previewQty').textContent = qty;
-            document.getElementById('previewSubtotal').textContent = '$' + total.toFixed(2);
-            document.getElementById('previewTotal').textContent = '$' + total.toFixed(2);
+            document.getElementById('previewPrice').textContent = '$' + price.toFixed(2);
+            document.getElementById('previewLineTotal').textContent = '$' + lineTotal.toFixed(2);
+            document.getElementById('previewSubtotal').textContent = '$' + lineTotal.toFixed(2);
+            document.getElementById('previewTotal').textContent = '$' + lineTotal.toFixed(2);
         }
     </script>
 </body>
