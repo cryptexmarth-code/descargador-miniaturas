@@ -13,13 +13,18 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        return data.items.map(item => {
-          // Extraer imagen de la propiedad thumbnail de rss2json o buscarla en el contenido HTML si no existe
+        return Promise.all(data.items.map(async (item) => {
           let imageUrl = item.thumbnail || '';
-          
-          if (!imageUrl && item.content) {
-            const imgMatch = item.content.match(/<img[^>]+src="([^">]+)"/);
-            if (imgMatch) imageUrl = imgMatch[1];
+
+          // Si no hay miniatura, intentamos obtener la imagen OpenGraph (og:image) del artículo o usamos un servicio de favicon/screenshot dinámico
+          if (!imageUrl && item.link) {
+            try {
+              // Usamos un servicio gratuito de miniaturas de webs basado en la URL del artículo
+              const domain = new URL(item.link).hostname;
+              imageUrl = `https://unavatar.io/${domain}`; // Extrae el logo/icono representativo de la fuente de la noticia de forma dinámica
+            } catch (e) {
+              imageUrl = '';
+            }
           }
 
           return {
@@ -27,9 +32,9 @@ export default async function handler(req, res) {
             link: item.link,
             pubDate: item.pubDate,
             description: item.description ? item.description.replace(/<[^>]*>?/gm, '') : '',
-            image: imageUrl // <--- Propiedad lista para la miniatura
+            image: imageUrl
           };
-        });
+        }));
       }
       return [];
     }
@@ -42,10 +47,10 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       categories: {
-        general: generalItems.slice(0, 4),
-        youtube: youtubeItems.slice(0, 4),
-        seo: seoItems.slice(0, 4),
-        tech: techItems.slice(0, 4)
+        general: (await generalItems).slice(0, 4),
+        youtube: (await youtubeItems).slice(0, 4),
+        seo: (await seoItems).slice(0, 4),
+        tech: (await techItems).slice(0, 4)
       }
     });
 
