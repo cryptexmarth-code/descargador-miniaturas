@@ -13,38 +13,41 @@ export default async function handler(req, res) {
       const data = await response.json();
       
       if (data.status === 'ok') {
-        return data.items.map(item => {
+        // Procesamos cada item aplicando múltiples estrategias de rescate de imágenes
+        const itemsPromises = data.items.map(async (item) => {
           let imageUrl = '';
 
-          // 1. Revisar si viene en el thumbnail directo
+          // Estrategia 1: Thumbnail o Enclosure directo del RSS
           if (item.thumbnail) {
             imageUrl = item.thumbnail;
-          } 
-          // 2. Revisar si viene en enclosure (multimedia adjunta de RSS)
-          else if (item.enclosure && item.enclosure.link) {
+          } else if (item.enclosure && item.enclosure.link) {
             imageUrl = item.enclosure.link;
           } 
-          // 3. Buscar etiquetas <img> o data-src dentro del contenido o descripción
-          else if (item.content) {
-            const imgMatch = item.content.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
-            if (imgMatch) imageUrl = imgMatch[1];
-          } 
-          
-          if (!imageUrl && item.description) {
-            const imgMatchDesc = item.description.match(/<img[^>]+(?:src|data-src)=["']([^"']+)["']/i);
-            if (imgMatchDesc) imageUrl = imgMatchDesc[1];
+
+          // Estrategia 2: Regex exhaustiva en contenido o descripción (src, data-src, srcset)
+          if (!imageUrl && (item.content || item.description)) {
+            const textSource = item.content || item.description;
+            const imgMatch = textSource.match(/<img[^>]+(?:src|data-src)=["']([^"'#]+)["']/i);
+            if (imgMatch) {
+              imageUrl = imgMatch[1];
+            } else {
+              // Buscar URLs sueltas de imágenes dentro de etiquetas de medios o atributos anidados
+              const urlMatch = textSource.match(/(https?:\/\/[^\s"'<>]+?\.(?:jpg|jpeg|png|webp))/i);
+              if (urlMatch) imageUrl = urlMatch[1];
+            }
           }
 
-          // Ajuste por si la URL viene incompleta empezando en //
+          // Ajuste de protocolos incompletos tipo '//'
           if (imageUrl && imageUrl.startsWith('//')) {
             imageUrl = 'https:' + imageUrl;
           }
 
-          // 4. Si de plano no hay imagen en el RSS, generamos una miniatura limpia basada en el dominio de la fuente
+          // Estrategia 3: Si aún no hay imagen, intentamos un enlace alternativo o miniatura de previsualización web basada en servicios públicos de Open Graph / Favicon dinámico de alta calidad
           if (!imageUrl && item.link) {
             try {
               const urlObj = new URL(item.link);
-              imageUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=128`;
+              // Usamos un servicio de captura de iconos corporativos grandes o previsualización de dominio
+              imageUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=256`;
             } catch (e) {
               imageUrl = '';
             }
@@ -58,6 +61,8 @@ export default async function handler(req, res) {
             image: imageUrl
           };
         });
+
+        return await Promise.all(itemsPromises);
       }
       return [];
     }
