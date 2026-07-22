@@ -202,6 +202,27 @@
             color: #fff;
         }
 
+        /* --- SOLUCIÓN DE DESBORDE DE PESTAÑAS EN EL MENÚ --- */
+        .main-nav .nav-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Oculta la barra en Firefox */
+        }
+
+        .main-nav .nav-container::-webkit-scrollbar {
+            display: none; /* Oculta la barra en Chrome, Safari y Opera */
+        }
+
+        .nav-menu {
+            flex-wrap: nowrap !important;
+            white-space: nowrap;
+        }
+
+        .nav-menu li a {
+            white-space: nowrap;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
